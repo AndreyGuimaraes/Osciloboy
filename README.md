@@ -1,6 +1,6 @@
 # Osciloboy
 
-> Este projeto será feito como Trabalho de Conclusão de Curso para o curso de Engenharia Elétrica da Universidade Tencológica Federal do Paraná - campus Curitiba. Sua previsão de conclusão é para o mês de Dezembro de 2022.
+> Este projeto será feito como Trabalho de Conclusão de Curso para o curso de Engenharia Elétrica da Universidade Tencológica Federal do Paraná - campus Curitiba. Sua previsão de conclusão é para o mês de Dezembro de 2023.
 
 ## Descrição
 Este projeto consiste em um instrumento de medição de tensão e corrente elétricas de três canais, que será montado em bancadas pré-fabricadas e adaptado para o uso nos laboratórios das disciplinas de Circuitos A e B e Eletricidade e Magnetismo. Possuirá conexão com um smartphone ou computador, exibirá as formas de onda obtidas através de conexão sem fio , e contará com proteção contra curto-circuito e sobretensão.
