@@ -1,0 +1,39 @@
+
+\begin{thenomenclature} 
+\nomgroup{A}
+  \item [{$A$}]\begingroup Área \nomunit{m^2}\nomeqref {2}\nompageref{40}
+  \item [{$L$}]\begingroup Comprimento \nomunit {m}\nomeqref {2}\nompageref{40}
+  \item [{$R$}]\begingroup Raio \nomunit {m}\nomeqref {2}\nompageref{40}
+\nomgroup{B}
+  \item [{$\mu$}]\begingroup Viscosidade dinâmica \nomunit{kg/(m.s)}\nomeqref {2}\nompageref{40}
+  \item [{$\nu $}]\begingroup Viscosidade cinemática \nomunit {m^2/s}\nomeqref {2}\nompageref{40}
+  \item [{$\pi $}]\begingroup Pi (constante circular) \nomunit {rad}\nomeqref {2}\nompageref{40}
+  \item [{$\rho $}]\begingroup Massa específica \nomunit {kg/m^3}\nomeqref {2}\nompageref{40}
+  \item [{$\sigma $}]\begingroup Tensão superficial \nomunit {N/m}\nomeqref {2}\nompageref{40}
+\nomgroup{C}
+  \item [{$+$}]\begingroup Passo de tempo posterior\nomeqref {2}\nompageref{40}
+  \item [{$-$}]\begingroup Passo de tempo anterior \nomunit {}\nomeqref {2}\nompageref{40}
+  \item [{$0$}]\begingroup Valor inicial \nomunit {}\nomeqref {2}\nompageref{40}
+\nomgroup{D}
+  \item [{$G$}]\begingroup Fase gasosa\nomeqref {2}\nompageref{40}
+  \item [{$L$}]\begingroup Fase líquida \nomunit {}\nomeqref {2}\nompageref{40}
+  \item [{$S$}]\begingroup Fase sólida \nomunit {}\nomeqref {2}\nompageref{40}
+\nomgroup{E}
+  \item [{$\overline{\Psi}$}]\begingroup Média temporal\nomeqref {2}\nompageref{40}
+  \item [{$\langle \Psi \rangle $}]\begingroup Média na seção transversal \nomunit {}\nomeqref {2}\nompageref{40}
+  \item [{$\langle \langle \Psi \rangle \rangle $}]\begingroup Média na seção transversal ponderada \nomunit {}\nomeqref {2}\nompageref{40}
+\nomgroup{F}
+  \item [{$e \in E$}]\begingroup Set of events \nomunit {}\nomeqref {2}\nompageref{40}
+  \item [{$i \in I$}]\begingroup Set of intervals \nomunit {}\nomeqref {2}\nompageref{40}
+\nomgroup{G}
+  \item [{$\varepsilon $}]\begingroup Small constant value \nomunit {}\nomeqref {2}\nompageref{40}
+  \item [{$L$}]\begingroup Lower bound value ($L \ll 0$) \nomunit {}\nomeqref {2}\nompageref{40}
+\nomgroup{H}
+  \item [{$e_{i}$}]\begingroup End of interval $i$ \nomunit {h}\nomeqref {2}\nompageref{40}
+  \item [{$s_{i}$}]\begingroup Start of interval $i$ \nomunit {h}\nomeqref {2}\nompageref{40}
+\nomgroup{I}
+  \item [{$\phi _i$}]\begingroup Number of employees set to work during interval $i$ \nomunit {}\nomeqref {2}\nompageref{40}
+\nomgroup{J}
+  \item [{$a_{i}$}]\begingroup 1 if the flow is active during interval $i$; 0 otherwise \nomunit {}\nomeqref {2}\nompageref{40}
+
+\end{thenomenclature}

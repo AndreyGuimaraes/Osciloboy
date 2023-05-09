@@ -13,6 +13,13 @@ Deste modo, o presente documento foi produzido utilizando o modelo \gls{utfprctt
 
 Os arquivos principais do modelo \gls{utfprcttex}\index{UTFPRCTTeX@\utfprcttex} são: \texttt{utfprct.tex} e \texttt{utfprct-dados.tex}. O segundo tem por finalidade a definição de informações sobre o documento, o autor, o orientador, o coorientador, a instituição e a defesa do trabalho. O primeiro constitui a estrutura central deste modelo e tem por finalidade:
 
+\begin{itemize}%% Lista de itens
+\item Definir a classe e as opções do documento.
+\item Permitir o carregamento de pacotes adicionais.
+\item Permitir a definição de comandos personalizados.
+\item Permitir a inclusão de arquivos auxiliares, por exemplo, fontes de dados do documento e elementos pré-textuais, textuais e pós-textuais.
+\end{itemize}
+
 A codificação de caracteres em todos os arquivos é \texttt{UTF8}, tanto no modelo \gls{abntex2}\index{abnTeX2@\abnTeX} quanto no modelo \gls{utfprcttex}\index{UTFPRCTTeX@\utfprcttex}. Portanto, é necessário que seja utilizada a mesma codificação nos documentos a serem desenvolvidos, inclusive nos arquivos de base bibliográfica. Diversos editores de arquivos fonte do \gls{latex}\index{LaTeX@\latex} são capazes de manipular e/ou converter entre diferentes codificações, por exemplo, o ``Texmaker\index{Texmaker}'' (disponível em \url{http://www.xm1math.net/texmaker/}). Recomenda-se, sempre que for manipular e/ou substituir um dos arquivos constituintes deste modelo, manter uma cópia do original num local seguro e/ou renomear esta cópia do original para que possa ser utilizada como um exemplo no desenvolvimento do seu próprio arquivo. Por exemplo, quando for criar o seu ``Capítulo 1'', fazer uma cópia do arquivo original \texttt{capitulo1.tex}, renomeando-o para \texttt{capitulo1.original.tex}, por exemplo, e realizar as alterações e/ou modificações no arquivo \texttt{capitulo1.tex}.
 
 Este capítulo\label{errata:capitulo} de exemplo tem por finalidade a definição e a apresentação de alguns comandos do \gls{latex}\index{LaTeX@\latex} e/ou dos modelos \gls{abntex2}\index{abnTeX2@\abnTeX} e \gls{utfprcttex}\index{UTFPRCTTeX@\utfprcttex}. O presente documento não se constitui um manual, tampouco uma apostila de \gls{latex}\index{LaTeX@\latex}, visto que existe uma grande quantidade de material de referência disponível na internet, como por exemplo em \url{http://en.wikibooks.org/wiki/LaTeX}.
@@ -686,7 +693,7 @@ Outra opção ao comando \verb|\nomenclature| é o uso dos atalhos:
 \subscrito{L}{L}{Fase líquida}{}%%
 \subscrito{S}{S}{Fase sólida}{}%%
 %% Notações [E]
-\nomenclature[EPsi1]{$\overline{\Psi}$}{Média temporal}%%
+\nomenclature[EPsi_1]{$\overline{\Psi}$}{Média temporal}%%
 \notacao{Psi_2}{\langle \Psi \rangle}{Média na seção transversal}{}%%
 \notacao{Psi_3}{\langle\langle \Psi \rangle\rangle}{Média na seção transversal ponderada}{}%%
 %% Notações [F]
