@@ -1,3 +1,5 @@
+%% Changed by Luiz Arthur - 27/jun/2022 - In:
+%%
 %% abntex2-alf.bst, v-1.9.7 laurocesar
 %% Copyright 2012-2018 by abnTeX2 group at http://www.abntex.net.br/ 
 %%
@@ -22,16 +24,6 @@
 %% The original source files were:
 %% merlin.mbs  (with options: `babel,nm-revf,aunm-semi,nmlm,x3,m3,dt-end,yr-com,xmth,vnum-x,volp-com,jwdpg,jwdvol,num-xser,btit-rm,bt-rm,pg-bk,add-pub,pub-date,pub-xpar,pre-pub,isbn,issn,pp,ed,abr,ednx,nfss')
 %% These sourefiles are copyrighted by Patrick W Daly
-
-%% Changes due to NBR 6023/2018
-%%
-%% 1) Italic applied to [s.l.], [s.d.], et al., In
-%%
-%% s.l = sine loco (sem local da publicacao); 
-%% s.n = sine nomine (sem editora)
-%% s.d = sem data (n.d. = no date); 
-%%
-%% last modified by wmeira (25/05/2020)
 
 ENTRY
   { address author
@@ -263,7 +255,7 @@ FUNCTION {bbl.edition} { "ed." }
 FUNCTION {bbl.empty} {""}
 FUNCTION {bbl.etal}{abnt.etal.text "" = {""} {" " abnt.etal.text *} if$}
 FUNCTION {bbl.doi.url} {"http://dx.doi.org/"}
-FUNCTION {bbl.in}{ "\textit{In}" iso.abbreviation 'skip$ { bbl.colon *} if$}
+FUNCTION {bbl.in}{ "In" iso.abbreviation 'skip$ { bbl.colon *} if$}
 FUNCTION {bbl.ldots} %#0 use nothing, #1 use \ldots, #2 use $\ldots$, 3# use {...}
 {abnt.ldots.type
   {abnt.ldots.type #1 = {"\ldots"}   'skip$ if$
@@ -274,14 +266,14 @@ if$}
 FUNCTION {bbl.master}  { "Mestrado" }
 FUNCTION {bbl.missing.year}
 {abnt.missing.year
-  {"\textit{[s.d.]}"} %#1
+  {"[s.d.]"} %#1
   {""}       %#0
  if$}
 FUNCTION {bbl.monography} { "Monografia" }
 FUNCTION {bbl.mthesis} { "Disserta\c{c}\~{a}o" }
-FUNCTION {bbl.no.address} {"\textit{[S.l.]}"}
-FUNCTION {bbl.no.address.no.publisher} {"\textit{[S.l.: s.n.]}"}
-FUNCTION {bbl.no.publisher} {"\textit{[s.n.]}"}
+FUNCTION {bbl.no.address} {"[\textit{S.l.}]"}
+FUNCTION {bbl.no.address.no.publisher} {"[\textit{S.l.}: \textit{s.n.}]"}
+FUNCTION {bbl.no.publisher} {"[\textit{s.n.}]"}
 FUNCTION {bbl.number} { iso.abbreviation {"no."} {"n."} if$ }
 FUNCTION {bbl.nr} { "n." }
 FUNCTION {bbl.of} { "de" }
@@ -753,7 +745,9 @@ FUNCTION {n.dashify}
   while$
 }
 
-FUNCTION {word.in} { bbl.in " " * }
+% Luiz - In em itálico
+%FUNCTION {word.in} { bbl.in " " * }
+FUNCTION {word.in} {"\textit{In}: "}
 
 FUNCTION {format.month}
 { month empty$ 'skip$
@@ -1107,7 +1101,7 @@ FUNCTION {format.type}
 FUNCTION {format.year}
 {year empty$
    { "campo year vazio ou faltando em " cite$ *
-    abnt.missing.year {" (vou colocar \textit{[s.d.]})" *} 'skip$ if$ warning$
+    abnt.missing.year {" (vou colocar [s.d.])" *} 'skip$ if$ warning$
     abnt.missing.year {", " } {""} if$ bbl.missing.year *}
     {year n.dashify "year" bibinfo.check}
 if$
@@ -2051,11 +2045,11 @@ FUNCTION {set.default.abnt.variables}
   abnt.doi.expand.to.url 'abnt.doi :=
   #3 'abnt.etal.cite :=
   #3 'abnt.etal.list :=
-  "\textit{et al.}" 'abnt.etal.text :=
+  "et al." 'abnt.etal.text :=
   #0 'abnt.full.initials :=
   #0 'abnt.last.names :=      %#0 abnt-style, #1 bibtex-style
   #1 'abnt.ldots.type :=      %#0 use nothing, #1 use \ldots, #2 use $\ldots$, 3# use {...}
-  #0 'abnt.missing.year :=    %#0 "void"; #1 "\textit{[s.d.]}"
+  #0 'abnt.missing.year :=    %#0 "void"; #1 "[s.d.]"
   #0 'repeated.author :=
   #0 'abnt.repeated.author.omit :=
   #0 'abnt.repeated.title.omit :=
