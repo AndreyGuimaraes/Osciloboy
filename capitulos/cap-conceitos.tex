@@ -5,23 +5,35 @@
 %% Título e rótulo de capítulo (rótulos não devem conter caracteres especiais, acentuados ou cedilha)
 \chapter{Referencial te\'orico}\label{cap:referencialTeorico}
 
-Uma forma de tratar o referencial teórico é definir como título de capítulo o assunto macro e relevante relacionado ao trabalho e o texto é dividido em subtítulos (seções e subseções), conforme necessário. Essa forma é preferida por deixar explícito o assunto a ser tratado e que o mesmo é a fundamentação do trabalho \footnote{Teste de nota de rodapé 3.}. 
+\section{Diagrama de Blocos}\label{sec:FlowChart}
 
-Outra forma de tratar esse capítulo é denominá-lo referencial teórico e dividi-lo em seções e subseções ou com um único texto os assuntos que fornecem o suporte teórico para o trabalho. Essa forma pode ser utilizada quando assuntos distintos fundamentam o trabalho e é difícil incluí-los sob uma mesma denominação de capítulo \footnote{Teste de nota de rodapé 4.}.
+Como premissa de organização, para melhor apresentar os tópicos envolvidos, será utilizado o diagrama de blocos de um multimetro com o design feito pela Texas Instruments como guia base.
 
-O embasamento teórico se refere ao(s) assunto(s) principal(is) relacionado(s) ao objeto de pesquisa para o qual o trabalho traz alguma contribuição ou que é utilizado como referência conceitual para o desenvolvimento do proposto no trabalho. O assunto pode fornecer a fundamentação (suporte teórico) para a ideia do sistema, para definir claramente o problema, para explicitar a solução, para a forma de resolução; referir-se aos conceitos e teorias relacionados ao sistema desenvolvido, sobre tecnologias e metodologias específicas utilizadas na definição do sistema e na sua implementação.
+\begin{figure}[htb]%% Ambiente figure
+    %\captionsetup{width=0.55\textwidth}%% Largura da legenda
+    \caption{Exemplo de um Diagrama de Blocos de um Multímetro}%% Legenda
+    \label{fig:flowChart}%% Rótulo
+    \includegraphics[scale=0.4]{flowchart}%% Dimensões e localização
+    \fonte{Fonte: Texas Instruments}%% Fonte
+\end{figure}
 
-Exemplos:
+\section{Proteção de Entrada}\label{sec:InputProtection}
 
-Conceitos da orientação a objetos fazem parte do referencial teórico se o uso intensivo da orientação a objetos é o principal embasamento do trabalho; ou se a principal contribuição do trabalho está relacionada à orientação a objetos, seja em termos de agregar conhecimento nessa área ou à forma de usar os seus conceitos.
+Proteção de entrada é um assunto extremamente abrangente quando se trata de circuitos eletrônicos. Dependendo da função que este tenha que exercer, existem infinitas topografias que podem ser consideradas. Algumas exigências, porém, são comuns, como a necessidade de um circuito de proteção contra descargas eletrostáticas, ou ESD (Electrostatic Discharge). Tais descargas podem entregar picos de tensão extremamente altos, chegando até a 30 kV, o que é extremamente danoso a qualquer circuito que use semicondutores. Pulsos de pico tão alto quanto 2500 V já são o suficiente para danificar a maioria dos circuitos eletrônicos. Notóriamente, seres humanos são capazes de entregar descargas de até 20 kV porcausa da capacitância inata à sua fisiologia %%citar o documento http://www.reallyreallyrandom.com/zener/media/Zener_Theory_and_Design.pdf, página 65
 
-Sistemas distribuídos pode ser o assunto do embasamento teórico se o resultado do trabalho for um sistema distribuído. O mesmo pode ocorrer com sistemas cliente servidor, sistemas de informações gerenciais, de apoio à decisão, para web e etc.
 
-Se o desenvolvimento de um sistema para biometria for o objeto do trabalho, o referencial teórico se refere aos conceitos principais de biometria, aplicabilidade, exemplos de sistemas existentes, o que esses sistemas tratam, como eles são, etc.
 
-Se um sistema web para portadores de necessidades especiais for o resultado do trabalho, o referencial teórico refere-se as quais e como são essas necessidades, outros sistemas existentes na área, como os sistemas lidam com essas necessidades e os principais conceitos por eles considerados.
+\subsection{ESD}\label{subsec:electrostaticDischarge}
 
-O embasamento teórico pode conter os trabalhos relacionados, desde que seja relevante para o desenvolvimento do trabalho. Esse item deve ser elaborado especialmente quando se trata do desenvolvimento de algo muito específico, havendo a necessidade de um estudo comparativo. Nesse caso pode-se inserir claramente o trabalho de pesquisa no contexto dos demais autores, no sentido da contribuição da proposta na área de pesquisa em que o mesmo se insere e em relação ao que já tem pesquisado na área. 
+Esse tipo de proteção é necessária para circuitos que fazem interface com o meio físico e normalmente é exercida por um circuito básico de TVS (Transient Voltage Supressor). Estes circuitos, também chamados de circuitos de clamping, reagem a transientes (ou picos) de tensão, fechando um curto entre o circuito e o ground do equipamento, dissipando assim tal anomalia.
+
+\section{Calibração}\label{sec:OpenLoopCalibration}
+
+\section{Referência de Tensão}\label{sec:VoltageReference}
+
+\section{Conversor Analógico Digital}\label{sec:ADC}
+
+\subsection{Condicionamento de Sinal}\label{sec:SignalConditioning}
 
 \caixa{Atenção}{Converse com o seu orientador para ver quais seções/conteúdos devem ter neste capítulo...}
 
