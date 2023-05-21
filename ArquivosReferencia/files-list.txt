@@ -1,2 +1,6 @@
-#Nome do Arquivo
-#Descrição de que parte desse arquivo é importante
+# Nome do Arquivo
+# Descrição de que parte desse arquivo é importante
+
+# All-in-one three-phase smart meter and power quality analyzer with extended IoT capabilities
+# Usado seu diagrama de blocos e embasamento teórico para o trabalho inteiro
+
