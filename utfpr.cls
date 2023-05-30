@@ -1212,7 +1212,7 @@
 \newglossary[alg3]{\abbreviationtype}{acr3}{acn3}{\nomeabreviaturas}%% Subtipo de glossário (abreviaturas)
 \newcommand{\imprimirlistadeacronimos}{%% Definição do comando para inclusão da lista de abreviaturas, siglas e acrônimos
   \newglossarystyle{myxtab}{%% Estilo de glossário personalizado
-    \glossarystyle{long}%% Estilo de glossário base
+    %\glossarystyle{long}%% Estilo de glossário base
     \renewcommand*{\glossaryheader}{}%% Conteúdo do cabeçalho do glossário
     \renewcommand*{\glsgroupheading}[1]{}%% Conteúdo do cabeçalho de itens no glossário
     \renewcommand*{\glsgroupskip}{}%% Espaçamento entre itens
@@ -1222,13 +1222,18 @@
     \setglossarysection{section}%% Estilo de seção do glossário
     \setlength{\glsdescwidth}{135mm}%% Comprimento da descrição
     \setlength{\glspagelistwidth}{0pt}%% Comprimento da lista de páginas
-    \renewenvironment{theglossary}{%% Formatação do glossário
-      \begin{Spacing}{1.5}%% Espaçamento simples entre linhas
-        \begin{xtabular}{@{}p{25mm}@{}p{\glsdescwidth}}%% Ambiente xtabular
-    }{%%
-        \end{xtabular}
-      \end{Spacing}
-    }
+	%Juan: Setting  a long table for glossary style
+	\setglossarystyle{long}
+	\renewenvironment{theglossary}%
+	 {\begin{longtable}[l]{lp{\glsdescwidth}}}%
+	 {\end{longtable}}
+%    \renewenvironment{theglossary}{%% Formatação do glossário
+%      \begin{Spacing}{1.5}%% Espaçamento simples entre linhas
+%        \begin{xtabular}{@{}p{25mm}@{}p{\glsdescwidth}}%% Ambiente xtabular
+%    }{%%
+%        \end{xtabular}
+%      \end{Spacing}
+%    }
   }
   \pretextualchapter{\nomelistadeacronimos}%% Marcador
   \printglossary[type = \abbreviationtype, title = \nomeabreviaturas, style = myxtab, nonumberlist = true]%% Lista de abreviaturas
@@ -1378,7 +1383,9 @@
 \renewcommand{\cftpartfont}{\normalfont\normalsize\bfseries}%% Estilo da parte no sumário
 \renewcommand{\cftchapterfont}{\normalfont\normalsize\bfseries}%% Estilo do capítulo no sumário
 % luiz - sumário em negrito
-\renewcommand{\cftsectionfont}{\normalfont\normalsize\scshape\bfseries}%% Estilo da seção no sumário
+%\renewcommand{\cftsectionfont}{\normalfont\normalsize\scshape\bfseries}%% Estilo da seção no sumário
+%Juan - Seção secundária (negrito)
+\renewcommand{\cftsectionfont}{\normalfont\normalsize\bfseries}%% Estilo da seção no sumário
 \renewcommand{\cftsubsectionfont}{\normalfont\normalsize}%% Estilo da subseção no sumário
 \renewcommand{\cftsubsubsectionfont}{\normalfont\normalsize}%% Estilo da subsubseção no sumário
 \renewcommand{\cftparagraphfont}{\normalfont\normalsize\itshape}%% Estilo do parágrafo no sumário
@@ -1606,10 +1613,11 @@
 % Command to underline the text
 \newcommand{\underln}[1]{$\underline{\text{#1}}$}
 
- \renewcommand*{\l@section}[2]
- {% luiz - o xmakefirstuc está funcionando, todavia a primeira coisa que vem é o número... e depois o texto, então ele não deixa a primeira letra maiúscula por causa disso... tem que ver como resolver
-     \l@chapapp{\ABNTEXsectionfont\xmakefirstuc{#1}}{#2}{\cftsectionname}
- }
+%%Juan: Erro usando Miktex
+% \renewcommand*{\l@section}[2]
+% {% luiz - o xmakefirstuc está funcionando, todavia a primeira coisa que vem é o número... e depois o texto, então ele não deixa a primeira letra maiúscula por causa disso... tem que ver como resolver
+ %    \l@chapapp{\ABNTEXsectionfont\xmakefirstuc{#1}}{#2}{\cftsectionname}
+ %}
  
  
 
