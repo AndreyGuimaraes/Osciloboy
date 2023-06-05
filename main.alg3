@@ -1,5 +1,7 @@
 This is makeindex, version 2.16 [MiKTeX 23.5].
 Scanning style file ./main.ist...........................done (27 attributes redefined, 0 ignored).
-Scanning input file main.acn3...done (0 entries accepted, 0 rejected).
-Nothing written in main.acr3.
+Scanning input file main.acn3....done (9 entries accepted, 0 rejected).
+Sorting entries....done (30 comparisons).
+Generating output file main.acr3....done (18 lines written, 0 warnings).
+Output written in main.acr3.
 Transcript written in main.alg3.

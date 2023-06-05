@@ -137,7 +137,8 @@
 \RequirePackage[acronym, nosuper, nowarn, sanitize={description=false}, style=index]{glossaries}%% Glossários e listas de acrônimos
 \RequirePackage{nomencl}%% Listas de símbolos como uma nomenclatura
 \RequirePackage{amsmath}%% Ferramentas para linguagem matemática
-\RequirePackage{sistyle}%% Unidades, números e ângulos no SI
+\RequirePackage{siunitx} %%Andrey - Adicionado o pacote siunitx, mais atualizado e adequado para as grandezas no SI
+% \RequirePackage{sistyle}%% Unidades, números e ângulos no SI %%Andrey - Removido devido ao pacote siunitx já utilizar
 \RequirePackage{caption}%% Configuração das legendas de objetos flutuantes
 \RequirePackage{xtab}%% Tabelas em múltiplas páginas
 \RequirePackage{etoolbox}%% Caixa de ferramentas para programadores LaTeX usando e-TEX
@@ -158,6 +159,10 @@
   pdfpagelayout=SinglePage%%
 }
 
+%%Andrey - Configurações do pacote siunitx
+\sisetup{per-mode = symbol} %%Definido a formatação para utilizar / como forma de fração inline
+\sisetup{list-final-separator = { e }}
+\sisetup{range-phrase = { até }}
 
 
 % luiz? comentado pois as normas da ABNT não utilizam o Citado na p[agina]
@@ -280,7 +285,7 @@
     \providetranslation{Page List (glossaries)}{Lista de Páginas}
     \providetranslation{Symbols (glossaries)}{Símbolos}
     \providetranslation{Numbers (glossaries)}{Números}
-    \SIdecimalsign{,}%% Símbolo de decimal (pacote sistyle)
+    % \SIdecimalsign{,}%% Símbolo de decimal (pacote sistyle) %%Andrey - Removido junto do pacote sistyle
   }
 }{%% English definitions
   \AtBeginDocument{%% Definições carregadas no início do documento

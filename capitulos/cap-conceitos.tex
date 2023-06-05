@@ -98,25 +98,24 @@ Proteção de entrada é um assunto extremamente abrangente quando se trata de c
 
 \section{Aquisição de Sinal}\label{sec:aqSignal}
 
-    \subsection{Monofásica e Monocanal}\label{subsec:aqSMono}
+A aquisição de sinal é o processo de captura e conversão de sinais físicos em um formato adequado para análise, processamento ou armazenamento. No contexto da medição de tensão e corrente, a aquisição de sinal refere-se à captura e registro desses parâmetros elétricos em um sistema de medição, permitindo sua análise, processamento ou armazenamento em um formato adequado.
+Essa pode ser realizada de diferentes maneiras, dependendo do caso. Em alguns cenários, utiliza-se sondas específicas para cada aplicação, as quais permitem capturar e registrar os parâmetros elétricos de forma precisa. Por outro lado, em certos casos, a aquisição ocorre internamente dentro do circuito do próprio medidor, proporcionando uma solução integrada e simplificada para a captura e registro dos sinais elétricos.
 
-        \subsubsection{Resistor Shunt}\label{subsubsec:resiShunt}
-            Neste tipo de medição, um resistor de valor extremamente baixo (< 0,1 $\Omega$) é colocado em série com o circuito no qual se deseja medir a corrente elétrica, quando esta atravessa o componente, ocorre uma queda de tensão proporcional. Essa queda de tensão pode ser então medida diretamente através de um ADC ou amplificada e então medida para se obter os valores da corrente original. [Current Sensing Technniques]
-            Para a aplicação do multimedidor de 3 canais independentes de corrente, torna-se necessária algum tipo de isolação. Isso pode ser obtido utilizando-se de amplificadores isoladores neste caso – amplificadores operacionais que possuem duas referências isoladas entre si, permitindo uma medição da queda de tensão sobre o resistor shunt para cada canal sem interferência mútua, como exemplo o AD202 na \ref{AD202}.
-            \begin{figure}[htb]
-                \caption{AD202 um exemplo de amplificador isolador}
-                \label{AD202}
-                \includegraphics[width=0.8\textwidth]{figuras/AD202-ampop-isolado.png}
-                \fonte{CITAR DATASHEET AD202}
-            \end{figure}
+\subsection{Resistor Shunt}\label{subsec:resiShunt}
+Neste tipo de medição, um resistor de valor extremamente baixo (< 0,1 $\Omega$) é colocado em série com o circuito no qual se deseja medir a corrente elétrica, quando esta atravessa o componente, ocorre uma queda de tensão proporcional. Essa queda de tensão pode ser então medida diretamente através de um \gls{ADC} ou amplificada e então medida para se obter os valores da corrente original. \citep{curr_sens_tech}
 
-    \subsection{Trifásica e Multicanal}\label{subsec:aqSMulti}
-        
+Para a aplicação em 3 canais independentes de corrente, torna-se necessária algum tipo de isolação. Isso pode ser obtido utilizando-se de amplificadores isoladores --- amplificadores operacionais que possuem duas referências isoladas entre si. Permitindo uma medição da queda de tensão sobre o resistor shunt para cada canal sem interferência mútua, como exemplo o AD202 na \autoref{AD202}.
 
-
+\begin{figure}[htb]
+    \caption{AD202 um exemplo de amplificador isolador}
+    \label{AD202}
+    \includegraphics[width=0.8\textwidth]{figuras/AD202-ampop-isolado.png}
+    \fonte{\cite{ad202}}
+\end{figure}
+    
 Esse tipo de amplificador, porém, apresenta alto custo e possui uma variação de leitura considerável com a temperatura. São inferiores em precisão a outros métodos de medição que realizam o isolamento do circuito inerentemente por seus aspectos construtivos. 
 
-\subsubsection{Bobina Rogowski}\label{subsubsec:Rogowski}
+\subsection{Bobina Rogowski}\label{subsec:Rogowski}
 
 Utilizando-se do princípio da Lei da Indução de Faraday, a bobina Rogowski trata-se de um loop fechado de fio enrolado em volta de um aro. Esse aro envolve o condutor que, por sua variação de corrente, induz uma tensão elétrica proporcional ao número de espiras e a intensidade da própria corrente a ser medida. Para a medida dos valores obtidos pela bobina Rogowski, é necessário o uso de um integrador (por vezes acoplado no próprio cabo da ponteira de medição) para relacionar a derivada da corrente com a tensão obtida em seus terminais, podendo causar certo erro introduzido pela operação.
 
@@ -127,21 +126,21 @@ Utilizando-se do princípio da Lei da Indução de Faraday, a bobina Rogowski tr
     \fonte{CITAR Metodos de medição (artigo)}
 \end{figure}
 
-É um método amplamente utilizado para medições de altas correntes e suporta uma grande faixa de frequências. Tem um custo próximo dos transformadores de corrente e insere menos impedância parasita no circuito. [CITAR Current Sensing Techniques]
+É um método amplamente utilizado para medições de altas correntes e suporta uma grande faixa de frequências. Tem um custo próximo dos transformadores de corrente e insere menos impedância parasita no circuito. \citep{curr_sens_tech}
 
-\subsubsection{Transformador de Corrente}\label{subsubsec:t-corrente}
+\subsection{Transformador de Corrente}\label{subsec:t-corrente}
 
 O princípio de funcionamento do transformador de corrente é parecido com o da bobina Rogowski: possui um primário e um secundário com uma razão de voltas que permite que a tensão induzida seja lida em sua saída. A diferença deste para a bobina Rogowski é que existe agora um núcleo com certa permeabilidade magnética e o secundário possui um resistor Rs que permite uma medição mais simplificada da corrente de entrada.
-Nesse tipo de medição, a própria saída do transformador de corrente é proporcional a entrada de corrente, não sendo necessário um integrador como é o caso da bobina Rogowski. Devido a sua construção, seu sinal de saída também não necessita de nenhum tipo de amplificação, podendo ser lido diretamente por um ADC. É teoricamente impossível medir correntes contínuas com esse método, porém, caso seja possível pulsar essa corrente, utilizando um circuito acessório de desmagnetização e, respeitando os tempos necessários entre os pulsos, é possível obter uma medida satisfatória.
+Nesse tipo de medição, a própria saída do transformador de corrente é proporcional a entrada de corrente, não sendo necessário um integrador como é o caso da bobina Rogowski. Devido a sua construção, seu sinal de saída também não necessita de nenhum tipo de amplificação, podendo ser lido diretamente por um \gls{ADC}. É teoricamente impossível medir correntes contínuas com esse método, porém, caso seja possível pulsar essa corrente, utilizando um circuito acessório de desmagnetização e, respeitando os tempos necessários entre os pulsos, é possível obter uma medida satisfatória.
 
 \begin{figure}[htb]
-    \caption{Circuito completo com transformador de pulso para medição CA/CC}
+    \caption{Circuito completo com transformador de pulso para medição \gls{CA}/\gls{CC}}
     \label{fig:circuito-tc-dc}
     \includegraphics[width=0.8\textwidth]{figuras/transform-corrente-dc.png}
-    \fonte{CITAR Metodos de medição corrente (artigo)}
+    \fonte{\cite{curr_sens_tech}}
 \end{figure}
 
-\subsubsection{Circuito Integrado de Medição \textit{(hall effect)}}\label{subsubsec:halleffect}
+\subsection{Circuito Integrado de Medição \textit{(hall effect)}}\label{subsec:halleffect}
 
 Existem circuitos integrados capazes de medir a corrente alternada de maneira isolada do
 restante do circuito. Utilizando-se do efeito hall, o campo magnético gerado pela corrente
@@ -150,19 +149,59 @@ do chip. Uma tensão proporcional a esse campo é fornecida pelo CI como saída 
 medida por um ADC, recuperando-se o valor da corrente original.
 O uso dessa tecnologia traz custo baixo em relação ao uso de TC's ou bobinas Rugowski,
 fácil implementação no sistema, isolamento diretamente no chip.
-Tal medição, porém, possui uma resolução de cerca de 100 mV/A (considerando um CI que
-suporte acima de 10 A) e um ruído intrínseco de 11 mV.[CITAR DATASHEET ACS712]
+Tal medição, porém, possui uma resolução na ordem de \SI{100}{\milli\volt\per\ampere} (considerando um CI que suporte acima de 10 A) e um ruído intrínseco de 11 mV. Como é o caso do ACS712.\citep{acs712}
 
 \section{Aviso de Entrada Incorreta \textit{(Input Warning)}}\label{sec:inpWarning}
 
-    \subsection{Monofásico e Monocanal}\label{subsec:inpWMono}
+O termo \textit{input warning} refere-se a um aviso emitido quando ocorre uma entrada incorreta ou anormal em um sistema de medição. Esse tipo de aviso é acionado quando há um problema que pode afetar a precisão ou confiabilidade dos dados de medição. Pode ser uma condição fora dos limites esperados, como valores de tensão ou corrente que ultrapassam os limites especificados pelo instrumento de medição. \cite{base_alarms}
 
-    \subsection{Trifásico e Multicanal}\label{subsec:inpWMulti}
+Em medições de tensão e corrente em um único canal, um aviso de entrada incorreta pode ocorrer quando os valores medidos excedem os limites estabelecidos pelo instrumento. Por exemplo, se a tensão medida estiver além da faixa de operação máxima, o aviso é acionado para indicar que a medição está fora dos limites aceitáveis.
+
+Em medições com vários canais, o \textit{input warning} pode ser diferenciado dependendo da configuração do sistema de aquisição de dados. Pode haver avisos específicos para cada canal, indicando problemas individuais, como tensão excessiva ou corrente anormalmente alta. Alternativamente, pode haver um aviso global indicando um problema geral em qualquer um dos canais.
+
+\subsection{Comparador para detecção de falhas} \label{subsec:compfalhas}
+
+Para o caso do multímetro a ser desenvolvido pode-se utilizar um simples circuito comparador para monitorar as tensões de entrada e indicar ao usuário que a escala utilizada está incorreta ou, até mesmo, que a tensão ou corrente medidas está acima do limite suportado. O circuito pode ser visto na \autoref{fig:comparador-simples} e consiste apenas em um \gls{amp-op}.
+
+\begin{figure}[htb]
+    \caption{Circuito de um comparador utilizando dois resistores como referência de tensão}
+    \label{fig:comparador-simples}
+    \includegraphics[width=0.8\textwidth]{figuras/ampop-comparador.png}
+    \fonte{\cite{comp_ncbraga}}
+\end{figure}
+
+Dessa maneira, uma vez definida a tensão de referência, pode-se utilizar-se da saída para disparar algum tipo de aviso.
+
+\subsection{Tipos de aviso} \label{subsec:tiposdeaviso}
+
+Os avisos podem ser luminosos, sonoros, ou até mesmo gerar vibrações ou movimentações mecânica mais rigorosas a fim de afastar ou notificar o usuário do dispositivo.\cite{base_alarms}
+
+Para tanto, em casos mais brandos --- onde há o uso da escala incorreta do medidor --- pode-se utilizar uma luz de aviso. Dado que esse uso não danifica o dispositivo, apenas impossibilita a leitura correta do dado.
+Em casos mais sérios, onde há a possibilidade de causar dano ao aparelho de medição ou até mesmo ao usuário, se faz necessário um aviso mais severo, como, por exemplo, uma sirene alta.
+
+\subsection{Casos de extrema gravidade} \label{subsec:casosextrgraves}
+
+Um erro comum em laboratórios de eletrônica é a tentativa de medição de tensão elétrica utilizando-se do modo de medição de corrente elétrica do dispositivo. 
+
+Comumente a corrente é medida através da queda de tensão em um resistor \textit{shunt}, conforme discorrido em \ref{subsec:resiShunt}. Colocar as ponteiras em um ponto onde haja tensão sem nenhum dispositivo limitador de corrente, faria com que o resistor shunt sofresse um enorme estresse levando possivelmente a sua falha ou diminuição drástica da vida útil.
+
+Como geralmente há um sistema de proteção nesses dispositivos, muitas vezes, há a queima de um elemento fusível no lugar do resistor shunt. Porém, é necessário alertar o usuário de que o uso do equipamento foi incorreto e, caso a corrente seja removida a tempo, em algumas ocasiões, preservar a própria proteção. Caso a proteção seja rompida, também é importante notificar o usuário de que a mesma deve ser substituída.
+
+Para tanto, pode-se utilizar um \textit{buzzer} com o som alto o suficiente para notificar o usuário mesmo em um ambiente com certo ruído, como é o caso de um laboratório de aula. 
 
 \section{Isolador de sinal digital \textit{(Digital Signal Isolator)}}\label{sec:DSIsolator}
 
-\section{MCU e Interface de Comunição}\label{sec:MCUInterface}
 
-    \subsection{Microcontroladores}\label{subsec:MCU}
 
-    \subsection{Interface de Comunicação}\label{sec:Interface}
+
+\section{MCU e Interface de Comunicação}\label{sec:MCUInterface}
+
+
+
+\subsection{Microcontroladores}\label{subsec:MCU}
+
+O \gls{MCU} ou \textit{Microcontroller Unit} é um dispositivo eletrônico altamente integrado contendo um processador, memória e periféricos de entrada e saída. Os microcontroladores são amplamente utilizados em uma variedade de aplicações, desde eletrodomésticos e automóveis até dispositivos médicos e sistemas de controle industrial.
+
+Ele é projetado para ser compacto, de baixo consumo de energia e fácil de programar. Eles são usados para controlar e executar tarefas específicas em um sistema eletrônico. Ao contrário de um microprocessador, que é projetado para executar uma ampla variedade de tarefas e requer componentes externos adicionais, o \gls{MCU} possui todos os recursos necessários integrados em um único chip. (Buscar REFS)
+
+\subsection{Interface de Comunicação}\label{sec:Interface}
