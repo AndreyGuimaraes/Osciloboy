@@ -2,3 +2,8 @@
 # Link
 # Data de acesso
 # Descrição pequena sobre o que tem de importante nesse link
+
+# Medição de corrente
+# https://iopscience.iop.org/article/10.1088/0957-0233/21/11/112001/pdf
+# 05/06/2023
+# Arquivo muito bom e generalista sobre medição de corrente

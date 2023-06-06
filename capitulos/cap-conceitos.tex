@@ -185,23 +185,80 @@ Um erro comum em laboratórios de eletrônica é a tentativa de medição de ten
 
 Comumente a corrente é medida através da queda de tensão em um resistor \textit{shunt}, conforme discorrido em \ref{subsec:resiShunt}. Colocar as ponteiras em um ponto onde haja tensão sem nenhum dispositivo limitador de corrente, faria com que o resistor shunt sofresse um enorme estresse levando possivelmente a sua falha ou diminuição drástica da vida útil.
 
-Como geralmente há um sistema de proteção nesses dispositivos, muitas vezes, há a queima de um elemento fusível no lugar do resistor shunt. Porém, é necessário alertar o usuário de que o uso do equipamento foi incorreto e, caso a corrente seja removida a tempo, em algumas ocasiões, preservar a própria proteção. Caso a proteção seja rompida, também é importante notificar o usuário de que a mesma deve ser substituída.
+Como geralmente há um sistema de proteção nesses dispositivos, muitas vezes, há a queima de um elemento fusível no lugar do resistor shunt. Porém, é necessário alertar o usuário de que o uso do equipamento foi incorreto e, caso a corrente seja removida a tempo, preservar a própria proteção. Caso essa seja rompida, também é importante notificar o usuário de que a mesma deve ser substituída.
 
 Para tanto, pode-se utilizar um \textit{buzzer} com o som alto o suficiente para notificar o usuário mesmo em um ambiente com certo ruído, como é o caso de um laboratório de aula. 
 
-\section{Isolador de sinal digital \textit{(Digital Signal Isolator)}}\label{sec:DSIsolator}
-
-
+% Removida essa seção, não foi encontrado nada de muito útil que pudesse ser efetivamente usado. Trata-se apenas de um sistema para proteger o MCU em alguns casos específicos.
+%%\section{Isolador de sinal digital \textit{(Digital Signal Isolator)}}\label{sec:DSIsolator}
 
 
 \section{MCU e Interface de Comunicação}\label{sec:MCUInterface}
-
-
 
 \subsection{Microcontroladores}\label{subsec:MCU}
 
 O \gls{MCU} ou \textit{Microcontroller Unit} é um dispositivo eletrônico altamente integrado contendo um processador, memória e periféricos de entrada e saída. Os microcontroladores são amplamente utilizados em uma variedade de aplicações, desde eletrodomésticos e automóveis até dispositivos médicos e sistemas de controle industrial.
 
-Ele é projetado para ser compacto, de baixo consumo de energia e fácil de programar. Eles são usados para controlar e executar tarefas específicas em um sistema eletrônico. Ao contrário de um microprocessador, que é projetado para executar uma ampla variedade de tarefas e requer componentes externos adicionais, o \gls{MCU} possui todos os recursos necessários integrados em um único chip. (Buscar REFS)
+Ele é projetado para ser compacto, de baixo consumo de energia e fácil de programar. Eles são usados para controlar e executar tarefas específicas em um sistema eletrônico. Ao contrário de um microprocessador, que é projetado para executar uma ampla variedade de tarefas e requer componentes externos adicionais, o \gls{MCU} possui praticamente todos os recursos necessários integrados em um único chip.
+
+No caso dos medidores, o \gls{MCU} é utilizado como o interpretador dos sinais obtidos pelo \gls{ADC}, podendo realizar as operações matemáticas necessárias para se obter os valores médios, eficazes, pico, e demais necessários, a partir da amostragem obtida. Esse é o caso do \textit{3Ph-ozm}, que utiliza um microcontrolador com pré-processador dos dados e como sistema de controle para as funções fundamentais do dispositivo. \cite{3ph-ozm}
+
+Juntamente do \gls{MCU}, o \textit{3Ph-ozm} utiliza um microprocessador para realizar o trabalho de comunicação através de WiFi e Bluetooth.
+Tal abordagem, porém, traz um custo mais alto ao projeto, uma vez que um microprocessador é mais caro que um microcontrolador --- que pode ser capaz de tanto processar, como enviar os sinais. \cite{uCdiff}
+
+\subsubsection{Microcontroladores Considerados} \label{subsubsec:uc-disp}
+
+Existe uma vasta gama de \gls{MCU}'s capazes de realizar o processamento dos sinais obtidos. Logo, se faz necessária uma filtragem prévia dos principais requisitos do projeto antes mesmo do inicio da metodologia.
+Para tanto, foram considerados os seguintes pontos:
+
+\begin{itemize}
+    \item Popularidade --- um item popularmente conhecido pode ser encontrado com maior facilidade em lojas locais;
+    \item Facilidade de programação --- como um dos objetivos primordiais do projeto é a replicabilidade e a disponibilização por meios \textit{open source}, a simplicidade na programação deve ser levada em conta;
+    \item Preço --- o microcontrolador tem potencial para ser o item único mais custoso do projeto, reduzir seu preço auxiliaria na questão do baixo custo;
+    \item Capacidade de processamento --- devido o tratamento de três canais em simultâneo e/ou do uso de comunicação por WiFi ou Bluetooth, se faz necessária uma solução que tenha capacidade de processamento de acordo
+\end{itemize}
+
+Seguindo esses critérios e as informações disponíveis no artigo \textit{How to Select the Microcontroller for Your New Product} \cite{select_uC}, os \gls{MCU}'s adequados à finalidade de medição seriam os que possuem arquitetura de 32 bits, uma vez que estes possuem também certas características de microprocessadores como, por exemplo, a lógica de prioridade nas interrupções e a velocidade de trabalho com ponto flutuante.
+
+Os \gls{MCU}'s mais populares dessa arquitetura são os da família STM32.
+
+\begin{figure}[htb]
+    \caption{Família STM32 separada por função}
+    \label{fig:stm32-family}
+    \includegraphics[width=0.7\textwidth]{figuras/STM32-family.png}
+    \fonte{Mouser}
+\end{figure}
+
+Para a seleção de um microcontrolador adequado, pode-se seguir a linha \textit{mainstream} da \autoref{fig:stm32-family}, pois tratam-se de \gls{MCU}'s populares e que possuem vasta documentação disponível online.
 
 \subsection{Interface de Comunicação}\label{sec:Interface}
+
+Os dispositivos de medição que possuem comunicação com sistemas externos o fazem de diversas maneiras. 
+
+A mais simples delas trata-se de um display que apresenta os valores da leitura ao usuário. Este pode utilizar a tecnologia de \gls{LCD} ou semelhantes para mostrar apenas números, como também pode mostrar as formas de onda em telas que possuam uma resolução maior.
+
+Os dados também podem ser enviados a um sistema externo que fará a apresentação dos dados, os armazenará para usos posteriores, ou dará outra finalidade conforme o sistema.
+
+Para realizar esse envio, podem-se utilizar diversas tecnologias diferentes, desde protocolos com fio (CAN, MODBUS, I2C, UART, etc.) até protocolos sem fio --- que serão os mais aprofundados nessa seção.
+
+Baseando-se no artigo \citet{lowcost-smartmeter}, as tecnologias que podem ser usadas são as encontradas no ambiente de IoT (Internet das Coisas) como LoRa, Sigfox e NB-IoT. Também é possível utilizar tecnologias mais populares, como é o caso do \citet{3ph-ozm} que utiliza WiFi e Bluteooth para realizar sua comunicação e o display de seus dados através de uma interface web conforme a \autoref{fig:interface-3ph-ozm}.
+
+\begin{figure}[htb]
+    \caption{Interface WEB usada no 3Ph-ozm}
+    \label{fig:interface-3ph-ozm}
+    \includegraphics[width=0.9\textwidth]{figuras/interface-web-openzmeter.png}
+    \fonte{www.openzmeter.com/}
+\end{figure}
+
+\subsection{Soluções completas}\label{subsec:solucomp}
+
+Há também a possibilidade da utilização de módulos que possuem um microcontrolador e outras funções integradas. Como é o caso do ESP32-WROOM-32D (\autoref{fig:esp32-frente-verso}), construído em torno do chip ESP32.
+
+Esse módulo possui um microprocessador \textit{Xtensa® Dual-Core 32-bit LX6} e as funções principais de um microcontrolador, como \gls{ADC} próprio e tratamento de interrupções por ordem de relevância. Além de possuir dois \gls{DAC}'s. O principal diferencial desse módulo, porém, é a sua capacidade de trabalhar com WiFi e Bluetooth sem a necessidade de nenhum periférico extra, além de possuir grande facilidade em sua programação. \cite{esp32-datasheet}
+
+\begin{figure}[htb]
+    \caption{Módulo ESP32-WROOM-32D frente e verso}
+    \label{fig:esp32-frente-verso}
+    \includegraphics[width=0.3\textwidth]{figuras/esp32-frente-verso.png}
+    \fonte{DigiKey}
+\end{figure}
