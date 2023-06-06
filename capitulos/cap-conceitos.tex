@@ -9,14 +9,14 @@
 
 \section{Proteção de Entrada}\label{sec:InputProtection}
 
-Proteção de entrada é um assunto extremamente abrangente quando se trata de circuitos eletrônicos. Dependendo da função que este tenha que exercer, existem infinitas topografias que podem ser consideradas. Algumas exigências, porém, são comuns, como a necessidade de um circuito de proteção contra descargas eletrostáticas, ou ESD (Electrostatic Discharge). Tais descargas podem entregar picos de tensão extremamente altos, chegando até a 30 kV, o que é extremamente danoso a qualquer circuito que use semicondutores. Pulsos de pico tão alto quanto 2500 V já são o suficiente para danificar a maioria dos circuitos eletrônicos. Notóriamente, seres humanos são capazes de entregar descargas de até 20 kV porcausa da capacitância inata à sua fisiologia %%citar o documento http://www.reallyreallyrandom.com/zener/media/Zener_Theory_and_Design.pdf, página 65
+Proteção de entrada é um assunto extremamente abrangente quando se trata de circuitos eletrônicos. Dependendo da função que este tenha que exercer, existem infinitas topografias que podem ser consideradas. Algumas exigências, porém, são comuns, como a necessidade de um circuito de proteção contra descargas eletrostáticas, ou \gls{ESD} (\textit{Electrostatic Discharge}). Tais descargas podem entregar picos de tensão extremamente altos, chegando até a 30 kV, o que é extremamente danoso a qualquer circuito que use semicondutores. Pulsos de pico tão alto quanto 2500 V (Volts) já são o suficiente para danificar a maioria dos circuitos eletrônicos. Notóriamente, seres humanos são capazes de entregar descargas de até 20 kV porcausa da capacitância inata à sua fisiologia %%citar o documento http://www.reallyreallyrandom.com/zener/media/Zener_Theory_and_Design.pdf, página 65
 
     \subsection{ESD}\label{subsec:electrostaticDischarge}
-    Esse tipo de proteção é necessária para circuitos que fazem interface com o meio físico e normalmente é exercida por um circuito básico de componentes TVS (Transient Voltage Supressor). Os semicondutores mais simples (e também regularmente) utilizados para exercer esta função são diodos Zener.
+    Esse tipo de proteção é necessária para circuitos que fazem interface com o meio físico e normalmente é exercida por um circuito básico de componentes \gls{TVS} (\textit{Transient Voltage Suppressor}). Os semicondutores mais simples (e também regularmente) utilizados para exercer esta função são diodos Zener.
     
     Ao serem submetidos a uma tensão maior que à especificada como limite de operação do circuito a ser protegido, diodos Zener apresentam uma resistencia baixissima, fechando a passagem de corrente entre o circuito e o ground do equipamento. Este circuito pode apresentar uma configuração unidirecional ou bidirecional, dependendo da necessidade do circuito a ser protegido. 
     
-    As \ref{fig:tvsUnidirecional} e \ref{fig:tvsBidirecional} demonstram a utilização basica de tal circuito e o conceito por trás da tensão de ruptura de tal semicondutor.
+    As figuras \ref{fig:tvsUnidirecional} e \ref{fig:tvsBidirecional} demonstram a utilização basica de tal circuito e o conceito por trás da tensão de ruptura de tal semicondutor.
 
     \begin{figure}[htb]%% Ambiente figure
         %\captionsetup{width=0.55\textwidth}%% Largura da legenda
@@ -44,7 +44,7 @@ Proteção de entrada é um assunto extremamente abrangente quando se trata de c
         %\captionsetup{width=0.55\textwidth}%% Largura da legenda
         \caption{Ilustração da Classificação CAT}%% Legenda
         \label{fig:CATrating}%% Rótulo
-        \includegraphics[scale=0.6]{CATrating}%% Dimensões e localização
+        \includegraphics[scale=0.4]{CATrating}%% Dimensões e localização
         \fonte{Adaptado de https://www.ecmweb.com/test-measurement/article/21247639/understanding-the-cat-rating-system, acesso em: 17/05/2023}%% Fonte
     \end{figure}
 
@@ -54,9 +54,9 @@ Proteção de entrada é um assunto extremamente abrangente quando se trata de c
 
         O circuito de proteção para o input de correntes se divide em duas partes, sendo uma delas para o range de A (Amperes) e os ranges de mA e µA.
 
-	    Para o input de Amperes, é utilizado um fusível HRC (High Rupturing Capacity), geralmente de 11 A e 1000 V, para se prevenir arcos voltaicos após a queima do fusível, negando a possibilidade de uma continuação da condução de curto-circuito ou sobrecorrente. Logo após, é conectado um shunt de quatro terminais, 0R005 $\Omega$, entre o ground e o input, no qual será feita a medida.
+	    Para o input de Amperes, é utilizado um fusível \gls{HRC} (\textit{High Rupturing Capacity}), geralmente de 11 A e 1000 V, para se prevenir arcos voltaicos após a queima do fusível, negando a possibilidade de uma continuação da condução de curto-circuito ou sobrecorrente. Logo após, é conectado um shunt de quatro terminais, 0R005 $\Omega$, entre o ground e o input, no qual será feita a medida.
 
-	    Para o input de mA e µA, também é utilizado um fusível HRC, mas de 500 mA e 1000 V. Em sequência, é colocado um retificador em ponte de diodos entre o canal e o ground, para dar clamp em possíveis sobretensões (normalmente ocasionada pela utilização errônea do equipamento, colocando-se o input de corrente para medir tensão) até que o fusível possa atuar. Internamente, há um switch entre mA e µA. 
+	    Para o input de mA e µA, também é utilizado um fusível \gls{HRC}, mas de 500 mA e 1000 V. Em sequência, é colocado um retificador em ponte de diodos entre o canal e o ground, para dar clamp em possíveis sobretensões (normalmente ocasionada pela utilização errônea do equipamento, colocando-se o input de corrente para medir tensão) até que o fusível possa atuar. Internamente, há um switch entre mA e µA. 
 
         Para o switch de mA, é contectado em série um resistor shunt de 4R995 $\Omega$ com o shunt do range de A (0R005 $\Omega$), para ser feita a medição em uma resistência total de 5 $\Omega$.
 
@@ -64,11 +64,11 @@ Proteção de entrada é um assunto extremamente abrangente quando se trata de c
 
         \subsubsection{Proteção de Entrada para Circuitos de Tensão}\label{subsec:protecaoTensao}
 
-        O circuito de proteção para o input de tensão é simples, sendo este composto de um resistor WW (WireWound) em série com um termistor PTC (Positive Temperature Coefficient) em série com um resistor de 10 M$\Omega$, no qual será feita a medida. 
+        O circuito de proteção para o input de tensão é simples, sendo este composto de um resistor \gls{WW} (WireWound) em série com um termistor \gls{PTC} (\textit{Positive Temperature Coefficient}) em série com um resistor de 10 M$\Omega$, no qual será feita a medida. 
 
-        Conectado em paralelo ao resistor de 10 M$\Omega$ com o ground input, há uma série de varistores MOV (Metal Oxide Varistor) de rápida atuação como proteção para transientes de sobretensão, até que o termistor consiga esquentar. Pode ser utilizado somente um varistor, mas uma série destes aumenta a distância de fuga de corrente, reduzindo a chance de arcos voltaicos e também dissipando energia entre vários componentes, melhorando a proteção.
+        Conectado em paralelo ao resistor de 10 M$\Omega$ com o ground input, há uma série de varistores \gls{MOV} (\textit{Metal Oxide Varistor}) de rápida atuação como proteção para transientes de sobretensão, até que o termistor consiga esquentar. Pode ser utilizado somente um varistor, mas uma série destes aumenta a distância de fuga de corrente, reduzindo a chance de arcos voltaicos e também dissipando energia entre vários componentes, melhorando a proteção.
 
-        Uma parte importante do design geral da PCB (Printed Circuit Board) são slots de isolamento de alta tensão, que se resumem a espaços abertos entre partes da placa, que vão receber altas tensões em funcionamento indesejado, para minimizar as chances de arcos voltaicos entre partes do circuito, como explícito na \ref{fig:exemploPCB}. %%ref: https://lygte-info.dk/info/DMMDesignProtection%20UK.html
+        Uma parte importante do design geral da \gls{PCB} (\textit{Printed Circuit Board}) são slots de isolamento de alta tensão, que se resumem a espaços abertos entre partes da placa, que vão receber altas tensões em funcionamento indesejado, para minimizar as chances de arcos voltaicos entre partes do circuito, como explícito na \autoref{fig:exemploPCB}. %%ref: https://lygte-info.dk/info/DMMDesignProtection%20UK.html
 
         \begin{figure}[htb]%% Ambiente figure
             %\captionsetup{width=0.55\textwidth}%% Largura da legenda
@@ -78,20 +78,93 @@ Proteção de entrada é um assunto extremamente abrangente quando se trata de c
             \fonte{Adaptado de https://www.mjlorton.com/forum/index.php?topic=150.0, acesso em: 17/05/2023}%% Fonte
         \end{figure}    
 
+\section{Conversor Analógico Digital}\label{sec:ADC}
+
+O \gls{ADC} (\textit{Analog-to-Digital Converter}) é uma parte integral do funcionamento dos equipamentos de medição elétrica, pois este fará o interfaceamento, ou seja, a leitura do sinal analógico a ser interpretado e o converterá para um sinal digital que pode assim ser processado, como mostrado na \autoref{fig:ADCDB}.
+
+\begin{figure}[htb]%% Ambiente figure
+    %\captionsetup{width=0.55\textwidth}%% Largura da legenda
+    \caption{Diagrama de blocos de um ADC}%% Legenda
+    \label{fig:ADCDB}%% Rótulo
+    \includegraphics[scale=0.8]{ADCDB}%% Dimensões e localização
+    \fonte{Adaptado de }%% Fonte: Lessons in Electric Circuits: Volume IV - Digital, by Tony R. Kuphaldt
+\end{figure}  
+
+Existem vários tipos de \gls{ADC}s, sendo alguns deles:
+
+\begin{itemize}
+    \item \textit{Flash} \gls{ADC};
+    \item \textit{Digital Ramp} \gls{ADC};
+    \item \textit{Successive Approximation} \gls{ADC};
+    \item \textit{Tracking} \gls{ADC};
+    \item \textit{Slope (integrating)} \gls{ADC};
+    \item \textit{Delta-Sigma ($\Delta$ $\Sigma$)} \gls{ADC};
+    \item entre outros\dots
+\end{itemize}
+
+Para fins de objetividade, será somente apresentado o \gls{SAR} (\textit{Successive Approximation Register}), pois este é o mais comumente utilizado em multímetros. Porém, dependendo da aplicação e necessidade de resolução ou precisão, são utilizados outros tipos de \gls{ADC} também.
+
+    \subsection{SAR ADC}\label{SARADC}
+    O \gls{SAR} funciona de maneira que se é conectado um contador \gls{SAR}, que faz uma contagem testando todos os valores de bits, começando com o mais significativo e terminando com o menos significativo a um \gls{DAC} que então sua saída é comparada com o sinal analógico a ser obtido. 
+    
+    Durante o processo de contagem, um registro monitora a saída deste comparador para ver se a contagem binária é maior ou menor que a entrada do sinal analógico, ajustando os valores de bit de acordo. A maneira que este registro conta é idêntica ao método de conversão decimal para binário, portanto diferentes valores de bits são testados do bit mais significante ao menos significante para conseguir um número binário que se iguala ao número decimal original. 
+
+    O circuito e resultado de leitura do \gls{ADC} em questão, em termos simples, pode ser representado pelas figuras \ref{fig:SARADC} e \ref{fig:SARADCplot}.
+    \begin{figure}[htb]%% Ambiente figure
+        %\captionsetup{width=0.55\textwidth}%% Largura da legenda
+        \caption{Diagrama de blocos de um ADC SAR}%% Legenda
+        \label{fig:SARADC}%% Rótulo
+        \includegraphics[scale=0.8]{SARADC}%% Dimensões e localização
+        \fonte{Adaptado de }%% Fonte: Lessons in Electric Circuits: Volume IV - Digital, by Tony R. Kuphaldt
+    \end{figure}  
+
+    \begin{figure}[htb]%% Ambiente figure
+        %\captionsetup{width=0.55\textwidth}%% Largura da legenda
+        \caption{Plot sobre o tempo da saída de um ADC SAR}%% Legenda
+        \label{fig:SARADCplot}%% Rótulo
+        \includegraphics[scale=0.8]{SARADCplot}%% Dimensões e localização
+        \fonte{Adaptado de }%% Fonte: Lessons in Electric Circuits: Volume IV - Digital, by Tony R. Kuphaldt
+    \end{figure} 
 
 
+\section{Calibração}\label{sec:Calibration}
 
+Todo equipamento de medição precisa ser calibrado para exercer a sua função com precisão. Normalmente, este serviço é feito pelo provedor do produto e, dependendo do tipo de uso de tal produto e sua precisão, feito em intervalos regulares para garantir sua eficácia. Muitas vezes, realizar a calibração de um equipamento como um multímetro pode ser mais caro que comprar um novo.
 
+Para se calibrar um multímetro, é utilizado um outro dispositivo com no mínimo 4x a precisão do multímetro a ser calibrado. Portanto, normalmente se é utilizado um equipamento específico para exercer tal função. Esse equipamento geralmente é chamado de \textit{calibrator} ou \textit{standard}. %ref: https://eu.flukecal.com/products/electrical-calibration-0
 
+    \subsection{Calibrators ou Standards}\label{subsec:Calibrators}
 
+    O \textit{calibrator} tem a capacidade de fornecer sinais elétricos precisos e de função variável, que podem ser produzidos de µV a kV, normalmente. Estes sinais, em ranges específicos, serão lidos pela \gls{UUT} (\textit{Unit Under Test}) e então serão anotados os resultados da medição, fazendo-se um levantamento de dados do multimetro. Após tal levantamento, realiza-se os passos necessários para calibrar tal dispositivo, dependendo das suas necessidades e também do fabricante do mesmo. Este equipamento também consegue fazer medições de precisão, caso seja necessário. 
 
-\section{Calibração}\label{sec:OpenLoopCalibration}
+    O \textit{standard} cumpre a mesma função do calibrator, mas geralmente é limitado a poucos ranges de geração de sinal e somente uma função, o que possibilita uma performance e precisão muito maior que a do \textit{calibrator}. 
+
+Entretanto, existe uma proposta de calibração do equipamento on-board, feita pela \gls{TI} (\textit{Texas Instruments}), utilizando-se um \gls{DAC} para corrigir erros de leitura, seja por mudanças de temperatura, mudança na tensão de referência do \gls{ADC} ou qualquer outro fator que possa afetar a leitura do sinal. Também nesse circuito é incluido um sensor de temperatura para avisar o usuário sobre mudanças consideráveis de temperatura.
+
+O funcionamento do \gls{DAC}, porém, está diretamente relacionado à sua tensão de referência. Geralmente, se é utilizada uma referência externa para medidas de precisão, pois esta estará isolada da aquisição de sinal do multímetro e logo não será afetada caso haja uma mudança de temperatura. A solução proposta pela \gls{TI} é de se utilizar um \gls{DAC} de precisão (16-Bits) com \textit{on-board low-drift voltage reference} junto com um \textit{buffer} por meio de um \gls{amp-op} de alta velocidade. Tais componentes são de uso extremamente específico e por isso são caros, colocando-os assim fora do escopo do estudo desta presente tese. %ref: https://www.analog.com/en/analog-dialogue/articles/buffering-the-output-of-high-speed-dacs.html e https://www.ti.com/lit/ug/tiduct8/tiduct8.pdf?ts=1685988821918&ref_url=https%253A%252F%252Fwww.ti.com%252Fsolution%252Fdigital-multimeter-dmm%253Fvariantid%253D20220%2526subsystemid%253D33430
 
 \section{Referência de Tensão}\label{sec:VoltageReference}
 
-\section{Conversor Analógico Digital}\label{sec:ADC}
+A referência de tensão do ADC, utilizada para a leitura do sinal analógico, pode estar incluída no chip, que é uma solução mais barata e de menor precisão para equipamentos que não exigem tal afinidade, ou ser externa ao chip, que provém uma melhor precisão e, consequentemente, uma melhor leitura. Tal referência externa, hodiernamente, é feita por um \gls{CI} (Circuito Integrado) especializado, como por exemplo o ICL8069, visto sendo utilizado no estado da arte. %datasheet: https://pdfserv.maximintegrated.com/en/ds/ICL8069.pdf
 
-\subsection{Condicionamento de Sinal}\label{sec:SignalConditioning}
+
+\section{Condicionamento de Sinal e Pathing}\label{sec:signalConditioningandPathing}
+
+O condicionamento de sinal se resume ao controle da entrada apropriada a ser avaliada pelo ADC, que geralmente é feita por um \gls{MUX} (Multiplexador), por \textit{switches} mecânicos, como exemplificado na \autoref{fig:Fluke28-II}, ou em alguns casos, por uma combinação dos dois.  
+
+\begin{figure}[htb]%% Ambiente figure
+    %\captionsetup{width=0.55\textwidth}%% Largura da legenda
+    \caption{Fluke 28-II}%% Legenda
+    \label{fig:Fluke28-II}%% Rótulo
+    \includegraphics[scale=0.4]{Fluke28-II}%% Dimensões e localização
+    \fonte{Adaptado de https://www.mjlorton.com/forum/index.php?topic=150.0, acesso em: 22/05/2023}%% Fonte
+\end{figure}
+
+\section{Power Management}\label{powerManagement}
+
+Multímetros digitais se apresentam em duas configurações, sendo estas de bancada e portátil. Na configuração portátil, se é utilizado pilhas ou baterias para prover a tensão necessária para se ligar todos os subsistemas do aparelho. Já na configuração de bancada, é utilizada uma fonte isolada, conectada à rede de energia para fornecer a tensão adequada para se ligar todos os subsistemas do dispositivo.
+
+Existem vários modos de se projetar uma fonte adequada ao sistema proposto, mas para o escopo desta tese, foi optado por se utilizar uma fonte comercial que será escolhida para atender as necessidades do protótipo em questão.
 
 
 % ANDREY------------------------------------------------------------------------
