@@ -9,14 +9,14 @@
 
 \section{Proteção de Entrada}\label{sec:InputProtection}
 
-Proteção de entrada é um assunto extremamente abrangente quando se trata de circuitos eletrônicos. Dependendo da função que este tenha que exercer, existem infinitas topografias que podem ser consideradas. Algumas exigências, porém, são comuns, como a necessidade de um circuito de proteção contra descargas eletrostáticas, ou \gls{ESD} (\textit{Electrostatic Discharge}). Tais descargas podem entregar picos de tensão extremamente altos, chegando até a 30 kV, o que é extremamente danoso a qualquer circuito que use semicondutores. Pulsos de pico tão alto quanto 2500 V (Volts) já são o suficiente para danificar a maioria dos circuitos eletrônicos. Notóriamente, seres humanos são capazes de entregar descargas de até 20 kV porcausa da capacitância inata à sua fisiologia %%citar o documento http://www.reallyreallyrandom.com/zener/media/Zener_Theory_and_Design.pdf, página 65
+Proteção de entrada é um assunto extremamente abrangente quando se trata de circuitos eletrônicos. Dependendo da função que este tenha que exercer, existem infinitas topografias que podem ser consideradas. Algumas exigências, porém, são comuns, como a necessidade de um circuito de proteção contra descargas eletrostáticas, ou \gls{ESD} (\textit{Electrostatic Discharge}). Tais descargas podem entregar picos de tensão extremamente altos, chegando até a 30 kV, o que é extremamente danoso a qualquer circuito que use semicondutores. Pulsos de pico tão alto quanto 2500 V (Volts) já são o suficiente para danificar a maioria dos circuitos eletrônicos. Notoriamente, seres humanos são capazes de entregar descargas de até 20 kV por consequência da capacitância inata à sua fisiologia %%citar o documento http://www.reallyreallyrandom.com/zener/media/Zener_Theory_and_Design.pdf, página 65
 
     \subsection{ESD}\label{subsec:electrostaticDischarge}
     Esse tipo de proteção é necessária para circuitos que fazem interface com o meio físico e normalmente é exercida por um circuito básico de componentes \gls{TVS} (\textit{Transient Voltage Suppressor}). Os semicondutores mais simples (e também regularmente) utilizados para exercer esta função são diodos Zener.
     
-    Ao serem submetidos a uma tensão maior que à especificada como limite de operação do circuito a ser protegido, diodos Zener apresentam uma resistencia baixissima, fechando a passagem de corrente entre o circuito e o ground do equipamento. Este circuito pode apresentar uma configuração unidirecional ou bidirecional, dependendo da necessidade do circuito a ser protegido. 
+    Ao serem submetidos a uma tensão maior que à especificada como limite de operação do circuito a ser protegido, diodos Zener apresentam uma resistência baixíssima, fechando a passagem de corrente entre o circuito e o ground do equipamento. Este circuito pode apresentar uma configuração unidirecional ou bidirecional, dependendo da necessidade do circuito a ser protegido. 
     
-    As figuras \ref{fig:tvsUnidirecional} e \ref{fig:tvsBidirecional} demonstram a utilização basica de tal circuito e o conceito por trás da tensão de ruptura de tal semicondutor.
+    As figuras \ref{fig:tvsUnidirecional} e \ref{fig:tvsBidirecional} demonstram a utilização básica de tal circuito e o conceito por trás da tensão de ruptura de tal semicondutor.
 
     \begin{figure}[htb]%% Ambiente figure
         %\captionsetup{width=0.55\textwidth}%% Largura da legenda
@@ -36,9 +36,9 @@ Proteção de entrada é um assunto extremamente abrangente quando se trata de c
 
     \subsection{Proteção Específica para Equipamentos de Medição de Sinais Elétricos}\label{subsec:especProtec}
 
-    Primeiramente, se põe necessário explicar sobre a classificação de proteção quando se fala de equipamentos elétricos. A classificação mais robustamente utilizada é a CAT, que vai de CAT I a CAT IV. Os numerais indicam o potencial de energia que o sistema pode entregar caso ocorra um curto-circuito ou um transiente de tensão, então um instrumento CAT III tem que estar protegido contra transientes muito maiores que um dispositivo CAT II. 
+    Primeiramente, se põe necessário explicar sobre a classificação de proteção quando se fala de equipamentos elétricos. A classificação mais robustamente utilizada é a CAT, que vai de CAT I a CAT IV. Os numerais indicam o potencial de energia que o sistema pode entregar caso ocorra um curto-circuito ou um transiente de tensão, então um instrumento CAT III tem que estar protegido contra transientes muito maiores que um dispositivo CAT II.  
 
-    Dispositivos CAT IV devem estar protegidos a nivel de distribuição de energia, pois estes serão utilizados em conexão entrada de energia de uma facilidade. Dispositivos CAT III devem estar protegidos a nivel de distribuição interna (quadros de distribuição), podendo esta ser trifásica ou monofásica. Dispositivos CAT II devem estar protegidos a nivel de equipamento terminal ou de uso comum, sendo estes eletrodomésticos e afins. Dispositivos CAT I devem estar protegidos a nivel de circuitos eletronicos e transformadores de baixa potência. %%ref: https://www.ecmweb.com/test-measurement/article/21247639/understanding-the-cat-rating-system
+    Dispositivos CAT IV devem estar protegidos a nível de distribuição de energia, pois estes serão utilizados em conexão entrada de energia de uma facilidade. Dispositivos CAT III devem estar protegidos a nível de distribuição interna (quadros de distribuição), podendo esta ser trifásica ou monofásica. Dispositivos CAT II devem estar protegidos a nível de equipamento terminal ou de uso comum, sendo estes eletrodomésticos e afins. Dispositivos CAT I devem estar protegidos a nível de circuitos eletrônicos e transformadores de baixa potência. %%ref: https://www.ecmweb.com/test-measurement/article/21247639/understanding-the-cat-rating-system
 
     \begin{figure}[htb]%% Ambiente figure
         %\captionsetup{width=0.55\textwidth}%% Largura da legenda
@@ -58,7 +58,7 @@ Proteção de entrada é um assunto extremamente abrangente quando se trata de c
 
 	    Para o input de mA e µA, também é utilizado um fusível \gls{HRC}, mas de 500 mA e 1000 V. Em sequência, é colocado um retificador em ponte de diodos entre o canal e o ground, para dar clamp em possíveis sobretensões (normalmente ocasionada pela utilização errônea do equipamento, colocando-se o input de corrente para medir tensão) até que o fusível possa atuar. Internamente, há um switch entre mA e µA. 
 
-        Para o switch de mA, é contectado em série um resistor shunt de 4R995 $\Omega$ com o shunt do range de A (0R005 $\Omega$), para ser feita a medição em uma resistência total de 5 $\Omega$.
+        Para o switch de mA, é conectado em série um resistor shunt de 4R995 $\Omega$ com o shunt do range de A (0R005 $\Omega$), para ser feita a medição em uma resistência total de 5 $\Omega$.
 
         Para o switch de µA, é conectado um resistor shunt de 500 $\Omega$, no qual será feita a medição. %%ref: https://lygte-info.dk/info/DMMDesignProtection%20UK.html
 
@@ -135,11 +135,11 @@ Para se calibrar um multímetro, é utilizado um outro dispositivo com no mínim
 
     \subsection{Calibrators ou Standards}\label{subsec:Calibrators}
 
-    O \textit{calibrator} tem a capacidade de fornecer sinais elétricos precisos e de função variável, que podem ser produzidos de µV a kV, normalmente. Estes sinais, em ranges específicos, serão lidos pela \gls{UUT} (\textit{Unit Under Test}) e então serão anotados os resultados da medição, fazendo-se um levantamento de dados do multimetro. Após tal levantamento, realiza-se os passos necessários para calibrar tal dispositivo, dependendo das suas necessidades e também do fabricante do mesmo. Este equipamento também consegue fazer medições de precisão, caso seja necessário. 
+    O \textit{calibrator} tem a capacidade de fornecer sinais elétricos precisos e de função variável, que podem ser produzidos de µV a kV, normalmente. Estes sinais, em ranges específicos, serão lidos pela \gls{UUT} (\textit{Unit Under Test}) e então serão anotados os resultados da medição, fazendo-se um levantamento de dados do multímetro. Após tal levantamento, realiza-se os passos necessários para calibrar tal dispositivo, dependendo das suas necessidades e também do fabricante do mesmo. Este equipamento também consegue fazer medições de precisão, caso seja necessário. 
 
     O \textit{standard} cumpre a mesma função do calibrator, mas geralmente é limitado a poucos ranges de geração de sinal e somente uma função, o que possibilita uma performance e precisão muito maior que a do \textit{calibrator}. 
 
-Entretanto, existe uma proposta de calibração do equipamento on-board, feita pela \gls{TI} (\textit{Texas Instruments}), utilizando-se um \gls{DAC} para corrigir erros de leitura, seja por mudanças de temperatura, mudança na tensão de referência do \gls{ADC} ou qualquer outro fator que possa afetar a leitura do sinal. Também nesse circuito é incluido um sensor de temperatura para avisar o usuário sobre mudanças consideráveis de temperatura.
+Entretanto, existe uma proposta de calibração do equipamento on-board, feita pela \gls{TI} (\textit{Texas Instruments}), utilizando-se um \gls{DAC} para corrigir erros de leitura, seja por mudanças de temperatura, mudança na tensão de referência do \gls{ADC} ou qualquer outro fator que possa afetar a leitura do sinal. Também nesse circuito é incluído um sensor de temperatura para avisar o usuário sobre mudanças consideráveis de temperatura.
 
 O funcionamento do \gls{DAC}, porém, está diretamente relacionado à sua tensão de referência. Geralmente, se é utilizada uma referência externa para medidas de precisão, pois esta estará isolada da aquisição de sinal do multímetro e logo não será afetada caso haja uma mudança de temperatura. A solução proposta pela \gls{TI} é de se utilizar um \gls{DAC} de precisão (16-Bits) com \textit{on-board low-drift voltage reference} junto com um \textit{buffer} por meio de um \gls{amp-op} de alta velocidade. Tais componentes são de uso extremamente específico e por isso são caros, colocando-os assim fora do escopo do estudo desta presente tese. %ref: https://www.analog.com/en/analog-dialogue/articles/buffering-the-output-of-high-speed-dacs.html e https://www.ti.com/lit/ug/tiduct8/tiduct8.pdf?ts=1685988821918&ref_url=https%253A%252F%252Fwww.ti.com%252Fsolution%252Fdigital-multimeter-dmm%253Fvariantid%253D20220%2526subsystemid%253D33430
 
@@ -220,7 +220,7 @@ restante do circuito. Utilizando-se do efeito hall, o campo magnético gerado pe
 que passa entre seus terminais é medida por um sensor montado diretamente no substrato
 do chip. Uma tensão proporcional a esse campo é fornecida pelo CI como saída e pode ser
 medida por um ADC, recuperando-se o valor da corrente original.
-O uso dessa tecnologia traz custo baixo em relação ao uso de TC's ou bobinas Rugowski,
+O uso dessa tecnologia traz custo baixo em relação ao uso de TC's ou bobinas Rogowski,
 fácil implementação no sistema, isolamento diretamente no chip.
 Tal medição, porém, possui uma resolução na ordem de \SI{100}{\milli\volt\per\ampere} (considerando um CI que suporte acima de 10 A) e um ruído intrínseco de 11 mV. Como é o caso do ACS712.\citep{acs712}
 
@@ -314,7 +314,7 @@ Os dados também podem ser enviados a um sistema externo que fará a apresentaç
 
 Para realizar esse envio, podem-se utilizar diversas tecnologias diferentes, desde protocolos com fio (CAN, MODBUS, I2C, UART, etc.) até protocolos sem fio --- que serão os mais aprofundados nessa seção.
 
-Baseando-se no artigo \citet{lowcost-smartmeter}, as tecnologias que podem ser usadas são as encontradas no ambiente de IoT (Internet das Coisas) como LoRa, Sigfox e NB-IoT. Também é possível utilizar tecnologias mais populares, como é o caso do \citet{3ph-ozm} que utiliza WiFi e Bluteooth para realizar sua comunicação e o display de seus dados através de uma interface web conforme a \autoref{fig:interface-3ph-ozm}.
+Baseando-se no artigo \citet{lowcost-smartmeter}, as tecnologias que podem ser usadas são as encontradas no ambiente de IoT (Internet das Coisas) como LoRa, Sigfox e NB-IoT. Também é possível utilizar tecnologias mais populares, como é o caso do \citet{3ph-ozm} que utiliza WiFi e Bluetooth para realizar sua comunicação e o display de seus dados através de uma interface web conforme a \autoref{fig:interface-3ph-ozm}.
 
 \begin{figure}[htb]
     \caption{Interface WEB usada no 3Ph-ozm}
