@@ -288,7 +288,7 @@ Para tanto, foram considerados os seguintes pontos:
     \item Popularidade --- um item popularmente conhecido pode ser encontrado com maior facilidade em lojas locais;
     \item Facilidade de programação --- como um dos objetivos primordiais do projeto é a replicabilidade e a disponibilização por meios \textit{open source}, a simplicidade na programação deve ser levada em conta;
     \item Preço --- o microcontrolador tem potencial para ser o item único mais custoso do projeto, reduzir seu preço auxiliaria na questão do baixo custo;
-    \item Capacidade de processamento --- devido o tratamento de três canais em simultâneo e/ou do uso de comunicação por WiFi ou Bluetooth, se faz necessária uma solução que tenha capacidade de processamento de acordo
+    \item Comunicação --- dispositivos com Wifi, I2C, UART ou demais protocolos de comunicação já embarcados auxiliariam no processo de transmissão e tratamento dos dados obtidos.
 \end{itemize}
 
 Seguindo esses critérios e as informações disponíveis no artigo \textit{How to Select the Microcontroller for Your New Product} \cite{select_uC}, os \gls{MCU}'s adequados à finalidade de medição seriam os que possuem arquitetura de 32 bits, uma vez que estes possuem também certas características de microprocessadores como, por exemplo, a lógica de prioridade nas interrupções e a velocidade de trabalho com ponto flutuante.
@@ -302,9 +302,9 @@ Os \gls{MCU}'s mais populares dessa arquitetura são os da família STM32.
     \fonte{Mouser}
 \end{figure}
 
-Para a seleção de um microcontrolador adequado, pode-se seguir a linha \textit{mainstream} da \autoref{fig:stm32-family}, pois tratam-se de \gls{MCU}'s populares e que possuem vasta documentação disponível online.
+Para a seleção de um microcontrolador adequado, pode-se seguir a linha \textit{mainstream} da \autoref{fig:stm32-family}, pois tratam-se de \gls{MCU}'s populares e que possuem vasta documentação disponível online. Porém, ao utilizar tais microcontroladores, seria necessária a utilização de outro periférico para a função de Wifi e/ou Bluetooth.
 
-\subsection{Interface de Comunicação}\label{sec:Interface}
+\subsection{Apresentação dos dados e Comunicação}\label{sec:Interface}
 
 Os dispositivos de medição que possuem comunicação com sistemas externos o fazem de diversas maneiras. 
 
