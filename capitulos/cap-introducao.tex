@@ -15,7 +15,9 @@ O multímetro digital é a ferramenta padrão utilizada por profissionais nas á
 	No curso de Engenharia Elétrica da \gls{utfpr} (Universidade Tecnológica Federal do Paraná), a primeira interação dos alunos com instrumentos de medição, mais especificamente o multímetro digital, é feita nas matérias de Eletricidade e Magnetismo e Circuitos A. Os laboratórios de tais matérias e algumas outras serão o ponto focal da utilização dos dispositivos por este \gls{TCC} desenvolvidos.
 
 \subsection{Delimitações do tema}\label{subsec:del-tema}
+Para o desenvolvimento de um multímetro capaz de ler diversos canais de maneira isolada seria necessária a utilização de tecnologias de maior custo. Sendo necessária a utilização de amplificadores operacionais isolados ou transformadores de corrente com múltiplos taps para manter-se a precisão do dispositivo.
 
+Dessa maneira, para que o dispositivo mantenha-se de baixo custo, este será feito de maneira modular, possuindo apenas um canal de tensão e um canal de corrente isolados entre si. Sua modularização se dará da possibilidade de utilizar mais de um multímetro em paralelo --- medindo um canal extra de tensão e corrente para cada adição --- com seus sinais sincronizados através de um circuito acessório que os interconecta e por software.
 
 \section{PROBLEMA E PREMISSAS}\label{sec:probpremiss}
 A Universidade Tecnológica Federal do Paraná - campus Curitiba, possui dois laboratórios de ensino para as disciplinas de Eletricidade e Magnetismo, Circuitos A e B, ofertadas por diversos cursos da universidade. Os laboratórios são salas com bancadas de testes para circuitos elétricos que possuem fontes de tensão e corrente, bem como módulos de medidores para diversos fins.
