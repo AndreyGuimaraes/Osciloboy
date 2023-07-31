@@ -7,8 +7,10 @@
 
 Esta seção será dedicada a explicar como funcionam as várias partes envolvidas na construção e funcionamento de um multímetro digital e/ou multimedidor.
 
-% RAFAEL --------------------------------------------------------------------------------------------------------
+%Input Protection > Pathing > Aquisição de Sinal > ADC > Referência de Tensão > Input Warning > MCU > Interfaceamento > Power Supply > Calibração
 
+% RAFAEL --------------------------------------------------------------------------------------------------------
+%Input Protection
 \section{Proteção de Entrada}\label{sec:InputProtection}
 
 Proteção de entrada é um assunto extremamente abrangente quando se trata de circuitos eletrônicos. Dependendo da função que este tenha que exercer, existem infinitas topografias que podem ser consideradas. Algumas exigências, porém, são comuns, como a necessidade de um circuito de proteção contra descargas eletrostáticas, ou \gls{ESD} (\textit{Electrostatic Discharge}). Tais descargas podem entregar picos de tensão extremamente altos, chegando até a 30 kV, o que é extremamente danoso a qualquer circuito que use semicondutores. Pulsos de pico tão alto quanto 2500 V (Volts) já são o suficiente para danificar a maioria dos circuitos eletrônicos. Notoriamente, seres humanos são capazes de entregar descargas de até 20 kV por consequência da capacitância inata à sua fisiologia. \cite{ONsemicondTVS2} %%citar o documento http://www.reallyreallyrandom.com/zener/media/Zener_Theory_and_Design.pdf, página 65
@@ -78,8 +80,80 @@ Proteção de entrada é um assunto extremamente abrangente quando se trata de c
             \label{fig:exemploPCB}%% Rótulo
             \includegraphics[scale=0.6]{divetPCB}%% Dimensões e localização
             \fonte{\cite{flukeforum}}%% Fonte
-        \end{figure}    
+        \end{figure}  
 
+%Pathing
+ \section{Condicionamento de Sinal e Pathing}\label{sec:signalConditioningandPathing}
+
+O condicionamento de sinal se resume ao controle da entrada apropriada a ser avaliada pelo ADC, que geralmente é feita por um \gls{MUX} (Multiplexador), por \textit{switches} mecânicos, como exemplificado na \autoref{fig:Fluke28-II-switches}, ou em alguns casos, por uma combinação dos dois.  \cite{dmmblog}
+        
+\begin{figure}[htb]%% Ambiente figure
+    %\captionsetup{width=0.55\textwidth}%% Largura da legenda
+    \caption{Switches de um Fluke 28-II}%% Legenda
+    \label{fig:Fluke28-II-switches}%% Rótulo
+    \includegraphics[scale=0.8]{Fluke28-II-switches}%% Dimensões e localização
+    \fonte{\cite{flukeforum}}%% Fonte
+\end{figure}
+
+%Aquisição de Sinal
+\section{Aquisição de Sinal}\label{sec:aqSignal}
+
+A aquisição de sinal é o processo de captura e conversão de sinais físicos em um formato adequado para análise, processamento ou armazenamento. No contexto da medição de tensão e corrente, a aquisição de sinal refere-se à captura e registro desses parâmetros elétricos em um sistema de medição, permitindo sua análise, processamento ou armazenamento em um formato adequado.
+
+Essa pode ser realizada de diferentes maneiras, dependendo do caso. Em alguns cenários, utiliza-se sondas específicas para cada aplicação, as quais permitem capturar e registrar os parâmetros elétricos de forma precisa. Por outro lado, em certos casos, a aquisição ocorre internamente dentro do circuito do próprio medidor, proporcionando uma solução integrada e simplificada para a captura e registro dos sinais elétricos.
+
+\subsection{Resistor Shunt}\label{subsec:resiShunt}
+Neste tipo de medição, um resistor de valor extremamente baixo (< 0,1 $\Omega$) é colocado em série com o circuito no qual se deseja medir a corrente elétrica, quando esta atravessa o componente, ocorre uma queda de tensão proporcional. Essa queda de tensão pode ser então medida diretamente através de um \gls{ADC} ou amplificada e então medida para se obter os valores da corrente original. \citep{curr_sens_tech}
+
+Para a aplicação em 3 canais independentes de corrente, torna-se necessária algum tipo de isolação. Isso pode ser obtido utilizando-se de amplificadores isoladores --- amplificadores operacionais que possuem duas referências isoladas entre si. Permitindo uma medição da queda de tensão sobre o resistor shunt para cada canal sem interferência mútua, como exemplo o AD202 na \autoref{AD202}.
+
+\begin{figure}[htb]
+    \caption{AD202 um exemplo de amplificador isolador}
+    \label{AD202}
+    \includegraphics[width=0.8\textwidth]{figuras/AD202-ampop-isolado.png}
+    \fonte{\cite{ad202}}
+\end{figure}
+    
+Esse tipo de amplificador, porém, apresenta alto custo e possui uma variação de leitura considerável com a temperatura. São inferiores em precisão a outros métodos de medição que realizam o isolamento do circuito inerentemente por seus aspectos construtivos. 
+
+\subsection{Bobina Rogowski}\label{subsec:Rogowski}
+
+Utilizando-se do princípio da Lei da Indução de Faraday, a bobina Rogowski trata-se de um loop fechado de fio enrolado em volta de um aro. Esse aro envolve o condutor que, por sua variação de corrente, induz uma tensão elétrica proporcional ao número de espiras e a intensidade da própria corrente a ser medida. Para a medida dos valores obtidos pela bobina Rogowski, é necessário o uso de um integrador (por vezes acoplado no próprio cabo da ponteira de medição) para relacionar a derivada da corrente com a tensão obtida em seus terminais, podendo causar certo erro introduzido pela operação.
+
+\begin{figure}[htb]
+    \caption{Bobina Rogowski aberta}
+    \label{fig:rogowski-bobina}
+    \includegraphics[width=0.8\textwidth]{figuras/bobina-rogowski.png}
+    \fonte{CITAR Metodos de medição (artigo)}
+\end{figure}
+
+É um método amplamente utilizado para medições de altas correntes e suporta uma grande faixa de frequências. Tem um custo próximo dos transformadores de corrente e insere menos impedância parasita no circuito. \citep{curr_sens_tech}
+
+\subsection{Transformador de Corrente}\label{subsec:t-corrente}
+
+O princípio de funcionamento do transformador de corrente é parecido com o da bobina Rogowski: possui um primário e um secundário com uma razão de voltas que permite que a tensão induzida seja lida em sua saída. A diferença deste para a bobina Rogowski é que existe agora um núcleo com certa permeabilidade magnética e o secundário possui um resistor Rs que permite uma medição mais simplificada da corrente de entrada.
+
+Nesse tipo de medição, a própria saída do transformador de corrente é proporcional a entrada de corrente, não sendo necessário um integrador como é o caso da bobina Rogowski. Devido a sua construção, seu sinal de saída também não necessita de nenhum tipo de amplificação, podendo ser lido diretamente por um \gls{ADC}. É teoricamente impossível medir correntes contínuas com esse método, porém, caso seja possível pulsar essa corrente, utilizando um circuito acessório de desmagnetização e, respeitando os tempos necessários entre os pulsos, é possível obter uma medida satisfatória.
+
+\begin{figure}[htb]
+    \caption{Circuito completo com transformador de pulso para medição \gls{CA}/\gls{CC}}
+    \label{fig:circuito-tc-dc}
+    \includegraphics[width=0.8\textwidth]{figuras/transform-corrente-dc.png}
+    \fonte{\cite{curr_sens_tech}}
+\end{figure}
+
+\subsection{Circuito Integrado de Medição \textit{(hall effect)}}\label{subsec:halleffect}
+
+Existem circuitos integrados capazes de medir a corrente alternada de maneira isolada do
+restante do circuito. Utilizando-se do efeito hall, o campo magnético gerado pela corrente
+que passa entre seus terminais é medida por um sensor montado diretamente no substrato
+do chip. Uma tensão proporcional a esse campo é fornecida pelo CI como saída e pode ser
+medida por um ADC, recuperando-se o valor da corrente original.
+O uso dessa tecnologia traz custo baixo em relação ao uso de TC's ou bobinas Rogowski,
+fácil implementação no sistema, isolamento diretamente no chip.
+Tal medição, porém, possui uma resolução na ordem de \SI{100}{\milli\volt\per\ampere} (considerando um CI que suporte acima de 10 A) e um ruído intrínseco de 11 mV. Como é o caso do ACS712.\citep{acs712}
+
+%ADC
 \section{Conversor Analógico Digital}\label{sec:ADC}
 
 O \gls{ADC} (\textit{Analog-to-Digital Converter}) é uma parte integral do funcionamento dos equipamentos de medição elétrica, pois este fará o interfaceamento, ou seja, a leitura do sinal analógico a ser interpretado e o converterá para um sinal digital que pode assim ser processado, como mostrado na \autoref{fig:ADCDB}.
@@ -115,7 +189,7 @@ Para fins de objetividade, será somente apresentado o \gls{SAR} (\textit{Succes
         %\captionsetup{width=0.55\textwidth}%% Largura da legenda
         \caption{Diagrama de blocos de um ADC Flash}%% Legenda
         \label{fig:flashADC}%% Rótulo
-        \includegraphics[scale=0.8]{flashADC}%% Dimensões e localização
+        \includegraphics[scale=0.6]{flashADC}%% Dimensões e localização
         \fonte{\cite{ADCbook}}%% Fonte: Lessons in Electric Circuits: Volume IV - Digital, by Tony R. Kuphaldt
     \end{figure}  
 
@@ -142,122 +216,12 @@ Para fins de objetividade, será somente apresentado o \gls{SAR} (\textit{Succes
         \fonte{\cite{ADCbook}}%% Fonte: Lessons in Electric Circuits: Volume IV - Digital, by Tony R. Kuphaldt
     \end{figure} 
 
-
-\section{Calibração}\label{sec:Calibration}
-
-Todo equipamento de medição precisa ser calibrado para exercer a sua função com precisão. Normalmente, este serviço é feito pelo provedor do produto e, dependendo do tipo de uso de tal produto e sua precisão, feito em intervalos regulares para garantir sua eficácia. Muitas vezes, realizar a calibração de um equipamento como um multímetro pode ser mais caro que comprar um novo.
-
-Para se calibrar um multímetro, é utilizado um outro dispositivo com no mínimo 4x a precisão do multímetro a ser calibrado. Portanto, normalmente se é utilizado um equipamento específico para exercer tal função. Esse equipamento geralmente é chamado de \textit{calibrator} ou \textit{standard}. \cite{flukecalib} %ref: https://eu.flukecal.com/products/electrical-calibration-0
-
-Tais equipamentos também necessitam ser calibrados, então o fornecedor deve garantir que estes estejam de acordo com os órgãos regionais, nacionais e internacionais em questão de procedência da calibração. Uma documentação e traçabilidade extensivas são requerimentos indispensáveis.
-
-    \subsection{Calibrators ou Standards}\label{subsec:Calibrators}
-
-    O \textit{calibrator} tem a capacidade de fornecer sinais elétricos precisos e de função variável, que podem ser produzidos de µV a kV, normalmente. Estes sinais, em ranges específicos, serão lidos pela \gls{UUT} (\textit{Unit Under Test}) e então serão anotados os resultados da medição, fazendo-se um levantamento de dados do multímetro. Após tal levantamento, realiza-se os passos necessários para calibrar tal dispositivo, dependendo das suas necessidades e também do fabricante do mesmo. Este equipamento também consegue fazer medições de precisão, caso seja necessário. 
-
-    O \textit{standard} cumpre a mesma função do calibrator, mas geralmente é limitado a poucos ranges de geração de sinal e somente uma função, o que possibilita uma performance e precisão muito maior que a do \textit{calibrator}. 
-
-Entretanto, existe uma proposta de calibração do equipamento on-board, feita pela \gls{TI} (\textit{Texas Instruments}), utilizando-se um \gls{DAC} para corrigir erros de leitura, seja por mudanças de temperatura, mudança na tensão de referência do \gls{ADC} ou qualquer outro fator que possa afetar a leitura do sinal. Também nesse circuito é incluído um sensor de temperatura para avisar o usuário sobre mudanças consideráveis de temperatura.
-
-O funcionamento do \gls{DAC}, porém, está diretamente relacionado à sua tensão de referência. Geralmente, se é utilizada uma referência externa para medidas de precisão, pois esta estará isolada da aquisição de sinal do multímetro e logo não será afetada caso haja uma mudança de temperatura. \cite{analogdac} A solução proposta pela \gls{TI} é de se utilizar um \gls{DAC} de precisão (16-Bits) com \textit{on-board low-drift voltage reference} junto com um \textit{buffer} por meio de um \gls{amp-op} de alta velocidade. Tais componentes são de uso extremamente específico e por isso são caros, colocando-os assim fora do escopo do estudo desta presente tese. \cite{DACTI} %ref: https://www.analog.com/en/analog-dialogue/articles/buffering-the-output-of-high-speed-dacs.html e https://www.ti.com/lit/ug/tiduct8/tiduct8.pdf?ts=1685988821918&ref_url=https%253A%252F%252Fwww.ti.com%252Fsolution%252Fdigital-multimeter-dmm%253Fvariantid%253D20220%2526subsystemid%253D33430
-
+%Referência de tensão
 \section{Referência de Tensão}\label{sec:VoltageReference}
 
 A referência de tensão do ADC, utilizada para a leitura do sinal analógico, pode estar incluída no chip, que é uma solução mais barata e de menor precisão para equipamentos que não exigem tal afinidade, ou ser externa ao chip, que provém uma melhor precisão e, consequentemente, uma melhor leitura. Tal referência externa, hodiernamente, é feita por um \gls{CI} (Circuito Integrado) especializado, como por exemplo o ICL8069 \cite{icl8069}, visto sendo utilizado no estado da arte. %datasheet: https://pdfserv.maximintegrated.com/en/ds/ICL8069.pdf
 
-
-\section{Condicionamento de Sinal e Pathing}\label{sec:signalConditioningandPathing}
-
-O condicionamento de sinal se resume ao controle da entrada apropriada a ser avaliada pelo ADC, que geralmente é feita por um \gls{MUX} (Multiplexador), por \textit{switches} mecânicos, como exemplificado na \autoref{fig:Fluke28-II-switches}, ou em alguns casos, por uma combinação dos dois.  \cite{dmmblog}
-
-\begin{figure}[htb]%% Ambiente figure
-    %\captionsetup{width=0.55\textwidth}%% Largura da legenda
-    \caption{Fluke 28-II}%% Legenda
-    \label{fig:Fluke28-II-switches}%% Rótulo
-    \includegraphics[scale=0.4]{Fluke28-II-switches}%% Dimensões e localização
-    \fonte{\cite{flukeforum}}%% Fonte
-\end{figure}
-
-\section{Power Management}\label{powerManagement}
-
-Multímetros digitais se apresentam em duas configurações, sendo estas de bancada e portátil. Na configuração portátil, se é utilizado pilhas ou baterias para prover a tensão necessária para se ligar todos os subsistemas do aparelho. Já na configuração de bancada, é utilizada uma fonte isolada, conectada à rede de energia para fornecer a tensão adequada para se ligar todos os subsistemas do dispositivo, como se pode ver nas figuras \ref{fig:batbt} e \ref{fig:bathh}, dos designs propostos pela \gls{TI}.
-
-\begin{figure}[htb]%% Ambiente figure
-    %\captionsetup{width=0.55\textwidth}%% Largura da legenda
-    \caption{Diagrama de Blocos de um Multimetro Portátil}%% Legenda
-    \label{fig:bathh}%% Rótulo
-    \includegraphics[scale=0.4]{bathh}%% Dimensões e localização
-    \fonte{}%% Fonte
-\end{figure}
-
-\begin{figure}[h]%% Ambiente figure
-    %\captionsetup{width=0.55\textwidth}%% Largura da legenda
-    \caption{Diagrama de Blocos de um Multímetro de Bancada}%% Legenda
-    \label{fig:batbt}%% Rótulo
-    \includegraphics[width=1\textwidth]{batbt}%% Dimensões e localização
-    \fonte{Texas Instruments}%% Fonte
-\end{figure}
-
-Existem vários modos de se projetar uma fonte adequada ao sistema proposto, mas para o escopo desta tese, foi optado por se utilizar uma fonte comercial que será escolhida para atender as necessidades do protótipo em questão.
-
-
-% ANDREY------------------------------------------------------------------------
-
-\section{Aquisição de Sinal}\label{sec:aqSignal}
-
-A aquisição de sinal é o processo de captura e conversão de sinais físicos em um formato adequado para análise, processamento ou armazenamento. No contexto da medição de tensão e corrente, a aquisição de sinal refere-se à captura e registro desses parâmetros elétricos em um sistema de medição, permitindo sua análise, processamento ou armazenamento em um formato adequado.
-Essa pode ser realizada de diferentes maneiras, dependendo do caso. Em alguns cenários, utiliza-se sondas específicas para cada aplicação, as quais permitem capturar e registrar os parâmetros elétricos de forma precisa. Por outro lado, em certos casos, a aquisição ocorre internamente dentro do circuito do próprio medidor, proporcionando uma solução integrada e simplificada para a captura e registro dos sinais elétricos.
-
-\subsection{Resistor Shunt}\label{subsec:resiShunt}
-Neste tipo de medição, um resistor de valor extremamente baixo (< 0,1 $\Omega$) é colocado em série com o circuito no qual se deseja medir a corrente elétrica, quando esta atravessa o componente, ocorre uma queda de tensão proporcional. Essa queda de tensão pode ser então medida diretamente através de um \gls{ADC} ou amplificada e então medida para se obter os valores da corrente original. \citep{curr_sens_tech}
-
-Para a aplicação em 3 canais independentes de corrente, torna-se necessária algum tipo de isolação. Isso pode ser obtido utilizando-se de amplificadores isoladores --- amplificadores operacionais que possuem duas referências isoladas entre si. Permitindo uma medição da queda de tensão sobre o resistor shunt para cada canal sem interferência mútua, como exemplo o AD202 na \autoref{AD202}.
-
-\begin{figure}[htb]
-    \caption{AD202 um exemplo de amplificador isolador}
-    \label{AD202}
-    \includegraphics[width=0.8\textwidth]{figuras/AD202-ampop-isolado.png}
-    \fonte{\cite{ad202}}
-\end{figure}
-    
-Esse tipo de amplificador, porém, apresenta alto custo e possui uma variação de leitura considerável com a temperatura. São inferiores em precisão a outros métodos de medição que realizam o isolamento do circuito inerentemente por seus aspectos construtivos. 
-
-\subsection{Bobina Rogowski}\label{subsec:Rogowski}
-
-Utilizando-se do princípio da Lei da Indução de Faraday, a bobina Rogowski trata-se de um loop fechado de fio enrolado em volta de um aro. Esse aro envolve o condutor que, por sua variação de corrente, induz uma tensão elétrica proporcional ao número de espiras e a intensidade da própria corrente a ser medida. Para a medida dos valores obtidos pela bobina Rogowski, é necessário o uso de um integrador (por vezes acoplado no próprio cabo da ponteira de medição) para relacionar a derivada da corrente com a tensão obtida em seus terminais, podendo causar certo erro introduzido pela operação.
-
-\begin{figure}[htb]
-    \caption{Bobina Rogowski aberta}
-    \label{fig:rogowski-bobina}
-    \includegraphics[width=0.8\textwidth]{figuras/bobina-rogowski.png}
-    \fonte{CITAR Metodos de medição (artigo)}
-\end{figure}
-
-É um método amplamente utilizado para medições de altas correntes e suporta uma grande faixa de frequências. Tem um custo próximo dos transformadores de corrente e insere menos impedância parasita no circuito. \citep{curr_sens_tech}
-
-\subsection{Transformador de Corrente}\label{subsec:t-corrente}
-
-O princípio de funcionamento do transformador de corrente é parecido com o da bobina Rogowski: possui um primário e um secundário com uma razão de voltas que permite que a tensão induzida seja lida em sua saída. A diferença deste para a bobina Rogowski é que existe agora um núcleo com certa permeabilidade magnética e o secundário possui um resistor Rs que permite uma medição mais simplificada da corrente de entrada.
-Nesse tipo de medição, a própria saída do transformador de corrente é proporcional a entrada de corrente, não sendo necessário um integrador como é o caso da bobina Rogowski. Devido a sua construção, seu sinal de saída também não necessita de nenhum tipo de amplificação, podendo ser lido diretamente por um \gls{ADC}. É teoricamente impossível medir correntes contínuas com esse método, porém, caso seja possível pulsar essa corrente, utilizando um circuito acessório de desmagnetização e, respeitando os tempos necessários entre os pulsos, é possível obter uma medida satisfatória.
-
-\begin{figure}[htb]
-    \caption{Circuito completo com transformador de pulso para medição \gls{CA}/\gls{CC}}
-    \label{fig:circuito-tc-dc}
-    \includegraphics[width=0.8\textwidth]{figuras/transform-corrente-dc.png}
-    \fonte{\cite{curr_sens_tech}}
-\end{figure}
-
-\subsection{Circuito Integrado de Medição \textit{(hall effect)}}\label{subsec:halleffect}
-
-Existem circuitos integrados capazes de medir a corrente alternada de maneira isolada do
-restante do circuito. Utilizando-se do efeito hall, o campo magnético gerado pela corrente
-que passa entre seus terminais é medida por um sensor montado diretamente no substrato
-do chip. Uma tensão proporcional a esse campo é fornecida pelo CI como saída e pode ser
-medida por um ADC, recuperando-se o valor da corrente original.
-O uso dessa tecnologia traz custo baixo em relação ao uso de TC's ou bobinas Rogowski,
-fácil implementação no sistema, isolamento diretamente no chip.
-Tal medição, porém, possui uma resolução na ordem de \SI{100}{\milli\volt\per\ampere} (considerando um CI que suporte acima de 10 A) e um ruído intrínseco de 11 mV. Como é o caso do ACS712.\citep{acs712}
-
+%input Warning
 \section{Aviso de Entrada Incorreta \textit{(Input Warning)}}\label{sec:inpWarning}
 
 O termo \textit{input warning} refere-se a um aviso emitido quando ocorre uma entrada incorreta ou anormal em um sistema de medição. Esse tipo de aviso é acionado quando há um problema que pode afetar a precisão ou confiabilidade dos dados de medição. Pode ser uma condição fora dos limites esperados, como valores de tensão ou corrente que ultrapassam os limites especificados pelo instrumento de medição. \cite{base_alarms}
@@ -296,10 +260,7 @@ Como geralmente há um sistema de proteção nesses dispositivos, muitas vezes, 
 
 Para tanto, pode-se utilizar um \textit{buzzer} com o som alto o suficiente para notificar o usuário mesmo em um ambiente com certo ruído, como é o caso de um laboratório de aula. 
 
-% Removida essa seção, não foi encontrado nada de muito útil que pudesse ser efetivamente usado. Trata-se apenas de um sistema para proteger o MCU em alguns casos específicos.
-%%\section{Isolador de sinal digital \textit{(Digital Signal Isolator)}}\label{sec:DSIsolator}
-
-
+%MCU/interface
 \section{MCU e Interface de Comunicação}\label{sec:MCUInterface}
 
 \subsection{Microcontroladores}\label{subsec:MCU}
@@ -370,11 +331,54 @@ Esse módulo possui um microprocessador \textit{Xtensa® Dual-Core 32-bit LX6} e
     \fonte{DigiKey}
 \end{figure}
 
+%power management
+\section{Power Management}\label{powerManagement}
+
+Multímetros digitais se apresentam em duas configurações, sendo estas de bancada e portátil. Na configuração portátil, se é utilizado pilhas ou baterias para prover a tensão necessária para se ligar todos os subsistemas do aparelho. Já na configuração de bancada, é utilizada uma fonte isolada, conectada à rede de energia para fornecer a tensão adequada para se ligar todos os subsistemas do dispositivo, como se pode ver nas figuras \ref{fig:batbt} e \ref{fig:bathh}, dos designs propostos pela \gls{TI}.
+
+\begin{figure}[htb]%% Ambiente figure
+    %\captionsetup{width=0.55\textwidth}%% Largura da legenda
+    \caption{Diagrama de Blocos de um Multimetro Portátil}%% Legenda
+    \label{fig:bathh}%% Rótulo
+    \includegraphics[scale=0.9]{bathh}%% Dimensões e localização
+    \fonte{\cite{DMMTI}}%% Fonte
+\end{figure}
+
+\begin{figure}[h]%% Ambiente figure
+    %\captionsetup{width=0.55\textwidth}%% Largura da legenda
+    \caption{Diagrama de Blocos de um Multímetro de Bancada}%% Legenda
+    \label{fig:batbt}%% Rótulo
+    \includegraphics[scale=0.7]{batbt}%% Dimensões e localização
+    \fonte{\cite{DMMTI}}%% Fonte
+\end{figure}
+
+Existem vários modos de se projetar uma fonte adequada ao sistema proposto, mas para o escopo desta tese, foi optado por se utilizar uma fonte comercial que será escolhida para atender as necessidades do protótipo em questão.
+
+%calibração
+\section{Calibração}\label{sec:Calibration}
+
+Todo equipamento de medição precisa ser calibrado para exercer a sua função com precisão. Normalmente, este serviço é feito pelo provedor do produto e, dependendo do tipo de uso de tal produto e sua precisão, feito em intervalos regulares para garantir sua eficácia. Muitas vezes, realizar a calibração de um equipamento como um multímetro pode ser mais caro que comprar um novo.
+
+Para se calibrar um multímetro, é utilizado um outro dispositivo com no mínimo 4x a precisão do multímetro a ser calibrado. Portanto, normalmente se é utilizado um equipamento específico para exercer tal função. Esse equipamento geralmente é chamado de \textit{calibrator} ou \textit{standard}. \cite{flukecalib} %ref: https://eu.flukecal.com/products/electrical-calibration-0
+
+Tais equipamentos também necessitam ser calibrados, então o fornecedor deve garantir que estes estejam de acordo com os órgãos regionais, nacionais e internacionais em questão de procedência da calibração. Uma documentação e traçabilidade extensivas são requerimentos indispensáveis.
+
+    \subsection{Calibrators ou Standards}\label{subsec:Calibrators}
+
+    O \textit{calibrator} tem a capacidade de fornecer sinais elétricos precisos e de função variável, que podem ser produzidos de µV a kV, normalmente. Estes sinais, em ranges específicos, serão lidos pela \gls{UUT} (\textit{Unit Under Test}) e então serão anotados os resultados da medição, fazendo-se um levantamento de dados do multímetro. Após tal levantamento, realiza-se os passos necessários para calibrar tal dispositivo, dependendo das suas necessidades e também do fabricante do mesmo. Este equipamento também consegue fazer medições de precisão, caso seja necessário. 
+
+    O \textit{standard} cumpre a mesma função do calibrator, mas geralmente é limitado a poucos ranges de geração de sinal e somente uma função, o que possibilita uma performance e precisão muito maior que a do \textit{calibrator}. 
+
+Entretanto, existe uma proposta de calibração do equipamento on-board, feita pela \gls{TI} (\textit{Texas Instruments}), utilizando-se um \gls{DAC} para corrigir erros de leitura, seja por mudanças de temperatura, mudança na tensão de referência do \gls{ADC} ou qualquer outro fator que possa afetar a leitura do sinal. Também nesse circuito é incluído um sensor de temperatura para avisar o usuário sobre mudanças consideráveis de temperatura.
+
+O funcionamento do \gls{DAC}, porém, está diretamente relacionado à sua tensão de referência. Geralmente, se é utilizada uma referência externa para medidas de precisão, pois esta estará isolada da aquisição de sinal do multímetro e logo não será afetada caso haja uma mudança de temperatura. \cite{analogdac} A solução proposta pela \gls{TI} é de se utilizar um \gls{DAC} de precisão (16-Bits) com \textit{on-board low-drift voltage reference} junto com um \textit{buffer} por meio de um \gls{amp-op} de alta velocidade. Tais componentes são de uso extremamente específico e por isso são caros, colocando-os assim fora do escopo do estudo desta presente tese. \cite{DACTI} %ref: https://www.analog.com/en/analog-dialogue/articles/buffering-the-output-of-high-speed-dacs.html e https://www.ti.com/lit/ug/tiduct8/tiduct8.pdf?ts=1685988821918&ref_url=https%253A%252F%252Fwww.ti.com%252Fsolution%252Fdigital-multimeter-dmm%253Fvariantid%253D20220%2526subsystemid%253D33430
+
+%cronograma
 \section{Cronograma}
 
 \begin{figure}[htb]
     \caption{Cronograma do Trabalho de Conclusão de Curso}
     \label{fig:cronograma}
     \includegraphics[width=0.8\textwidth]{figuras/gantt-cronograma.png}
-    \fonte{Autoria Própria}
+    \fonte{}
 \end{figure}
