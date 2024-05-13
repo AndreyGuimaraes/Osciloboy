@@ -7,11 +7,11 @@
 
 Este capítulo será dedicado a explicar como funcionam as várias partes envolvidas na construção e funcionamento de um multímetro digital e/ou multimedidor.
 
-Neste trabalho, o objetivo é desenvolver um multímetro capaz de medir tensão e corrente simultaneamente e enviar os dados para um smartphone por meio de uma conexão sem fio. Considerando essa proposta, foram analisadas duas opções para servir como base: um multimedidor e um multímetro.
+Neste trabalho, o objetivo é desenvolver um multímetro capaz de medir tensão e corrente simultaneamente e enviar os dados para um smartphone por meio de conexão sem fio. Considerando essa proposta, foram analisadas duas opções para servir como base: um multimedidor e um multímetro.
 
-O multimedidor é um dispositivo geralmente trifásico, que permite a medição simultânea de tensão e corrente, exibindo as formas de onda em um display. Possui três ou mais canais simultâneos. No entanto, apresenta a limitação de possuir apenas um referencial de medição, com resolução na ordem de 1V nos modelos mais baratos e 0,1V nos modelos mais caros, repetindo-se esses valores para a resolução da corrente \cite{fluke434}.
+O multimedidor é um dispositivo geralmente trifásico, que permite a medição simultânea de tensão e corrente, exibindo as formas de onda em um display. Possui três ou mais canais simultâneos. No entanto, apresenta a limitação de possuir apenas um referencial de medição, com resolução na ordem de 1V nos modelos mais baratos e 0,1V nos modelos mais caros, sendo os mesmos valores para a resolução da corrente \cite{fluke434}.
 
-Por outro lado, o multímetro é um dispositivo monofásico que permite a medição de apenas um canal por vez, como tensão, corrente, resistência, capacitância, entre outros. Ele não exibe as curvas na tela, fornecendo apenas os valores. A resolução varia, sendo que nos modelos mais simples pode chegar a 0,1 mV, enquanto a resolução da corrente é da ordem de 1µA \cite{et1100}.
+Por outro lado, o multímetro é um dispositivo monofásico que permite a medição de apenas um canal por vez, como tensão, corrente, resistência, capacitância, entre outros. Este não exibe as curvas na tela, fornecendo apenas valores. A resolução varia, sendo que nos modelos mais simples pode chegar a 0,1 mV, enquanto a resolução da corrente é da ordem de 1µA \cite{et1100}.
 
 Considerando que o dispositivo deve ser utilizado como uma ferramenta didática em sala de aula, é essencial que a resolução seja adequada para o bom aproveitamento das disciplinas. Além disso, a apresentação das formas de onda também é relevante. Assim, optou-se por uma abordagem que combina características de ambos os dispositivos, utilizando os diagramas de blocos para identificar as funcionalidades e suas relações com o dispositivo a ser produzido.
 
@@ -34,9 +34,9 @@ Para o multímetro, foi utilizado um diagrama de blocos (\autoref{fig:multimeter
     \fonte{\cite{DMMTI}}%% Fonte
 \end{figure}
 
-Sobre o estado da arte, existem diversos dispositivos que atendem a necessidades diferentes, como por exemplo, segurança (CAT rating), resolução, precisão ou até mesmo confiabilidade de leitura em condições de temperaturas elevadas, entre vários outros. Adicionalmente, existem também inúmeros fornecedores, tanto regionais, nacionais como internacionais, salientando a diversidade de produtos.
+Sobre o padrão comercial, existem diversos dispositivos que atendem a necessidades diferentes, como por exemplo, segurança (CAT rating), resolução, precisão ou até mesmo confiabilidade de leitura em condições de temperaturas elevadas, entre vários outros. Adicionalmente, existem também inúmeros fornecedores, tanto regionais, nacionais como internacionais, salientando a diversidade de produtos.
 
-Dispositivos como o representado na \autoref{fig:Fluke28-II} possuem boa métrica de confiabilidade e também são portáteis, além de fazerem medidas em \textit{True-RMS} (\textit{True Root Mean Square}). Este dispositivo é muito benquisto, tendo boas avaliações no mundo inteiro.
+Dispositivos como o representado na \autoref{fig:Fluke28-II} possuem boa métrica de confiabilidade e também são portáteis, além de provirem medidas em \textit{True-RMS} (\textit{True Root Mean Square}). Este dispositivo é muito benquisto, tendo boas avaliações no mundo inteiro.
 
 \begin{figure}[htb!]%% Ambiente figure
     %\captionsetup{width=0.55\textwidth}%% Largura da legenda
@@ -72,7 +72,7 @@ No caso de multimedidores, que são somente de uso específico industrial, algun
 %Input Protection
 \section{Proteção de Entrada}\label{sec:InputProtection}
 
-Proteção de entrada é um assunto extremamente abrangente quando se trata de circuitos eletrônicos. Dependendo da função que este tenha que exercer, existem infinitas topografias que podem ser consideradas. Algumas exigências, porém, são comuns, como a necessidade de um circuito de proteção contra descargas eletrostáticas, ou \gls{ESD} (\textit{Electrostatic Discharge}). Tais descargas podem entregar picos de tensão extremamente altos, chegando até a 30 kV, o que é extremamente danoso a qualquer circuito que use semicondutores. Pulsos de pico tão alto quanto 2500 V (Volts) já são o suficiente para danificar a maioria dos circuitos eletrônicos. Notoriamente, seres humanos são capazes de entregar descargas de até 20 kV por consequência da capacitância inata à sua fisiologia \cite{ONsemicondTVS2}. %%citar o documento http://www.reallyreallyrandom.com/zener/media/Zener_Theory_and_Design.pdf, página 65
+Proteção de entrada é um assunto extremamente abrangente quando se trata de circuitos eletrônicos. Dependendo da função que este tenha que exercer, existem infinitas topografias que podem ser consideradas. Algumas exigências, porém, são comuns, como a necessidade de um circuito de proteção contra descargas eletrostáticas, ou \gls{ESD} (\textit{Electrostatic Discharge}). Tais descargas podem entregar picos de tensão extremamente altos, chegando até a 30 kV, o que é extremamente danoso a qualquer circuito que use semicondutores. Pulsos de pico tão alto quanto 2500 V (Volts) já são o suficiente para danificar a maioria dos circuitos eletrônicos. Notoriamente, seres humanos são capazes de entregar descargas de até 20 kV por consequência da capacitância inata à sua fisiologia \cite{ONsemicondTVS2}. 
 
     \subsection{ESD}\label{subsec:electrostaticDischarge}
     Esse tipo de proteção é necessária para circuitos que fazem interface com o meio físico e normalmente é exercida por um circuito básico de componentes \gls{TVS} (\textit{Transient Voltage Suppressor}). Os dispositivos semicondutores mais simples (e também regularmente) utilizados para exercer esta função são diodos Zener \cite{IPblog}.
@@ -117,13 +117,13 @@ Proteção de entrada é um assunto extremamente abrangente quando se trata de c
 
         O circuito de proteção para a entrada de correntes se divide em duas partes, sendo uma delas para o range de A (Amperes) e os ranges de mA e µA.
 
-	    Para a entrada de Amperes, é utilizado um fusível \gls{HRC} (\textit{High Rupturing Capacity}), geralmente de 11 A e 1000 V (para se adequar à classificação CAT III, no caso do multímetro que foi estudado), para se prevenir arcos voltaicos após a queima do fusível, negando a possibilidade de uma continuação da condução de curto-circuito ou sobrecorrente. Logo após, é conectado um shunt de quatro terminais, 0R005 $\Omega$, entre o ground e a entrada, no qual será feita a medida.
+	    Para a entrada de Amperes, é utilizado um fusível \gls{HRC} (\textit{High Rupturing Capacity}), geralmente de 11 A e 1000 V (para se adequar à classificação CAT III, no caso do multímetro que foi estudado), para se prevenir arcos voltaicos após a queima do fusível, negando a possibilidade de uma continuação da condução de curto-circuito ou sobrecorrente. Logo após, é conectado um shunt, 0R01 $\Omega$, entre o ground e a entrada, no qual será feita a medida.
 
 	    Para a entrada de mA e µA, também é utilizado um fusível \gls{HRC}, mas de 500 mA e 1000 V. Em sequência, é colocado um retificador em ponte de diodos entre o canal e o ground, para dar clamp em possíveis sobretensões (normalmente ocasionada pela utilização errônea do equipamento, colocando-se a entrada de corrente para medir tensão) até que o fusível possa atuar. Internamente, há um switch entre mA e µA \cite{fluke27manual}.
 
-        Para o switch de mA, é conectado em série um resistor shunt de 4R995 $\Omega$ com o shunt do range de A (0R005 $\Omega$), para ser feita a medição em uma resistência total de 5 $\Omega$.
+        Para o switch de mA, é conectado em série um resistor shunt de 1 $\Omega$ com o shunt do range de A (0R01 $\Omega$), para ser feita a medição em uma resistência aproximada de 1 $\Omega$.
 
-        Para o switch de µA, é conectado um resistor shunt de 500 $\Omega$, no qual será feita a medição. \cite{IPblog}%%ref: https://lygte-info.dk/info/DMMDesignProtection%20UK.html
+        Para o switch de µA, é conectado um resistor shunt de 100 $\Omega$, no qual será feita a medição. \cite{IPblog}%%ref: https://lygte-info.dk/info/DMMDesignProtection%20UK.html
 
         \subsubsection{Proteção de Entrada para Circuitos de Tensão}\label{subsec:protecaoTensao}
 
@@ -131,7 +131,7 @@ Proteção de entrada é um assunto extremamente abrangente quando se trata de c
 
         Conectado em paralelo ao resistor de 10 M$\Omega$ com o ground input, há uma série de varistores \gls{MOV} (\textit{Metal Oxide Varistor}) de rápida atuação como proteção para transientes de sobretensão, até que o termistor consiga esquentar. Pode ser utilizado somente um varistor, mas uma série destes aumenta a distância de fuga de corrente, reduzindo a chance de arcos voltaicos e também dissipando energia entre vários componentes, melhorando a proteção \cite{flukeblog}.
 
-        Uma parte importante do design geral da \gls{PCB} (\textit{Printed Circuit Board}) são \textit{slots} de isolamento de alta tensão, que se resumem a espaços abertos entre partes da placa, que vão receber altas tensões em funcionamento indesejado, para minimizar as chances de arcos voltaicos entre partes do circuito, como destacado na \autoref{fig:exemploPCB}. %%ref: https://lygte-info.dk/info/DMMDesignProtection%20UK.html
+        Uma parte comum do design geral da \gls{PCB} (\textit{Printed Circuit Board}) são \textit{slots} de isolamento de alta tensão, que se resumem a espaços abertos entre partes da placa, que vão receber altas tensões em funcionamento indesejado, para minimizar as chances de arcos voltaicos entre partes do circuito, como destacado na \autoref{fig:exemploPCB}. %%ref: https://lygte-info.dk/info/DMMDesignProtection%20UK.html
 
         \begin{figure}[htb!]%% Ambiente figure
             %\captionsetup{width=0.55\textwidth}%% Largura da legenda
