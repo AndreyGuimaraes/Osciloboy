@@ -26,7 +26,7 @@ Para a proteção de corrente, primeiramente se é colocado fusíveis \gls{HRC},
 
 \begin{figure}[htb!]
     \caption{Entrada de Tensão e Corrente}
-    \label{circ-prot}
+    \label{fig:circ-prot}
     \includegraphics[width=0.8\textwidth]{figuras/circ-prot.png}
     \fonte{}
 \end{figure}
@@ -43,7 +43,7 @@ A primeira opção a ser considerada foi a \textit{Single-Ended}. Este tipo de l
 
 \begin{figure}[htb!]
     \caption{Condicionamento de sinais por divisor resistivo para leitura \textit{Single-Ended}}
-    \label{div-res}
+    \label{fig:div-res}
     \includegraphics[width=0.6\textwidth]{figuras/div-res.png}
     \fonte{}
 \end{figure}
@@ -82,7 +82,7 @@ Finalmente, para o menor range de tensão, seria necessária a aplicação de ma
 
 \begin{figure}[htb!]
     \caption{Condicionamento de sinais por divisor resistivo para leitura \textit{Single-Ended}, menor range}
-    \label{cascata}
+    \label{fig:cascata}
     \includegraphics[width=0.6\textwidth]{figuras/cascata.png}
     \fonte{}
 \end{figure}
@@ -93,7 +93,7 @@ Este tipo de leitura, ao invés de comparar a tensão entre um ponto do circuito
 
 \begin{figure}[htb!]
     \caption{Condicionamento de sinais por divisor resistivo para leitura diferencial}
-    \label{difread}
+    \label{fig:difread}
     \includegraphics[width=0.6\textwidth]{figuras/difread.png}
     \fonte{}
 \end{figure}
@@ -108,23 +108,61 @@ Para o dimensionamento dos resistores desta topologia, é feita uma malha result
 
 Resolvendo esta, chega-se ao resultado de 2 M$\Omega$ e 20 k$\Omega$ para os resistores.
 
-Para o offset de tensão, como os erros introduzidos são anulados pela própria topografia, utiliza-se uma referência tensão menos precisa, diminuindo o custo do circuito regulador como um todo. Como não são utilizados \gls{amp-op}s, também não é necessária a utilização do circuito auxiliar \textit{Negative Charge Pump}.
+Para o offset de tensão, como os erros introduzidos são anulados pela própria topografia, utiliza-se uma referência tensão menos precisa, diminuindo o custo do circuito regulador como um todo. A referência de tensão utilizada para este projeto é fornecida pelo \gls{CI} TL431A, tendo este ainda assim uma precisão de 1\%, mas sendo muito mais barato que a opção anterior. Além disso, este possibilita mais facilmente a utilização do range inteiro de leitura do \gls{ADC}, tornando assim o offset $3,3/2$, que pode ser regulado pela ação do trimpot junto ao circuito auxiliar. Como não são utilizados \gls{amp-op}s, também não é necessária a utilização do circuito auxiliar \textit{Negative Charge Pump}.
 
-Então, com todos estes benefícios em mente, foi escolhida esta topologia e tipo de leitura para o circuito final, como explícito na \autoref{fig:circ-cond-t}. Para a leitura de corrente, a mesma lógica se aplica, pois o resistor shunt é visto como uma fonte de tensão pelo circuito de leitura. Como esta tensão é extremamente baixa, não há a necessidade de um resistor de entrada para a atenuação da mesma, como explícito na \autoref{fig:circ-cond-t}.
+Então, com todos estes benefícios em mente, foi escolhida esta topologia e tipo de leitura para o circuito final, como explícito na \autoref{fig:circ-cond-t}. Para a leitura de corrente, a mesma lógica se aplica, pois o resistor shunt é visto como uma fonte de tensão pelo circuito de leitura. Como esta tensão é extremamente baixa, não há a necessidade de um resistor de entrada para a atenuação da mesma, como explícito na \autoref{fig:circ-cond-c}.
 
 \begin{figure}[htb!]
     \caption{Circuito de condicionamento de sinais para tensão}
-    \label{condst}
+    \label{fig:circ-cond-t}
     \includegraphics[width=0.6\textwidth]{figuras/circ-cond-t.png}
     \fonte{}
 \end{figure}
 
 \begin{figure}[htb!]
     \caption{Circuito de condicionamento de sinais para corrente}
-    \label{condsc}
+    \label{fig:circ-cond-c}
     \includegraphics[width=0.6\textwidth]{figuras/circ-cond-c.png}
     \fonte{}
 \end{figure}
+
+Após a leitura dos sinais e a conversão feita pelo ADC, o sinal digital de saída é processado por um microcontrolador para então ser entregue a uma webpage e assim tratado para visualização pelo usuário. Algumas necessidades básicas devem ser atendidas pelo chip escolhido, como suporte para comunicação \textit{wireless}, seja \textit{WiFi} ou \textit{Bluetooth}, \textit{clock speed} alta o suficiente para não interferir na aquisição de dados e também ter uma boa documentação para ser possível o desenvolvimento do código.
+
+Com isso em mente, o microcontrolador utilizado para este projeto é o ESP32, fabricado pela Espressif. A escolha deste foi feita por vários motivos:
+
+\begin{itemize}
+    \item Performance: O ESP32 opera em \textit{clock speeds} de até 240 MHz, oferecendo um robusto poder de processamento para o código e também para não interferir ou atrasar a aquisição dos sinais;
+    \item Suporte: Este microcontrolador tem suporte tanto para \textit{WiFi} quanto para \textit{Bluetooth}, trabalha com o protocolo \gls{$I^2$C}, que será utilizado para fazer a comunicação tanto com o \gls{ADC} quanto com o webserver e utiliza-se do Arduino como sua principal plataforma de desenvolvimento;
+    \item Ambiente: Este chip é extensamente utilizado em vários setores da tecnologia e tem uma vasta comunidade de usuários, o que garante um extenso leque de \textit{resources} como bibliotecas, tutoriais, videos, forums, entre outros, para ajudar na confecção do software e firmware. Também apresenta suporte oferecido pela própria Espressif sobre as suas funcionalidades muito bem documentados;
+    \item Modularidade: Esta parte crucial do trabalho também é suportada por este microcontrolador, e
+    \item Preço: Para todas as funcionalidades providas pelo ESP32, este apresenta um grande custo benefício, além de estar facilmente disponível no mercado.
+\end{itemize}
+
+Para ter uma comunicação confiável entre os dois \gls{ADC}s conectados a fontes diferentes e o ESP32, é necessário o isolamento entre estes, evitando-se curtos. Para isso, foi utilizado um circuito de comunicação isolada por optocouplers, como demonstrado na \autoref{fig:circ-comunic}.
+
+\begin{figure}[htb!]
+    \caption{Circuito de comunicação isolado}
+    \label{fig:circ-comunic}
+    \includegraphics[width=0.6\textwidth]{figuras/circ-comunic.png}
+    \fonte{}
+\end{figure}
+
+***explicação sobre o circuito de comunicação isolado e os optos***
+
+Para a alimentação do circuito como um todo, existiam duas opções: baterias ou fontes. Como este protótipo será de bancada, foi escolhida a alimentação por fontes, pois estas não precisam ser trocadas frequentemente e é possível ligá-las à rede.
+
+Para este projeto são utilizadas duas fontes isoladas, uma para alimentar o circuito de leitura de tensão e outra para alimentar o circuito de leitura de corrente, reduzindo assim possíveis ruídos e interferências entre circuitos e também aumentando a confiabilidade do protótipo, pois como o objetivo é realizar leituras simultâneas de corrente e tensão, um isolamento entre eles é necessário para previnir curtos.
+
+Porém, o output das fontes escolhidas é de 12 V, não atendendo as necessidades de alimentação dos \gls{CI}s envolvidos e também do microcontrolador. Para isso, circuitos de regulação de tensão foram implementados, gerando duas saídas, como explícito na \autoref{fig:circ-conv-T}. Estes circuitos são iguais tanto para a leitura de tensão e de corrente, visto que estes tem as mesmas necessidades.
+
+\begin{figure}[htb!]
+    \caption{Circuito de regulação de tensão}
+    \label{fig:circ-conv-T}
+    \includegraphics[width=0.6\textwidth]{figuras/circ-conv-T.png}
+    \fonte{}
+\end{figure}
+
+Como visto na \autoref{fig:circ-cond-t}, o \gls{ADC} é alimentado com 3,3 V, mas o LM358 (que gera o offset de tensão) é alimentado com 5 V. O ESP32, como o \gls{ADC}, é alimentado com 3,3 V e esta está conectada, por especificação do projeto, sempre ao circuito de conversão de tensão referente à leitura de tensão.
 
 \subsection{Software e Firmware}\label{softfirm}
 
