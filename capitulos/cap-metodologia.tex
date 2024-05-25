@@ -15,7 +15,7 @@ O circuito foi projetado para seguir um fluxo de informações conforme o diagra
 
 \begin{figure}[htb!]
     \caption{Diagrama de Blocos da Lógica de Funcionamento}
-    \label{dflux}
+    \label{fig:dflux}
     \includegraphics[width=1.0\textwidth]{figuras/dblocflux.png}
     \fonte{}
 \end{figure}
@@ -138,7 +138,7 @@ Com isso em mente, o microcontrolador utilizado para este projeto é o ESP32, fa
     \item Preço: Para todas as funcionalidades providas pelo ESP32, este apresenta um grande custo benefício, além de estar facilmente disponível no mercado.
 \end{itemize}
 
-Para ter uma comunicação confiável entre os dois \gls{ADC}s conectados a fontes diferentes e o ESP32, é necessário o isolamento entre estes, evitando-se curtos. Para isso, foi utilizado um circuito de comunicação isolada por optocouplers, como demonstrado na \autoref{fig:circ-comunic}.
+Para ter uma comunicação confiável entre os dois \gls{ADC}s conectados a fontes diferentes e o ESP32, é necessário o isolamento entre estes, evitando-se ruídos indesejados. Para isso, foi utilizado um circuito de comunicação isolada por \textit{optocouplers}, como demonstrado na \autoref{fig:circ-comunic}.
 
 \begin{figure}[htb!]
     \caption{Circuito de comunicação isolado}
@@ -147,11 +147,25 @@ Para ter uma comunicação confiável entre os dois \gls{ADC}s conectados a font
     \fonte{}
 \end{figure}
 
-***explicação sobre o circuito de comunicação isolado e os optos***
+O circuito transforma pulsos \gls{$I^2$C} em sinais de luz e transfere estas informações para o outro circuito isolado, desacoplando estes. Para o correto funcionamento do circuito, devido a limitações técnicas dos \textit{optocouplers} escolhidos, é necessária a inserção de uma linha de 5 V para a alimentação do \gls{CI}, bem como o uso de uma linha de 3,3 V para a ativação dos \gls{LED}s internos deste chip, bem como o potencial de \textit{pull-up} para as linhas de comunicação \gls{$I^2$C}.
 
-Para a alimentação do circuito como um todo, existiam duas opções: baterias ou fontes. Como este protótipo será de bancada, foi escolhida a alimentação por fontes, pois estas não precisam ser trocadas frequentemente e é possível ligá-las à rede.
+Como objetivo do trabalho, também é colocado como principal a modularidade do circuito, para se obter leituras de duas ou três fases diferentes. Inicialmente, foi considerado o uso do protocolo \gls{$I^2$C} também para a comunicação entre estes módulos. Porém, esta idéia foi descartada devido à complexidade de criação de um protocolo, ou dicionário, para estabelecer um modo comum de interação.
 
-Para este projeto são utilizadas duas fontes isoladas, uma para alimentar o circuito de leitura de tensão e outra para alimentar o circuito de leitura de corrente, reduzindo assim possíveis ruídos e interferências entre circuitos e também aumentando a confiabilidade do protótipo, pois como o objetivo é realizar leituras simultâneas de corrente e tensão, um isolamento entre eles é necessário para previnir curtos.
+Também, para o demérito da utilização de tal topografia, são necessários muitos fios de interligação entre os módulos, sendo estes:
+
+\begin{itemize}
+    \item 5 V;
+    \item 3,3 V;
+    \item SDA;
+    \item SCL e
+    \item \textit{ground}.
+\end{itemize}
+
+Por estes dois grandes motivos e também por existirem alternativas mais simples, chegou-se a conclusão de que a utilização do protocolo \textit{ESPNOW}, desenvolvido pela própria Espressif, para facilitar a comunicação entre chips desta que possuem \textit{WiFi}. Desta maneira, serão necessários somente 2 fios entre módulos, para o envio de um sinal de sincronização. Todo o restante da comunicação inicial é feito através deste protocolo.
+
+Para a alimentação dos circuitos integrantes do protótipo, existem duas opções: baterias ou fontes. Como este será utilizado em bancada, foi escolhida a alimentação por fontes, pois estas não precisam ser trocadas frequentemente e é possível ligá-las à rede, além de algumas outras vantagens.
+
+Em este projeto são utilizadas duas fontes isoladas galvanicamente, uma para alimentar o circuito de leitura de tensão e outra para alimentar o circuito de leitura de corrente, reduzindo ainda mais possíveis ruídos e interferências entre circuitos, mas também aumentando a confiabilidade do protótipo, pois como o objetivo é realizar leituras simultâneas de corrente e tensão, o isolamento entre eles é necessário para previnir curtos.
 
 Porém, o output das fontes escolhidas é de 12 V, não atendendo as necessidades de alimentação dos \gls{CI}s envolvidos e também do microcontrolador. Para isso, circuitos de regulação de tensão foram implementados, gerando duas saídas, como explícito na \autoref{fig:circ-conv-T}. Estes circuitos são iguais tanto para a leitura de tensão e de corrente, visto que estes tem as mesmas necessidades.
 
@@ -162,10 +176,15 @@ Porém, o output das fontes escolhidas é de 12 V, não atendendo as necessidade
     \fonte{}
 \end{figure}
 
-Como visto na \autoref{fig:circ-cond-t}, o \gls{ADC} é alimentado com 3,3 V, mas o LM358 (que gera o offset de tensão) é alimentado com 5 V. O ESP32, como o \gls{ADC}, é alimentado com 3,3 V e esta está conectada, por especificação do projeto, sempre ao circuito de conversão de tensão referente à leitura de tensão.
+A alimentação do ESP32 e também do circuito de comunicação isolada foi convencionada por especificação de projeto, para se manter um padrão e também suprir as necessidades de cada.
 
 \subsection{Software e Firmware}\label{softfirm}
 
+A programação também é uma das partes mais importantes e também complexas deste projeto. Esta faz a união de todas as partes envolvendo o microcontrolador, sendo dividida em duas partes: software e firmware.
+
+Primeiramente, será discutido o software. Esté é feito em Arduino e JSON, pela parte do ESP32 e em HTML 5 e JavaScript pela parte do webserver. Os dados lidos pelo \gls{ADC} chegam ao ESP32 por firmware e imediatamente são empacotados por JSON, uma linguagem de serialização de dados para comunicação entre servidores, entre outros mais, dentro de uma \textit{string}. Após a aquisição de dados de 5 ondas, este pacote é serializado e enviado ao servidor da webpage.
+
+Esta webpage, programada em HTML 5 para fazer a inserção de JavaScript e então utilizar Websocket, um protocolo de comunicação que fornece uma via de duas mãos para a conexão entre os servidores do microcontrolador e da webpage, para cuidar da comunicação entre o ESP32 e o aparelho móvel, fará o tratamento dos dados e os apresentará para o usuário, em forma de gráficos e visualizadores numéricos representando a Tensão RMS, corrente RMS, Potência Aparente e Fator de Potência, que são calculados pelas fórmulas
 
 
 \section{Materiais}\label{sec:materiais}
