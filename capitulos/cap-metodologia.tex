@@ -132,7 +132,7 @@ Com isso em mente, o microcontrolador utilizado para este projeto é o ESP32, fa
 
 \begin{itemize}
     \item Performance: O ESP32 opera em \textit{clock speeds} de até 240 MHz, oferecendo um robusto poder de processamento para o código e também para não interferir ou atrasar a aquisição dos sinais;
-    \item Suporte: Este microcontrolador tem suporte tanto para \textit{WiFi} quanto para \textit{Bluetooth}, trabalha com o protocolo \gls{$I^2$C}, que será utilizado para fazer a comunicação tanto com o \gls{ADC} quanto com o webserver e utiliza-se do Arduino como sua principal plataforma de desenvolvimento;
+    \item Suporte: Este microcontrolador tem suporte tanto para \textit{WiFi} quanto para \textit{Bluetooth}, trabalha com o protocolo \gls{$I^2$C}, que será utilizado para fazer a comunicação com o \gls{ADC} e utiliza-se do Arduino como sua principal plataforma de desenvolvimento;
     \item Ambiente: Este chip é extensamente utilizado em vários setores da tecnologia e tem uma vasta comunidade de usuários, o que garante um extenso leque de \textit{resources} como bibliotecas, tutoriais, videos, forums, entre outros, para ajudar na confecção do software e firmware. Também apresenta suporte oferecido pela própria Espressif sobre as suas funcionalidades muito bem documentados;
     \item Modularidade: Esta parte crucial do trabalho também é suportada por este microcontrolador, e
     \item Preço: Para todas as funcionalidades providas pelo ESP32, este apresenta um grande custo benefício, além de estar facilmente disponível no mercado.
@@ -161,7 +161,7 @@ Também, para o demérito da utilização de tal topografia, são necessários m
     \item \textit{ground}.
 \end{itemize}
 
-Por estes dois grandes motivos e também por existirem alternativas mais simples, chegou-se a conclusão de que a utilização do protocolo \textit{ESPNOW}, desenvolvido pela própria Espressif, para facilitar a comunicação entre chips desta que possuem \textit{WiFi}. Desta maneira, serão necessários somente 2 fios entre módulos, para o envio de um sinal de sincronização. Todo o restante da comunicação inicial é feito através deste protocolo.
+Por estes dois grandes motivos e também por existirem alternativas mais simples, chegou-se a conclusão de que a utilização do protocolo \textit{ESP-NOW}, desenvolvido pela própria Espressif, para facilitar a comunicação entre chips desta que possuem \textit{WiFi}. Desta maneira, serão necessários somente 2 fios entre módulos, para o envio de um sinal de sincronização. Todo o restante da comunicação inicial é feito através deste protocolo.
 
 Para a alimentação dos circuitos integrantes do protótipo, existem duas opções: baterias ou fontes. Como este será utilizado em bancada, foi escolhida a alimentação por fontes, pois estas não precisam ser trocadas frequentemente e é possível ligá-las à rede, além de algumas outras vantagens.
 
@@ -184,10 +184,36 @@ A programação também é uma das partes mais importantes e também complexas d
 
 Primeiramente, será discutido o software. Esté é feito em Arduino e JSON, pela parte do ESP32 e em HTML 5 e JavaScript pela parte do webserver. Os dados lidos pelo \gls{ADC} chegam ao ESP32 por firmware e imediatamente são empacotados por JSON, uma linguagem de serialização de dados para comunicação entre servidores, entre outros mais, dentro de uma \textit{string}. Após a aquisição de dados de 5 ondas, este pacote é serializado e enviado ao servidor da webpage.
 
-Esta webpage, programada em HTML 5 para fazer a inserção de JavaScript e então utilizar Websocket, um protocolo de comunicação que fornece uma via de duas mãos para a conexão entre os servidores do microcontrolador e da webpage, para cuidar da comunicação entre o ESP32 e o aparelho móvel, fará o tratamento dos dados e os apresentará para o usuário, em forma de gráficos e visualizadores numéricos representando a Tensão RMS, corrente RMS, Potência Aparente e Fator de Potência, que são calculados pelas fórmulas
+Esta webpage, programada em HTML 5 para fazer a inserção de JavaScript e então utilizar Websocket, um protocolo de comunicação que fornece uma via de duas mãos para a conexão entre os servidores do microcontrolador e da webpage, para cuidar da comunicação entre o ESP32 e o aparelho móvel, fará o tratamento dos dados e os apresentará para o usuário, em forma de gráficos e visualizadores numéricos representando a Tensão RMS, corrente RMS, Potência Aparente e Fator de Potência, que são calculados pelas fórmulas:
+
+
+***
+
+
+O firmware, além da lógica de leitura e calibração, refere-se a toda a operação do protótipo. Como está sendo utilizado o ESP32, este é programado em Arduino. O funcionamento deste está intimamente ligado à máquina de estados explícita na \autoref{fig:maq-estados}.
+
+\begin{figure}[htb!]
+    \caption{Máquina de estados}
+    \label{fig:maq-estados}
+    \includegraphics[width=0.6\textwidth]{figuras/maq-estados.png}
+    \fonte{}
+\end{figure}
+
+Seguindo a lógica proposta por esta, primeiramente o microcontrolador, após ser ligado, completa uma rotina de setup e fica aberto para conexão. Sendo esta estabelecida, assim se cria a relação principal como servidor \textit{master} e o dispositivo conectado como \textit{main client}. Contectando-se ao IP do ESP32, este fornece à \textit{webpage} o HTML e JavaScript necessários para a apresentação e utilização desta. Então, se espera um input do usuário para ou conectar um módulo ou iniciar a leitura.
+
+Ao se iniciar a leitura, o microcontrolador procede-se todas as etapas necessárias para a leitura. Após a obtensão dos dados, estes são serializados em JSON e enviados à \textit{webpage} para serem tratados. Caso não exista um \textit{input} adicional do cliente, esta etapa se repete indefinidamente. Caso exista um novo \textit{input} do cliente, o servidor volta ao modo de espera.
+
+Se o cliente desejar colocar mais um canal de leitura, o microcontrolador então utiliza o protocolo \textit{ESP-NOW} para procurar e parear com um outro dispositivo disponível. Ao suceder no emparelhamento, estabelece-se uma relação de \textit{client} com este outro dispositivo e a ele são fornecidos todos os dados da rede para se conectar e então ter acesso à mesma \textit{webpage} e Websocket. A atuação do protocolo \textit{ESP-NOW} é finalizada então. A adição de canais está limitada a 2, deixando possível uma leitura trifásica.
+
+Ao se iniciar a leitura por \textit{input} do cliente, um sinal de sync é enviado do servidor \textit{master} para o módulo do canal adicional, assim se estabelecendo uma referência de tempo e sincronizando as leituras. Então toda a \textit{procedure} de leitura é acarretada, sendo os dados obtidos enviados diretamente ao servidor, não sendo necessário passar pelo microcontrolador definido como \textit{master}, otimizando o processamento e a transição de dados.
+
+
+
 
 
 \section{Materiais}\label{sec:materiais}
+
+Esta seção está dedicada à lista de materiais utilizados para a confecção de um protótipo. Os preços indicados são validos somente para a data de confecção desta monografia, pois estão cotados de acordo com o que se foi pago para a confecção deste, sendo os componentes originados de várias lojas diferentes, online e físicas.
 
 \begin{table}[!ht]
     \centering
@@ -195,40 +221,40 @@ Esta webpage, programada em HTML 5 para fazer a inserção de JavaScript e entã
     \label{tab:Bookofmaterials}
     \begin{tabular}{|l|l|l|}
         \hline
-        \textbf{Material}                      & \textbf{Quantidade} & \textbf{Preço Unidade} \\ \hline
-        \textbf{ESP32}                         & 01                  & N/A                    \\ \hline
-        \textbf{ADC ADS1015}                   & 02                  & N/A                    \\ \hline
-        \textbf{Buzzer THT}                    & 01                  & N/A                    \\ \hline
-        \textbf{Capacitor 100 nF}              & 16                  & N/A                    \\ \hline
-        \textbf{Capacitor 330 pF}              & 04                  & N/A                    \\ \hline
-        \textbf{Capacitor 10 µF}               & 04                  & N/A                    \\ \hline
-        \textbf{Capacitor 1 µF}                & 06                  & N/A                    \\ \hline
-        \textbf{Diodo Schottky 1N5819}         & 04                  & N/A                    \\ \hline
-        \textbf{Diodo 1N4007}                  & 10                  & N/A                    \\ \hline
-        \textbf{Trimpot 1 K$\Omega$}           & 04                  & N/A                    \\ \hline
-        \textbf{Transistor BC547}              & 01                  & N/A                    \\ \hline
-        \textbf{Resistor 220 $\Omega$}         & 06                  & N/A                    \\ \hline
-        \textbf{Resistor 1 k$\Omega$}          & 13                  & N/A                    \\ \hline
-        \textbf{Resistor 330 $\Omega$}         & 02                  & N/A                    \\ \hline
-        \textbf{Resistor 0 $\Omega$}           & 04                  & N/A                    \\ \hline
-        \textbf{Resistor 3k3 $\Omega$}         & 01                  & N/A                    \\ \hline
-        \textbf{Resistor 1\% 2 M$\Omega$}      & 04                  & N/A                    \\ \hline
-        \textbf{Resistor 1\% 10 k$\Omega$}     & 04                  & N/A                    \\ \hline
-        \textbf{Resistor 1\% 100 $\Omega$}     & 04                  & N/A                    \\ \hline
-        \textbf{Resistor 1\% 1 $\Omega$}       & 04                  & N/A                    \\ \hline
-        \textbf{Resistor SMD 1\% 10 m$\Omega$} & 01                  & N/A                    \\ \hline
-        \textbf{Varistor S05K385}              & 02                  & N/A                    \\ \hline
-        \textbf{Fusível HRC 440 mA}            & 01                  & N/A                    \\ \hline
-        \textbf{Fusível HRC 11 A}              & 01                  & N/A                    \\ \hline
-        \textbf{Borne KRE2}                    & 03                  & N/A                    \\ \hline
-        \textbf{Borne KRE3}                    & 02                  & N/A                    \\ \hline
-        \textbf{Alavanca 2 posições}           & 01                  & N/A                    \\ \hline
-        \textbf{LM317T}                        & 02                  & N/A                    \\ \hline
-        \textbf{LM358}                         & 02                  & N/A                    \\ \hline
-        \textbf{LM7805}                        & 02                  & N/A                    \\ \hline
-        \textbf{6N137}                         & 05                  & N/A                    \\ \hline
-        \textbf{Barra de Pinos Fêmea 40x1}     & 02                  & N/A                    \\ \hline
-        \textbf{PCB}                           & 01                  & N/A                    \\ \hline
-        \textbf{Fonte Isolada}                 & 02                  & N/A                    \\ \hline
+        \textbf{Material}                      & \textbf{Quantidade} & \textbf{Preço por Unidade (R\$)} \\ \hline
+        \textbf{ESP32}                         & 01                  &                                  \\ \hline
+        \textbf{ADC ADS1015}                   & 02                  & 35,00                            \\ \hline
+        \textbf{Buzzer THT}                    & 01                  & 3,50                             \\ \hline
+        \textbf{Capacitor 100 nF}              & 16                  & 0,25                             \\ \hline
+        \textbf{Capacitor 330 pF}              & 04                  & 0,15                             \\ \hline
+        \textbf{Capacitor 10 µF}               & 04                  & 0,20                             \\ \hline
+        \textbf{Capacitor 1 µF}                & 06                  & 0,20                             \\ \hline
+        \textbf{Diodo Schottky 1N5819}         & 04                  & 0,25                             \\ \hline
+        \textbf{Diodo 1N4007}                  & 10                  & 0,15                             \\ \hline
+        \textbf{Trimpot 1 K$\Omega$}           & 04                  & 3,60                             \\ \hline
+        \textbf{Transistor BC547}              & 01                  & 0,25                             \\ \hline
+        \textbf{Resistor 220 $\Omega$}         & 06                  & 0,10                             \\ \hline
+        \textbf{Resistor 1 k$\Omega$}          & 13                  & 0,10                             \\ \hline
+        \textbf{Resistor 330 $\Omega$}         & 02                  & 0,07                             \\ \hline
+        \textbf{Resistor 0 $\Omega$}           & 04                  & \textit{N/A}                     \\ \hline
+        \textbf{Resistor 3k3 $\Omega$}         & 01                  & 0,10                             \\ \hline
+        \textbf{Resistor 1\% 2 M$\Omega$}      & 04                  & N/A                              \\ \hline
+        \textbf{Resistor 1\% 10 k$\Omega$}     & 04                  & N/A                              \\ \hline
+        \textbf{Resistor 1\% 100 $\Omega$}     & 04                  & N/A                              \\ \hline
+        \textbf{Resistor 1\% 1 $\Omega$}       & 04                  & N/A                              \\ \hline
+        \textbf{Resistor SMD 1\% 10 m$\Omega$} & 01                  & N/A                              \\ \hline
+        \textbf{Varistor S05K385}              & 02                  & N/A                              \\ \hline
+        \textbf{Fusível HRC 440 mA}            & 01                  & N/A                              \\ \hline
+        \textbf{Fusível HRC 11 A}              & 01                  & N/A                              \\ \hline
+        \textbf{Borne KRE2}                    & 03                  & 1,30                             \\ \hline
+        \textbf{Borne KRE3}                    & 02                  & 2,00                             \\ \hline
+        \textbf{Chave Alavanca 2 posições}     & 01                  & 4,20                             \\ \hline
+        \textbf{LM317T}                        & 02                  & 2,30                             \\ \hline
+        \textbf{LM358}                         & 02                  & 1,10                             \\ \hline
+        \textbf{LM7805}                        & 02                  & 1,60                             \\ \hline
+        \textbf{6N137}                         & 05                  & 3,20                             \\ \hline
+        \textbf{Barra de Pinos Fêmea 40x1}     & 02                  & 3,10                             \\ \hline
+        \textbf{PCB}                           & 01                  & N/A                              \\ \hline
+        \textbf{Fonte Isolada}                 & 02                  & N/A                              \\ \hline
     \end{tabular}
 \end{table}
