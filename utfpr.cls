@@ -128,7 +128,7 @@
 \ifpdf%% Compilação com pdflatex
 \else%% Compilação com latex
   \@ifpackageloaded{breakurl}%% Verificação do pacote breakurl
-    {\PassOptionsToPackage{hyphenbreaks}{breakurl}}{\RequirePackage[hyphenbreaks]{breakurl}}%% Quebra de linha em endereços da web
+  {\PassOptionsToPackage{hyphenbreaks}{breakurl}}{\RequirePackage[hyphenbreaks]{breakurl}}%% Quebra de linha em endereços da web
 \fi
 % \RequirePackage[showframe]{geometry}
 \RequirePackage{geometry}
@@ -373,8 +373,8 @@
 %\newcommand{\PrenomeDoAutor}[1]{\providecommand{\imprimirprenomedoautor}{#1}}%% Prenome do(a) autor(a)
 \newcommand{\AtribuiOutroAutor}[1]{%% Insere ou remove outro(a) autor(a)
   \ifthenelse{\equal{\imprimirtipodedocumento}{Trabalho de Conclusão de Curso}}%% Verificação do tipo de documento
-    {\providecommand{\imprimiratribuioutroautor}{#1}}%% Insere ou remove outro(a) autor(a)
-    {\providecommand{\imprimiratribuioutroautor}{false}}%% Remove outro(a) autor(a)
+  {\providecommand{\imprimiratribuioutroautor}{#1}}%% Insere ou remove outro(a) autor(a)
+  {\providecommand{\imprimiratribuioutroautor}{false}}%% Remove outro(a) autor(a)
 }
 \newcommand{\NomeDoOutroAutor}[1]{\providecommand{\imprimirnomedooutroautor}{#1}}%% Nome completo do(a) outro(a) autor(a)
 \newcommand{\SobrenomeDoOutroAutor}[1]{\providecommand{\imprimirsobrenomedooutroautor}{#1}}%% Sobrenome do(a) outro(a) autor(a)
@@ -454,23 +454,23 @@
 %% Informações nas propriedades do documento do arquivo pdf
 \AtBeginDocument{%% Definições carregadas no início do documento
   \ifthenelse{\imprimirnumerodepalavraschave > 0}%% Palavra-chave A
-    {\newcommand{\pdfkeyworda}{\imprimirpalavrachavea}}%%
-    {\newcommand{\pdfkeyworda}{}}%%
+  {\newcommand{\pdfkeyworda}{\imprimirpalavrachavea}}%%
+  {\newcommand{\pdfkeyworda}{}}%%
   \ifthenelse{\imprimirnumerodepalavraschave > 1}%% Palavra-chave B
-    {\newcommand{\pdfkeywordb}{. \imprimirpalavrachaveb}}%%
-    {\newcommand{\pdfkeywordb}{}}%%
+  {\newcommand{\pdfkeywordb}{. \imprimirpalavrachaveb}}%%
+  {\newcommand{\pdfkeywordb}{}}%%
   \ifthenelse{\imprimirnumerodepalavraschave > 2}%% Palavra-chave C
-    {\newcommand{\pdfkeywordc}{. \imprimirpalavrachavec}}%%
-    {\newcommand{\pdfkeywordc}{}}%%
+  {\newcommand{\pdfkeywordc}{. \imprimirpalavrachavec}}%%
+  {\newcommand{\pdfkeywordc}{}}%%
   \ifthenelse{\imprimirnumerodepalavraschave > 3}%% Palavra-chave D
-    {\newcommand{\pdfkeywordd}{. \imprimirpalavrachaved}}%%
-    {\newcommand{\pdfkeywordd}{}}%%
+  {\newcommand{\pdfkeywordd}{. \imprimirpalavrachaved}}%%
+  {\newcommand{\pdfkeywordd}{}}%%
   \ifthenelse{\imprimirnumerodepalavraschave > 4}%% Palavra-chave E
-    {\newcommand{\pdfkeyworde}{. \imprimirpalavrachavee}}%%
-    {\newcommand{\pdfkeyworde}{}}%%
+  {\newcommand{\pdfkeyworde}{. \imprimirpalavrachavee}}%%
+  {\newcommand{\pdfkeyworde}{}}%%
   \ifthenelse{\imprimirnumerodepalavraschave > 0}%% Ponto final
-    {\newcommand{\pdfkeywordfinalpoint}{.}}%%
-    {\newcommand{\pdfkeywordfinalpoint}{}}%%
+  {\newcommand{\pdfkeywordfinalpoint}{.}}%%
+  {\newcommand{\pdfkeywordfinalpoint}{}}%%
   % Luiz: pdfa: comentado para remover os warnnings do pdfa - ficava duplicado
   %\hypersetup{%% Propriedades do documento do arquivo pdf
   %  pdftitle={\@title},%% Título
@@ -679,33 +679,33 @@
 % Capa, conforme modelo em https://nuvem.utfpr.edu.br/index.php/s/QMqXIH2iVMlXSKi
 %
 \newcommand{\coverpageone}{
-	\thispagestyle{empty}
-	\begin{adjustwidth}{-.5cm}{}
-		\centering
-		{
-			\singlespacing
-			\large\textbf{\allcaps{\@university}}\\
-			% \large\allcaps{\@universitycampus}\\
-			% \large\allcaps{\@universityunit}\\
-			% \large\allcaps{\@program}\par	
-		}
-		%\vspace{56pt}
-		\vspace{45mm}
-		{
-			%\singlespacing
-			\large\textbf{\allcaps{\@author}}\\
-		}
-		%\vfill
-		\vspace{60mm}
-		{
-			\singlespacing
-			\large\textbf{\allcaps{\@title}} \par 
-		}
-		\vfill
-		\large\textbf{\allcaps{\@address}}\par
-		\large\textbf{\allcaps{\@depositshortdate}}
-	\end{adjustwidth}
-	\clearpage{\pagestyle{empty}\cleardoublepage}
+  \thispagestyle{empty}
+  \begin{adjustwidth}{-.5cm}{}
+    \centering
+    {
+      \singlespacing
+      \large\textbf{\allcaps{\@university}}\\
+      % \large\allcaps{\@universitycampus}\\
+      % \large\allcaps{\@universityunit}\\
+      % \large\allcaps{\@program}\par	
+    }
+    %\vspace{56pt}
+    \vspace{45mm}
+    {
+      %\singlespacing
+      \large\textbf{\allcaps{\@author}}\\
+    }
+    %\vfill
+    \vspace{60mm}
+    {
+      \singlespacing
+      \large\textbf{\allcaps{\@title}} \par
+    }
+    \vfill
+    \large\textbf{\allcaps{\@address}}\par
+    \large\textbf{\allcaps{\@depositshortdate}}
+  \end{adjustwidth}
+  \clearpage{\pagestyle{empty}\cleardoublepage}
 }
 %% luiz
 
@@ -715,22 +715,22 @@
 
 \newcommand{\esporient}[2]
 {
-	\leftskip 0em
-	\@tempdima 5.0em
-	\advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
-	{#1#2\hfil}
+  \leftskip 0em
+  \@tempdima 5.0em
+  \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+  {#1#2\hfil}
 }
 
 \newcommand{\@goalfulltext}{
-	\@latex@error{No \noexpand\goalfulltext given}\@ehc
+  \@latex@error{No \noexpand\goalfulltext given}\@ehc
 }
 
 \renewcommand{\@goalfulltext}{
-%	\@goal{} apresentado à disciplina de \@course, do \@program{} do \@universityunit{}
-%	da \@university{}, como requisito parcial para obtenção do título de \@degree{}
-%	em \@degreearea{}.
-	\@goal{} apresentado como requisito para obtenção do título de \@degree{}
-	em \@degreearea{} do \@program{} da \@university{}.
+  %	\@goal{} apresentado à disciplina de \@course, do \@program{} do \@universityunit{}
+  %	da \@university{}, como requisito parcial para obtenção do título de \@degree{}
+  %	em \@degreearea{}.
+  \@goal{} apresentado como requisito para obtenção do título de \@degree{}
+  em \@degreearea{} do \@program{} da \@university{}.
 }
 
 % Creative Commons
@@ -742,11 +742,11 @@
 % #3: tamanho da figura
 % #4: link da licença CC
 \newcommand{\licencaCCTabela}[4]{
-    \begin{tabular}[t]{@{}p{#3}@{}p{13.2cm}@{}}
-        \setstretch{.8}
-        \centering \includegraphics[scale=0.6]{./PreTexto/arquivos/licencasCC/#1} & \multirow{2}{*}{\setstretch{.9} \small \begin{tabular}{p{13.2cm}}\vspace{-1.2cm}#2\end{tabular}} \\
-        \centering \vspace{-0.7cm} \href{#4}{~\textcolor{blue}{\small\underline{4.0 Internacional}}} &
-    \end{tabular}
+  \begin{tabular}[t]{@{}p{#3}@{}p{13.2cm}@{}}
+    \setstretch{.8}
+    \centering \includegraphics[scale=0.6]{./PreTexto/arquivos/licencasCC/#1}                    & \multirow{2}{*}{\setstretch{.9} \small \begin{tabular}{p{13.2cm}}\vspace{-1.2cm}#2\end{tabular}} \\
+    \centering \vspace{-0.7cm} \href{#4}{~\textcolor{blue}{\small\underline{4.0 Internacional}}} &
+  \end{tabular}
 }
 % luiz: old
 % \newcommand{\licencaCCTabela}[4]{
@@ -762,24 +762,24 @@
 \newcommand{\case}{}
 \newcommand{\default}{}
 \newenvironment{switch}[1]{%
-    \setboolean{default}{true}
-    \renewcommand{\case}[2]{\ifthenelse{\equal{#1}{##1}}{%
-        \setboolean{default}{false}##2}{}}%
-    \renewcommand{\default}[1]{\ifthenelse{\boolean{default}}{##1}{}}
+  \setboolean{default}{true}
+  \renewcommand{\case}[2]{\ifthenelse{\equal{#1}{##1}}{%
+      \setboolean{default}{false}##2}{}}%
+  \renewcommand{\default}[1]{\ifthenelse{\boolean{default}}{##1}{}}
 }{}
 
 \newcommand{\printlicense}[1]{
-  \begin{switch}{#1}  
-    \case{ccby}{\licencaCCTabela{by}{Esta licença permite compartilhamento, remixe, adaptação e criação a partir do trabalho, mesmo para fins comerciais, desde que sejam atribuídos créditos ao(s) autor(es). Conteúdos elaborados por terceiros, citados e referenciados nesta obra não são cobertos pela licença.}{3.2cm}{https://creativecommons.org/licenses/by/4.0/deed.pt_BR}}  
+  \begin{switch}{#1}
+    \case{ccby}{\licencaCCTabela{by}{Esta licença permite compartilhamento, remixe, adaptação e criação a partir do trabalho, mesmo para fins comerciais, desde que sejam atribuídos créditos ao(s) autor(es). Conteúdos elaborados por terceiros, citados e referenciados nesta obra não são cobertos pela licença.}{3.2cm}{https://creativecommons.org/licenses/by/4.0/deed.pt_BR}}
     \case{ccbysa}{\licencaCCTabela{by-sa}{Esta licença permite remixe, adaptação e criação a partir do trabalho, mesmo para fins comerciais, desde que sejam atribuídos créditos ao(s) autor(es) e que licenciem as novas criações sob termos idênticos. Conteúdos elaborados por terceiros, citados e referenciados nesta obra não são cobertos pela licença.}{3.2cm}{https://creativecommons.org/licenses/by-sa/4.0/deed.pt_BR}}
-    \case{ccbynd}{\licencaCCTabela{by-nd}{Esta licença permite compartilhamento do trabalho, mesmo para fins comerciais, sem a possibilidade de alterá-lo, desde que sejam atribuídos créditos ao(s) autor(es). Conteúdos elaborados por terceiros, citados e referenciados nesta obra não são cobertos pela licença.}{3.2cm}{https://creativecommons.org/licenses/by-nd/4.0/deed.pt_BR}} 
-    \case{ccbync}{\licencaCCTabela{by-nc}{Esta licença permite remixe, adaptação e criação a partir do trabalho, para fins não comerciais, desde que sejam atribuídos créditos ao(s) autor(es). Conteúdos elaborados por terceiros, citados e referenciados nesta obra não são cobertos pela licença.}{3.2cm}{https://creativecommons.org/licenses/by-nc/4.0/deed.pt_BR}} 
-    \case{ccbyncsa}{\licencaCCTabela{by-nc-sa}{Esta licença permite remixe, adaptação e criação a partir do trabalho, para fins não comerciais, desde que sejam atribuídos créditos ao(s) autor(es) e que licenciem as novas criações sob termos idênticos. Conteúdos elaborados por terceiros, citados e referenciados nesta obra não são cobertos pela licença.}{3.2cm}{https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR}} 
-    \case{ccbyncnd}{\licencaCCTabela{by-nc-nd}{Esta licença permite download e compartilhamento do trabalho desde que sejam atribuídos créditos ao(s) autor(es), sem a possibilidade de alterá-lo ou utilizá-lo para fins comerciais. Conteúdos elaborados por terceiros, citados e referenciados nesta obra não são cobertos pela licença.}{3.2cm}{https://creativecommons.org/licenses/by-nc-nd/4.0/deed.pt_BR}} 
+    \case{ccbynd}{\licencaCCTabela{by-nd}{Esta licença permite compartilhamento do trabalho, mesmo para fins comerciais, sem a possibilidade de alterá-lo, desde que sejam atribuídos créditos ao(s) autor(es). Conteúdos elaborados por terceiros, citados e referenciados nesta obra não são cobertos pela licença.}{3.2cm}{https://creativecommons.org/licenses/by-nd/4.0/deed.pt_BR}}
+    \case{ccbync}{\licencaCCTabela{by-nc}{Esta licença permite remixe, adaptação e criação a partir do trabalho, para fins não comerciais, desde que sejam atribuídos créditos ao(s) autor(es). Conteúdos elaborados por terceiros, citados e referenciados nesta obra não são cobertos pela licença.}{3.2cm}{https://creativecommons.org/licenses/by-nc/4.0/deed.pt_BR}}
+    \case{ccbyncsa}{\licencaCCTabela{by-nc-sa}{Esta licença permite remixe, adaptação e criação a partir do trabalho, para fins não comerciais, desde que sejam atribuídos créditos ao(s) autor(es) e que licenciem as novas criações sob termos idênticos. Conteúdos elaborados por terceiros, citados e referenciados nesta obra não são cobertos pela licença.}{3.2cm}{https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR}}
+    \case{ccbyncnd}{\licencaCCTabela{by-nc-nd}{Esta licença permite download e compartilhamento do trabalho desde que sejam atribuídos créditos ao(s) autor(es), sem a possibilidade de alterá-lo ou utilizá-lo para fins comerciais. Conteúdos elaborados por terceiros, citados e referenciados nesta obra não são cobertos pela licença.}{3.2cm}{https://creativecommons.org/licenses/by-nc-nd/4.0/deed.pt_BR}}
     \default{
-    % deixar sem licença, pois alguns trabalhos já foram enviados sem licença para a biblioteca.
-    %\licencaCCTabela{\ccby}{Licença Creative Commons 4.0: CC BY - Esta licença permite que outros distribuam, remixem, adaptem e criem a partir do trabalho, mesmo para fins comerciais, desde que atribuam o devido crédito pela criação original.}{1.5cm}
-    }  
+      % deixar sem licença, pois alguns trabalhos já foram enviados sem licença para a biblioteca.
+      %\licencaCCTabela{\ccby}{Licença Creative Commons 4.0: CC BY - Esta licença permite que outros distribuam, remixem, adaptem e criem a partir do trabalho, mesmo para fins comerciais, desde que atribuam o devido crédito pela criação original.}{1.5cm}
+    }
   \end{switch}
 }
 
@@ -787,55 +787,55 @@
 %
 \newcommand{\coverpagetwo}
 {
-    \cleardoublepage
-	\thispagestyle{empty}
-	\begin{adjustwidth}{-.5cm}{}
-		\begin{center}
-				\singlespacing
-				\large\textbf{\allcaps{\@author}}\\
-		\end{center}
-		\vfill
-		\begin{center}
-			\large\textbf{\allcaps{\@title}}\par
-		\end{center}
-		\vspace{1cm}
-		\begin{center}
-			\large\textbf{\@titleen}\par
-		\end{center}
+  \cleardoublepage
+  \thispagestyle{empty}
+  \begin{adjustwidth}{-.5cm}{}
+    \begin{center}
+      \singlespacing
+      \large\textbf{\allcaps{\@author}}\\
+    \end{center}
+    \vfill
+    \begin{center}
+      \large\textbf{\allcaps{\@title}}\par
+    \end{center}
+    \vspace{1cm}
+    \begin{center}
+      \large\textbf{\@titleen}\par
+    \end{center}
 
-		\vspace{60pt}
-		\hfill\begin{minipage}{.5\textwidth}
-				\singlespacing
-				\hyphenpenalty=10000
-				\@goalfulltext\par
-				\vspace{-.3cm}
-				\esporient{\numberline{\advisorlabel:}}{\hspace{3pt}\@advisor}\par
-				\@ifundefined{@coadvisor}{}{
-					\vspace{-8pt}
-					\esporient{\numberline{\coadvisorlabel:}}{\hspace{15pt}\@coadvisor}\par
-				}
-		\end{minipage}
-		\vfill
-		\begin{center}
-			\textbf{\allcaps{\@address}}\par
-			\textbf{\@depositshortdate}\par
-			\vspace{1cm}
-			\printlicense{\@licenca}
-		\end{center}
-	\end{adjustwidth}
+    \vspace{60pt}
+    \hfill\begin{minipage}{.5\textwidth}
+      \singlespacing
+      \hyphenpenalty=10000
+      \@goalfulltext\par
+      \vspace{-.3cm}
+      \esporient{\numberline{\advisorlabel:}}{\hspace{3pt}\@advisor}\par
+      \@ifundefined{@coadvisor}{}{
+        \vspace{-8pt}
+        \esporient{\numberline{\coadvisorlabel:}}{\hspace{15pt}\@coadvisor}\par
+      }
+    \end{minipage}
+    \vfill
+    \begin{center}
+      \textbf{\allcaps{\@address}}\par
+      \textbf{\@depositshortdate}\par
+      \vspace{1cm}
+      \printlicense{\@licenca}
+    \end{center}
+  \end{adjustwidth}
 }
 
 \newcommand{\printevalboard}{}
 \newcommand{\evalboardmember}[3]{
-    \g@addto@macro\printevalboard{
-        \vspace{.4cm}
-        \begin{singlespacing}
-            \par\noindent\rule{.8\textwidth}{0.4pt}\\
-            #1\\
-            #2\\
-            #3\\
-        \end{singlespacing}
-    }
+  \g@addto@macro\printevalboard{
+    \vspace{.4cm}
+    \begin{singlespacing}
+      \par\noindent\rule{.8\textwidth}{0.4pt}\\
+      #1\\
+      #2\\
+      #3\\
+    \end{singlespacing}
+  }
 }
 %%
 
@@ -849,11 +849,11 @@
       \begin{flushleft}%% Alinhamento à esquerda
         \MakeUppercase{\imprimirsobrenomedoautor}, \imprimirprenomedoautor
         \ifthenelse{\equal{\imprimiratribuioutroautor}{true}}%% Verificação do(a) outro(a) autor(a)
-          {; \MakeUppercase{\imprimirsobrenomedooutroautor}, \imprimirprenomedooutroautor.}{.}
+        {; \MakeUppercase{\imprimirsobrenomedooutroautor}, \imprimirprenomedooutroautor.}{.}
         {\bfseries\imprimirtitulododocumento\unskip}. \imprimirano. \pageref{LastPage}~f. \imprimirtipodedocumento\
         (\imprimirniveldeformacao\ em \imprimircurso) -- \imprimirinstituicao. \imprimircidade, \imprimirano.
       \end{flushleft}
-}{%%
+      }{%%
     \end{Spacing}
   \end{errataoriginal}
   \cleardoublepage%% Página de verso
@@ -864,38 +864,38 @@
 %
 \newcommand{\approvalpage}
 {
-    \cleardoublepage
-	\thispagestyle{empty}
-	\begin{adjustwidth}{-.5cm}{}
-		\begin{center}
-			\singlespacing
-			\large\textbf{\allcaps{\@author}}\\
-		\end{center}
-		%\vspace{30mm}
-		\vspace{15mm}
-		\begin{center}
-			\large\textbf{\allcaps{\@title}}\par
-		\end{center}
-		%\vspace{60pt}
-		\vspace{10mm}
-		\hfill\begin{minipage}{.5\textwidth}
-				\singlespacing
-				\hyphenpenalty=10000
-				\@goalfulltext\par
-		\end{minipage}
-		%\vspace{15mm}
-		\vspace{10mm}
-		\begin{center}
-		    {\large Data de aprovação: \@approvaldate}
-		    \vspace{0,6cm}
-		    \printevalboard
-		\end{center}
-		\vfill
-		\begin{center}
-			\textbf{\allcaps{\@address}}\par
-			\textbf{\@depositshortdate}\par
-		\end{center}
-	\end{adjustwidth}
+  \cleardoublepage
+  \thispagestyle{empty}
+  \begin{adjustwidth}{-.5cm}{}
+    \begin{center}
+      \singlespacing
+      \large\textbf{\allcaps{\@author}}\\
+    \end{center}
+    %\vspace{30mm}
+    \vspace{15mm}
+    \begin{center}
+      \large\textbf{\allcaps{\@title}}\par
+    \end{center}
+    %\vspace{60pt}
+    \vspace{10mm}
+    \hfill\begin{minipage}{.5\textwidth}
+      \singlespacing
+      \hyphenpenalty=10000
+      \@goalfulltext\par
+    \end{minipage}
+    %\vspace{15mm}
+    \vspace{10mm}
+    \begin{center}
+      {\large Data de aprovação: \@approvaldate}
+      \vspace{0,6cm}
+      \printevalboard
+    \end{center}
+    \vfill
+    \begin{center}
+      \textbf{\allcaps{\@address}}\par
+      \textbf{\@depositshortdate}\par
+    \end{center}
+  \end{adjustwidth}
 }
 %% luiz - fim
 
@@ -908,7 +908,7 @@
       \begin{minipage}{0.5\textwidth}%% Caixa de texto
         \singlespacing
         \raggedleft
-}{%%
+        }{%%
       \end{minipage}
     \end{flushright}
   \end{dedicatoriaoriginal}
@@ -923,7 +923,7 @@
       \begin{minipage}{0.5\textwidth}%% Caixa de texto
         \singlespacing
         \raggedleft
-}{%%
+        }{%%
       \end{minipage}
     \end{flushright}
   \end{epigrafeoriginal}
@@ -945,7 +945,7 @@
       \begin{flushleft}%% Alinhamento à esquerda
       \end{flushleft}
       %\singlespacing
-}{%%
+      }{%%
       \\
       \par\textbf{\nomepalavraschave:}
       \ifthenelse{\imprimirnumerodepalavraschave > 0}{\imprimirpalavrachavea}{}%%
@@ -965,7 +965,7 @@
       \begin{flushleft}%% Alinhamento à esquerda
       \end{flushleft}
       %\singlespacing
-}{%%
+      }{%%
       \\
       \par\textbf{\nomekeywords:}
       \ifthenelse{\imprimirnumerodekeywords > 0}{\imprimirkeyworda}{}%%
@@ -997,30 +997,30 @@
 
 %% Listagem de Códigos fonte
 \usepackage{listings}
-\lstset{ 
-  numbers=left,
-  numberstyle=\small,
-  basicstyle=\small,
-  keepspaces=true,
-  showspaces=false, 
-  showstringspaces=false,
-  showtabs=false,
-  tabsize=2,
-  aboveskip=0.75em,
-  belowcaptionskip=0em,
-  belowskip=0em,
-  literate=
-    {á}{{\'a}}1
-    {à}{{\`a}}1
-    {ã}{{\~a}}1
-    {é}{{\'e}}1
-    {ê}{{\^e}}1
-    {í}{{\'i}}1
-    {ó}{{\'o}}1
-    {õ}{{\~o}}1
-    {ú}{{\'u}}1
-    {ü}{{\"u}}1
-    {ç}{{\c{c}}}1
+\lstset{
+numbers=left,
+numberstyle=\small,
+basicstyle=\small,
+keepspaces=true,
+showspaces=false,
+showstringspaces=false,
+showtabs=false,
+tabsize=2,
+aboveskip=0.75em,
+belowcaptionskip=0em,
+belowskip=0em,
+literate=
+  {á}{{\'a}}1
+{à}{{\`a}}1
+{ã}{{\~a}}1
+{é}{{\'e}}1
+{ê}{{\^e}}1
+{í}{{\'i}}1
+{ó}{{\'o}}1
+{õ}{{\~o}}1
+{ú}{{\'u}}1
+{ü}{{\"u}}1
+{ç}{{\c{c}}}1
 }
 \newfloat[chapter]{sourcecode}{loc}{\sourcecodename}
 \newlistof{listofsourcecodes}{loc}{\listofsourcecodesname}
@@ -1029,7 +1029,7 @@
 % configurações para atender às regras da ABNT
 \setfloatadjustment{sourcecode}{\centering}
 \counterwithout{sourcecode}{chapter}
-\renewcommand{\cftsourcecodename}{\sourcecodename\space} 
+\renewcommand{\cftsourcecodename}{\sourcecodename\space}
 \renewcommand*{\cftsourcecodeaftersnum}{\hfill--\hfill}
 
 \newcommand{\incluirlistadecodigosfonte}{%% Definição do comando para inclusão da lista de ilustrações
@@ -1074,7 +1074,7 @@
   \pdfbookmark[0]{\listfigurename}{lof}%% Marcador
   \begin{Spacing}{1.5}%% Espaçamento simples entre linhas
     \listoffigures*%% Impressão da lista de figuras
-    
+
     %% Lista de fotografias e gráficos estão separadas
     %\section*{Fotografias}%% Seção fotografias
     %\listofphotographs*%% Impressão da lista de fotografias
@@ -1186,7 +1186,7 @@
   \begin{Spacing}{1.5}%% Espaçamento simples entre linhas
     \section*{\nomeabreviaturas}%% Seção abreviaturas
     \begin{xtabular}{@{}p{25mm}@{}p{135mm}}%% Ambiente xtabular
-}{%%
+      }{%%
     \end{xtabular}
   \end{Spacing}
   \vspace*{0pt}%% Espaçamento vertical
@@ -1195,7 +1195,7 @@
   \begin{Spacing}{1.5}%% Espaçamento simples entre linhas
     \section*{\nomesiglas}%% Seção siglas
     \begin{xtabular}{@{}p{25mm}@{}p{135mm}}%% Ambiente xtabular
-}{%%
+      }{%%
     \end{xtabular}
   \end{Spacing}
   \vspace*{0pt}%% Espaçamento vertical
@@ -1204,7 +1204,7 @@
   \begin{Spacing}{1.5}%% Espaçamento simples entre linhas
     \section*{\nomeacronimos}%% Seção acrônimos
     \begin{xtabular}{@{}p{25mm}@{}p{135mm}}%% Ambiente xtabular
-}{%%
+      }{%%
     \end{xtabular}
   \end{Spacing}
   \vspace*{0pt}%% Espaçamento vertical
@@ -1227,18 +1227,18 @@
     \setglossarysection{section}%% Estilo de seção do glossário
     \setlength{\glsdescwidth}{135mm}%% Comprimento da descrição
     \setlength{\glspagelistwidth}{0pt}%% Comprimento da lista de páginas
-	%Juan: Setting  a long table for glossary style
-	\setglossarystyle{long}
-	\renewenvironment{theglossary}%
-	 {\begin{longtable}[l]{lp{\glsdescwidth}}}%
-	 {\end{longtable}}
-%    \renewenvironment{theglossary}{%% Formatação do glossário
-%      \begin{Spacing}{1.5}%% Espaçamento simples entre linhas
-%        \begin{xtabular}{@{}p{25mm}@{}p{\glsdescwidth}}%% Ambiente xtabular
-%    }{%%
-%        \end{xtabular}
-%      \end{Spacing}
-%    }
+    %Juan: Setting  a long table for glossary style
+    \setglossarystyle{long}
+    \renewenvironment{theglossary}%
+    {\begin{longtable}[l]{lp{\glsdescwidth}}}%
+        {\end{longtable}}
+    %    \renewenvironment{theglossary}{%% Formatação do glossário
+    %      \begin{Spacing}{1.5}%% Espaçamento simples entre linhas
+    %        \begin{xtabular}{@{}p{25mm}@{}p{\glsdescwidth}}%% Ambiente xtabular
+    %    }{%%
+    %        \end{xtabular}
+    %      \end{Spacing}
+    %    }
   }
   \pretextualchapter{\nomelistadeacronimos}%% Marcador
   \printglossary[type = \abbreviationtype, title = \nomeabreviaturas, style = myxtab, nonumberlist = true]%% Lista de abreviaturas
@@ -1272,7 +1272,7 @@
   \begin{Spacing}{1.5}%% Espaçamento simples entre linhas
     \section*{\nomeletraslatinas}%% Seção letras latinas
     \begin{xtabular}{@{}p{25mm}@{}p{110mm}@{}>{\hspace*{\fill}}p{25mm}}%% Ambiente xtabular
-}{%%
+      }{%%
     \end{xtabular}
   \end{Spacing}
   \vspace*{0pt}%% Espaçamento vertical
@@ -1281,7 +1281,7 @@
   \begin{Spacing}{1.0}%% Espaçamento simples entre linhas
     \section*{\nomeletrasgregas}%% Seção letras gregas
     \begin{xtabular}{@{}p{25mm}@{}p{110mm}@{}>{\hspace*{\fill}}p{25mm}}%% Ambiente xtabular
-}{%%
+      }{%%
     \end{xtabular}
   \end{Spacing}
   \vspace*{0pt}%% Espaçamento vertical
@@ -1290,7 +1290,7 @@
   \begin{Spacing}{1.5}%% Espaçamento simples entre linhas
     \section*{\nomesobrescritos}%% Seção sobrescritos
     \begin{xtabular}{@{}p{25mm}@{}p{110mm}@{}>{\hspace*{\fill}}p{25mm}}%% Ambiente xtabular
-}{%%
+      }{%%
     \end{xtabular}
   \end{Spacing}
   \vspace*{0pt}%% Espaçamento vertical
@@ -1299,7 +1299,7 @@
   \begin{Spacing}{1.5}%% Espaçamento simples entre linhas
     \section*{\nomesubscritos}%% Seção subscritos
     \begin{xtabular}{@{}p{25mm}@{}p{110mm}@{}>{\hspace*{\fill}}p{25mm}}%% Ambiente xtabular
-}{%%
+      }{%%
     \end{xtabular}
   \end{Spacing}
   \vspace*{0pt}%% Espaçamento vertical
@@ -1308,7 +1308,7 @@
   \begin{Spacing}{1.0}%% Espaçamento simples entre linhas
     \section*{\nomenotacoes}%% Seção notações
     \begin{xtabular}{@{}p{25mm}@{}p{110mm}@{}>{\hspace*{\fill}}p{25mm}}%% Ambiente xtabular
-}{%%
+      }{%%
     \end{xtabular}
   \end{Spacing}
   \vspace*{0pt}%% Espaçamento vertical
@@ -1322,11 +1322,11 @@
 \newcommand{\nomunit}[1]{\abntex@ifnotempty{#1}{\renewcommand{\nomentryend}{\hspace*{\fill}\SI{}{[#1]}}}}%% Unidade do símbolo
 \renewcommand{\nomgroup}[1]{%% Grupos de símbolos
   \ifthenelse{\equal{#1}{A}}{\item[\normalfont\normalsize\MakeUppercase{\nomeletraslatinas}]}%% Letras latinas
-    {\ifthenelse{\equal{#1}{B}}{\item[\normalfont\normalsize\MakeUppercase{\nomeletrasgregas}]}%% Letras gregas
-      {\ifthenelse{\equal{#1}{C}}{\item[\normalfont\normalsize\MakeUppercase{\nomesobrescritos}]}%% Sobrescritos
-        {\ifthenelse{\equal{#1}{D}}{\item[\normalfont\normalsize\MakeUppercase{\nomesubscritos}]}%% Subscritos
-          {\ifthenelse{\equal{#1}{E}}{\item[\normalfont\normalsize\MakeUppercase{\nomenotacoes}]}%% Notações
-            {}}}}\vspace*{12.25pt}}
+  {\ifthenelse{\equal{#1}{B}}{\item[\normalfont\normalsize\MakeUppercase{\nomeletrasgregas}]}%% Letras gregas
+    {\ifthenelse{\equal{#1}{C}}{\item[\normalfont\normalsize\MakeUppercase{\nomesobrescritos}]}%% Sobrescritos
+      {\ifthenelse{\equal{#1}{D}}{\item[\normalfont\normalsize\MakeUppercase{\nomesubscritos}]}%% Subscritos
+        {\ifthenelse{\equal{#1}{E}}{\item[\normalfont\normalsize\MakeUppercase{\nomenotacoes}]}%% Notações
+          {}}}}\vspace*{12.25pt}}
   \item[]\vspace*{12.25pt}
 }
 \renewcommand{\thenomenclature}{%% Inicialização da formatação da lista de símbolos
@@ -1334,17 +1334,17 @@
   \vspace*{12pt}%% Espaçamento vertical
   \nompreamble%% Pré-texto da nomeclatura
   \begin{Spacing}{0.0}%% Espaçamento simples entre linhas
-  \list{}{%% Estilo da lista de itens
-    \labelwidth\nom@tempdim
-    \leftmargin\labelwidth
-    \advance\leftmargin\labelsep
-    \itemsep\nomitemsep
-    \let\makelabel\nomlabel
-  }
-}
-\renewcommand{\endthenomenclature}{%% Finalização da formatação da lista de símbolos
-  \endlist
-  \nompostamble%% Pós-Texto da nomeclatura
+    \list{}{%% Estilo da lista de itens
+      \labelwidth\nom@tempdim
+      \leftmargin\labelwidth
+      \advance\leftmargin\labelsep
+      \itemsep\nomitemsep
+      \let\makelabel\nomlabel
+    }
+    }
+    \renewcommand{\endthenomenclature}{%% Finalização da formatação da lista de símbolos
+    \endlist
+    \nompostamble%% Pós-Texto da nomeclatura
   \end{Spacing}
   \cleardoublepage%% Página de verso
 }
@@ -1379,8 +1379,8 @@
 
 \let\oldcontentsline\contentsline%% Título da seção no sumário em letras maíusculas
 \def\contentsline#1#2{%%
-  \expandafter\ifx\csname l@#1\endcsname\l@section\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi%%
-  {\oldcontentsline{#1}{#2}}{\oldcontentsline{#1}{#2}}%%
+\expandafter\ifx\csname l@#1\endcsname\l@section\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi%%
+{\oldcontentsline{#1}{#2}}{\oldcontentsline{#1}{#2}}%%
 } % ver o caixa alta no sumário e no texto... 
 
 % fim
@@ -1403,13 +1403,13 @@
 \renewcommand{\cftparagraphpagefont}{\normalfont\normalsize}%% Estilo da página do parágrafo no sumário
 \renewcommand{\cftsubparagraphpagefont}{\normalfont\normalsize}%% Estilo da página do subparágrafo no sumário
 % \if@semrecuonosumario%% Remoção do recuo dos itens no sumário
-  \setlength{\cftpartindent}{0pt}%% Recuo do título da parte
-  \setlength{\cftchapterindent}{0pt}%% Recuo do título do capítulo
-  \setlength{\cftsectionindent}{0pt}%% Recuo do título da seção
-  \setlength{\cftsubsectionindent}{0pt}%% Recuo do título da subseção
-  \setlength{\cftsubsubsectionindent}{0pt}%% Recuo do título da subsubseção
-  \setlength{\cftparagraphindent}{0pt}%% Recuo do título do parágrafo
-  \setlength{\cftsubparagraphindent}{0pt}%% Recuo do título do subparágrafo
+\setlength{\cftpartindent}{0pt}%% Recuo do título da parte
+\setlength{\cftchapterindent}{0pt}%% Recuo do título do capítulo
+\setlength{\cftsectionindent}{0pt}%% Recuo do título da seção
+\setlength{\cftsubsectionindent}{0pt}%% Recuo do título da subseção
+\setlength{\cftsubsubsectionindent}{0pt}%% Recuo do título da subsubseção
+\setlength{\cftparagraphindent}{0pt}%% Recuo do título do parágrafo
+\setlength{\cftsubparagraphindent}{0pt}%% Recuo do título do subparágrafo
 %\fi
 \setlength{\cftbeforepartskip}{2em\@plus\p@}%% Remoção de espaço adicional antes de uma parte nas listas
 \setlength{\cftbeforechapterskip}{0.1em\@plus\p@}%% Remoção de espaço adicional antes de um capítulo nas listas
@@ -1451,24 +1451,24 @@
 
 \def\@chapapp{Chapter}%
 \makechapterstyle{postext}{%%
-    \chapterstyle{default}%
-    \renewcommand*{\chapterheadstart}{}%
-    \renewcommand{\chapterheadstart}{}%
-    \renewcommand*{\printchaptername}{}%
-    \renewcommand*{\chapternamenum}{}%
-    \renewcommand*{\chapnumfont}{\normalfont\scshape\MakeTextLowercase}%
-    \renewcommand*{\printchapternum}{}%
-    \renewcommand*{\afterchapternum}{}%
-    \renewcommand*{\printchapternonum}{}%
-    \renewcommand*{\chaptitlefont}{\normalfont\large\bfseries}%
-    \renewcommand*{\printchaptertitle}[1]{%%
-        \null
-        \vfill
-        \centering %
-        \chaptitlefont{\@chapapp\ \thechapter\ -- ##1}%
-        \vfill
-        \cleardoublepage
-    }%
+  \chapterstyle{default}%
+  \renewcommand*{\chapterheadstart}{}%
+  \renewcommand{\chapterheadstart}{}%
+  \renewcommand*{\printchaptername}{}%
+  \renewcommand*{\chapternamenum}{}%
+  \renewcommand*{\chapnumfont}{\normalfont\scshape\MakeTextLowercase}%
+  \renewcommand*{\printchapternum}{}%
+  \renewcommand*{\afterchapternum}{}%
+  \renewcommand*{\printchapternonum}{}%
+  \renewcommand*{\chaptitlefont}{\normalfont\large\bfseries}%
+  \renewcommand*{\printchaptertitle}[1]{%%
+    \null
+    \vfill
+    \centering %
+    \chaptitlefont{\@chapapp\ \thechapter\ -- ##1}%
+    \vfill
+    \cleardoublepage
+  }%
 }%
 
 %% Apêndices
@@ -1479,7 +1479,7 @@
       \texorpdfstring{\uppercase{\apendicesname}}{\apendicesname}%%
     }
     \setlength{\afterchapskip}{\linha}%% Espaçamento após o título
-}{%%
+    }{%%
   \end{apendicesenv}
 }
 
@@ -1488,13 +1488,13 @@
   \chapterstyle{postext}
   \renewcommand{\Hy@appendixstring}{anexo}%% Definição do comando para o rótulo anexo
   \xdef\Hy@chapapp{\Hy@appendixstring}%% Definição do rótulo anexo
-    \begin{anexosenv}%% Ambiente anexosenv
-      %\renewcommand{\appendixtocname}{Anexo}
-      \renewcommand{\appendixtocname}{%% Nome da parte anexos no sumário
+  \begin{anexosenv}%% Ambiente anexosenv
+    %\renewcommand{\appendixtocname}{Anexo}
+    \renewcommand{\appendixtocname}{%% Nome da parte anexos no sumário
       \texorpdfstring{\uppercase{\anexosname}}{\anexosname}%%
     }
     \setlength{\afterchapskip}{\linha}%% Espaçamento após o título
-}{%%
+    }{%%
   \end{anexosenv}
 }
 
@@ -1591,11 +1591,11 @@
 % Luiz - comando fonte - se deixar em branco (ex. /fonte{}  - sem espaço) será preenchido automático com autor e ano.
 % comandos para figuras e tabelas com fonte:
 \renewcommand{\fonte}[1]{
-\ifx\hfuzz#1\hfuzz
+  \ifx\hfuzz#1\hfuzz
     \caption*{\ABNTEXfontereduzida{\bfseries\nomefonte: Autoria própria (\the\year).}}
-\else
-    \caption*{\ABNTEXfontereduzida{\bfseries\nomefonte: {#1}.}} 
-\fi
+  \else
+    \caption*{\ABNTEXfontereduzida{\bfseries\nomefonte: {#1}.}}
+  \fi
 }
 
 
@@ -1621,9 +1621,9 @@
 %%Juan: Erro usando Miktex
 % \renewcommand*{\l@section}[2]
 % {% luiz - o xmakefirstuc está funcionando, todavia a primeira coisa que vem é o número... e depois o texto, então ele não deixa a primeira letra maiúscula por causa disso... tem que ver como resolver
- %    \l@chapapp{\ABNTEXsectionfont\xmakefirstuc{#1}}{#2}{\cftsectionname}
- %}
- 
- 
+%    \l@chapapp{\ABNTEXsectionfont\xmakefirstuc{#1}}{#2}{\cftsectionname}
+%}
+
+
 
 %\renewcommand{\ABNTEXsectionfont}{\usefont{T1}{cmr}{m}{n}}
