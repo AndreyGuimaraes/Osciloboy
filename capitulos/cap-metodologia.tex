@@ -129,7 +129,7 @@ Este filtro age de forma a atenuar em -3 decibéis (70,7\%) sinais de frequênci
 
 De acordo com o teorema de amostragem de Nyquist-Shannon, para a reconstrução de um sinal, se é necessário minimamente uma frequência de amostragem maior que $2f_{m}$ do sinal a ser lido. Como a frequência de leitura proposta pelo ADC escolhido é de aproximadamente 3,3 kHz, é possível escolher a frequência de corte do filto, sendo esta aproximadamente 1,6 kHz. Esta frequência também é um bom \textit{"middle-ground"} para leituras de sinais ruidosos sem perder muitas das características das harmônicas de rede, por exemplo.
 
-Para o cálculo deste filtro, precisa-se encontrar o R equivalente nos nós do capacitor. Para tanto, utiliza-se o teorema de Thevenin (considerando todas as fontes de tensão como circuito aberto), como é possível verificar substituindo o capacitor por um ohmímetro na \autoref{fig:r-thevenin}.
+Para o cálculo deste filtro, precisa-se encontrar o R equivalente nos nós do capacitor. Para tanto, utiliza-se o teorema de Thevenin (considerando todas as fontes de corrente como circuito aberto e fontes de tensão como curto), como é possível verificar substituindo o capacitor por um ohmímetro na \autoref{fig:r-thevenin}.
 
 \begin{figure}[htb!]
     \caption{Simulação da resistência de Thevenin}
