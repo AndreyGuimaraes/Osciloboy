@@ -100,7 +100,7 @@ Este tipo de leitura, ao invés de comparar a tensão entre um ponto do circuito
 
 Para o dimensionamento dos resistores desta topologia, considerando a necessidade da atenuação da tensão em aproximadamente 100 vezes, pois um sinal de 330 V (o pico máximo suportado pelo sistema) deve ser condicionado a no máximo 3,3 V. Considerando o divisor resistivo, para tal, também se necessita uma relação de aproximadamente 100 vezes entre os resistores. Para se ter uma corrente mínima de entrada, foi escolhido um resistor de 2M$\Omega$, tornando assim o segundo valor 20 k$\Omega$.
 
-Para o offset de tensão, como os erros introduzidos são anulados pela própria topografia, utiliza-se uma referência tensão menos precisa, diminuindo o custo do circuito regulador como um todo. A referência de tensão utilizada para este projeto é fornecida pelo \gls{CI} TL431A, tendo este ainda assim uma precisão de 1\%, mas sendo muito mais barato que a opção anterior. Além disso, este possibilita mais facilmente a utilização do range inteiro de leitura do \gls{ADC}, tornando assim o offset $3,3/2$, que pode ser regulado pela ação do trimpot junto ao circuito auxiliar. Como não são utilizados \gls{amp-op}s, também não é necessária a utilização do circuito auxiliar \textit{Negative Charge Pump}.
+Para o offset de tensão, como os erros introduzidos são minimizados pela própria topografia, utiliza-se uma referência tensão menos precisa, diminuindo o custo do circuito regulador como um todo. A referência de tensão utilizada para este projeto é fornecida pelo \gls{CI} TL431A, tendo este ainda assim uma precisão de 1\%, mas sendo muito mais barato que a opção anterior. Além disso, este possibilita mais facilmente a utilização do range inteiro de leitura do \gls{ADC}, tornando assim o offset $3,3/2$, que pode ser regulado pela ação do trimpot junto ao circuito auxiliar. Como não são utilizados \gls{amp-op}s, também não é necessária a utilização do circuito auxiliar \textit{Negative Charge Pump}.
 
 Então, com todos estes benefícios em mente, foi escolhida esta topologia e tipo de leitura para o circuito final, como explícito na \autoref{fig:circ-cond-t}. Para a leitura de corrente, a mesma lógica se aplica, pois o resistor shunt é visto como uma fonte de tensão pelo circuito de leitura. Como esta tensão é extremamente baixa, não há a necessidade de um resistor de entrada para a atenuação da mesma, como explícito na \autoref{fig:circ-cond-c}.
 
@@ -117,6 +117,44 @@ Então, com todos estes benefícios em mente, foi escolhida esta topologia e tip
     \includegraphics[width=0.8\textwidth]{figuras/circ-cond-c.png}
     \fonte{}
 \end{figure}
+
+Também sobre o condicionamento de sinais, é de suma importância se ter um filtro de entrada. Mesmo que a topografia em questão minimize ruídos, quanto mais limpo o sinal de entrada é, melhor serão as leituras e consequentemente o tratamento dos dados. Para este projeto, decidiu-se utilizar um filtro passa-baixas "RC", que consiste de um resistor e um capacitor em \textit{shunt} \cite{filtros}. O cálculo deste filtro é regido pela fórmula \autoref{eqcap}:
+
+\begin{equation}
+    \label{eqcap}
+    f_{c} = \frac{1}{2\pi RC}
+\end{equation}
+
+Este filtro age de forma a atenuar em -3 decibéis (70,7\%) sinais de frequências maiores que a de corte.
+
+De acordo com o teorema de amostragem de Nyquist-Shannon, para a reconstrução de um sinal, se é necessário minimamente uma frequência de amostragem maior que $2f_{m}$ do sinal a ser lido. Como a frequência de leitura proposta pelo ADC escolhido é de aproximadamente 3,3 kHz, é possível escolher a frequência de corte do filto, sendo esta aproximadamente 1,6 kHz. Esta frequência também é um bom \textit{"middle-ground"} para leituras de sinais ruidosos sem perder muitas das características das harmônicas de rede, por exemplo.
+
+Para o cálculo deste filtro, precisa-se encontrar o R equivalente nos nós do capacitor. Para tanto, utiliza-se o teorema de Thevenin (considerando todas as fontes de tensão como circuito aberto), como é possível verificar substituindo o capacitor por um ohmímetro na \autoref{fig:r-thevenin}.
+
+\begin{figure}[htb!]
+    \caption{Simulação da resistência de Thevenin}
+    \label{fig:r-thevenin}
+    \includegraphics[width=0.9\textwidth]{figuras/r-thevenin.png}
+    \fonte{}
+\end{figure}
+
+Utilizando a fórmula, para o caso da entrada de corrente e considerando um resistor de 10 k$\Omega$ (pela facilidade de se encontrar o componente), chega-se ao valor de um capacitor de aproximadamente 10 nF. As simulações representadas nas figuras \ref{fig:simco1} e \ref{fig:simco2}. O sinal encontrado no resistor de 6 M$\Omega$ representa a entrada do \gls{ADC}.
+
+\begin{figure}[htb!]
+    \caption{Simulação sem filtro passa-baixa para a corrente}
+    \label{fig:simco1}
+    \includegraphics[width=0.9\textwidth]{figuras/sim-co-1.png}
+    \fonte{}
+\end{figure}
+
+\begin{figure}[htb!]
+    \caption{Simulação com filtro passa-baixa para a corrente}
+    \label{fig:simco2}
+    \includegraphics[width=0.9\textwidth]{figuras/sim-co-2.png}
+    \fonte{}
+\end{figure}
+
+Para a entrada de tensão do circuito segue-se a mesma lógica, chegando a um valor de 5 nF.
 
 Após a leitura dos sinais e a conversão feita pelo ADC, o sinal digital de saída é processado por um microcontrolador para então ser entregue a uma webpage e assim tratado para visualização pelo usuário. Algumas necessidades básicas devem ser atendidas pelo chip escolhido, como suporte para comunicação \textit{wireless}, seja \textit{WiFi} ou \textit{Bluetooth}, \textit{clock speed} alta o suficiente para não interferir na aquisição de dados e também ter uma boa documentação para ser possível o desenvolvimento do código.
 
