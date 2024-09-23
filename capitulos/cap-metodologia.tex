@@ -127,8 +127,6 @@ Também sobre o condicionamento de sinais, é de suma importância se ter um fil
 
 Este filtro age de forma a atenuar em -3 decibéis (70,7\%) sinais de frequências maiores que a de corte.
 
-De acordo com o teorema de amostragem de Nyquist-Shannon, para a reconstrução de um sinal, se é necessário minimamente uma frequência de amostragem maior que $2f_{m}$ do sinal a ser lido. Como a frequência de leitura proposta pelo ADC escolhido é de aproximadamente 3,3 kHz, é possível escolher a frequência de corte do filto, sendo esta aproximadamente 1,6 kHz. Esta frequência também é um bom \textit{"middle-ground"} para leituras de sinais ruidosos sem perder muitas das características das harmônicas de rede, por exemplo.
-
 Para o cálculo deste filtro, precisa-se encontrar o R equivalente nos nós do capacitor. Para tanto, utiliza-se o teorema de Thevenin (considerando todas as fontes de corrente como circuito aberto e fontes de tensão como curto), como é possível verificar substituindo o capacitor por um ohmímetro na \autoref{fig:r-thevenin}.
 
 \begin{figure}[htb!]
@@ -138,7 +136,7 @@ Para o cálculo deste filtro, precisa-se encontrar o R equivalente nos nós do c
     \fonte{}
 \end{figure}
 
-Utilizando a fórmula, para o caso da entrada de corrente e considerando um resistor de 10 k$\Omega$ (pela facilidade de se encontrar o componente), chega-se ao valor de um capacitor de aproximadamente 10 nF. As simulações representadas nas figuras \ref{fig:simco1} e \ref{fig:simco2}. O sinal encontrado no resistor de 6 M$\Omega$ representa a entrada do \gls{ADC}.
+Utilizando a fórmula, para o caso da entrada de corrente e considerando dois resistores de 5 k$\Omega$ (pela facilidade de se encontrar o componente), chega-se ao valor de um capacitor de aproximadamente 100 nF para uma frequência de corte de aproximadamente 237 \textit{Hz}. As simulações representadas nas figuras \ref{fig:simco1} e \ref{fig:simco2}. O sinal encontrado no resistor de 6 M$\Omega$ representa a entrada do \gls{ADC}.
 
 \begin{figure}[htb!]
     \caption{Simulação sem filtro passa-baixa para a corrente}
@@ -154,7 +152,7 @@ Utilizando a fórmula, para o caso da entrada de corrente e considerando um resi
     \fonte{}
 \end{figure}
 
-Para a entrada de tensão do circuito segue-se a mesma lógica, chegando a um valor de 5 nF.
+Para a entrada de tensão do circuito segue-se a mesma lógica, chegando a um valor de aproximadamente 5 nF.
 
 Após a leitura dos sinais e a conversão feita pelo ADC, o sinal digital de saída é processado por um microcontrolador para então ser entregue a uma webpage e assim tratado para visualização pelo usuário. Algumas necessidades básicas devem ser atendidas pelo chip escolhido, como suporte para comunicação \textit{wireless}, seja \textit{WiFi} ou \textit{Bluetooth}, \textit{clock speed} alta o suficiente para não interferir na aquisição de dados e também ter uma boa documentação para ser possível o desenvolvimento do código.
 
