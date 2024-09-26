@@ -195,7 +195,7 @@ Por estes dois grandes motivos e também por existirem alternativas mais simples
 
 Para a alimentação dos circuitos integrantes do protótipo, existem duas opções: baterias ou fontes. Como este será utilizado em bancada, foi escolhida a alimentação por fontes, pois estas não precisam ser trocadas frequentemente e é possível ligá-las à rede, além de algumas outras vantagens.
 
-Em este projeto são utilizadas duas fontes isoladas galvanicamente, uma para alimentar o circuito de leitura de tensão e outra para alimentar o circuito de leitura de corrente, reduzindo ainda mais possíveis ruídos e interferências entre circuitos, mas também aumentando a confiabilidade do protótipo, pois como o objetivo é realizar leituras simultâneas de corrente e tensão, o isolamento entre eles é necessário para previnir curtos.
+Neste projeto são utilizadas duas fontes isoladas galvanicamente, uma para alimentar o circuito de leitura de tensão e outra para alimentar o circuito de leitura de corrente, reduzindo ainda mais possíveis ruídos e interferências entre circuitos, mas também aumentando a confiabilidade do protótipo, pois como o objetivo é realizar leituras simultâneas de corrente e tensão, o isolamento entre eles é necessário para prevenir curtos.
 
 Porém, o output das fontes escolhidas é de 12 V, não atendendo as necessidades de alimentação dos \gls{CI}s envolvidos e também do microcontrolador. Para isso, circuitos de regulação de tensão foram implementados, gerando duas saídas, como explícito na \autoref{fig:circ-conv-T}. Estes circuitos são iguais tanto para a leitura de tensão e de corrente, visto que estes tem as mesmas necessidades.
 
@@ -210,49 +210,104 @@ A alimentação do ESP32 e também do circuito de comunicação isolada foi conv
 
 \subsection{Software e Firmware}\label{softfirm}
 
-A programação também é uma das partes mais importantes e também complexas deste projeto. Esta faz a união de todas as partes envolvendo o microcontrolador, sendo dividida em duas partes: software e firmware.
+A programação do dispositivo é separada em duas etapas: \textit{Firmware} e \textit{Software}. O \textit{Firmware} é responsável por garantir a funcionalidade da comunicação do microcontrolador com os módulos \gls{ADC}, bem como manter a comunicação sem fio e sincronizar a amostragem do sinal.
+Já o \textit{Software}, é responsável por receber as entradas do usuário e mostrar, efetivamente, através de gráficos e valores numéricos, as leituras de tensão, corrente, frequência, potências, etc.
 
-Primeiramente, será discutido o software. Esté é feito em Arduino e JSON, pela parte do ESP32 e em HTML 5 e JavaScript pela parte do webserver. Os dados lidos pelo \gls{ADC} chegam ao ESP32 por firmware e imediatamente são empacotados por JSON, uma linguagem de serialização de dados para comunicação entre servidores, entre outros, dentro de uma \textit{string}. Após a aquisição de dados de 5 ondas, este pacote é serializado e enviado ao servidor da webpage.
+\subsubsection{Modularidade}\label{modular-softw}
 
-Esta webpage, programada em HTML 5 para fazer a inserção de JavaScript e então utilizar Websocket, um protocolo de comunicação que fornece uma via de duas mãos para a conexão entre os servidores do microcontrolador e da webpage, para cuidar da comunicação entre o ESP32 e o aparelho móvel, fará o tratamento dos dados e os apresentará para o usuário, em forma de gráficos e visualizadores numéricos representando a Tensão RMS, corrente RMS, Potência Aparente e Fator de Potência, que são calculados pelas fórmulas:
-
-
-***
-
-Os gráficos são gerados por uma biblioteca do JavaScript chamada Grahp.js. Esta biblioteca possibilita a integração de vários gráficos, para a amostragem e depicção tanto da tensão quanto da corrente simultaneamente, e também a utilização de um trigger por programação, para ser possível a visualização da onda estabilizada. Este trigger funciona de forma a detectar a passagem da onda por um ponto escolhido e então sincronizar o grafico de acordo, tornando aquele o ponto 0 visualizado e então estabilizando a onda.
+Devido a dificuldades durante o desenvolvimento do projeto, não foi possível implementar por completo a função de modularidade entre os dispositivos. Dessa maneira, não é possível observar mais de um módulo ao mesmo tempo.
 
 
+\subsubsection{Firmware}\label{firmw}
 
-O firmware, além da lógica de leitura e calibração, refere-se a toda a operação do protótipo. Como está sendo utilizado o ESP32, este é programado em Arduino. O funcionamento deste está intimamente ligado à máquina de estados explícita na \autoref{fig:maq-estados}.
 
-\begin{figure}[htb!]
-    \caption{Máquina de estados}
-    \label{fig:maq-estados}
-    \includegraphics[width=1.0\textwidth]{figuras/maq-estados.png}
-    \fonte{}
-\end{figure}
+\subsubsection{Software}\label{softwa}
 
-Seguindo a lógica proposta por esta, primeiramente o microcontrolador, após ser ligado, completa uma rotina de setup e fica aberto para conexão. Sendo esta estabelecida, assim se cria a relação principal como servidor \textit{master} e o dispositivo conectado como \textit{main client}. Contectando-se ao IP do ESP32, este fornece à \textit{webpage} o HTML e JavaScript necessários para a apresentação e utilização desta. Então, se espera um input do usuário para ou conectar um módulo ou iniciar a leitura.
+Toda a lógica de conversão dos valores de tensão e corrente em bits do \gls{ADC} para os valores reais é feita através de javascript em uma webpage. Dessa maneira, poupa-se informação transmitida pelo módulo, e utiliza-se um processamento mais robusto (do celular ou computador conectado) para os cálculos de potência.
+Esta webpage, programada em HTML 5 para fazer a inserção de JavaScript e então utilizar Websocket, um protocolo de comunicação que fornece uma via de duas mãos para a conexão entre os servidores do microcontrolador, para cuidar da comunicação entre o ESP32 e o aparelho móvel, fará o tratamento dos dados e os apresentará para o usuário, em forma de gráficos e visualizadores numéricos representando a Tensão RMS, corrente RMS, frequência, Potências: aparente, reativa e ativa, e Fator de Potência.
 
-Ao se iniciar a leitura, o microcontrolador procede-se todas as etapas necessárias para a leitura, como o pulso de \textit{sync} (sincronização), a criação de um delta de tempo para ser possível a convenção de um zero, tornando assim possível a sincronização das ondas, o calculo da frequência e do fator de potência. Para a obtenção dos dados em si, também existe uma série de processos a serem feitos.
+\subsubsubsection{Tensão e Corrente}
+Para diferentes configurações de escala de tensão, o código utiliza multiplicadores pré-definidos para converter os valores lidos para a tensão real. A \autoref{tab:softw-tensao} descreve os multiplicadores e a escala máxima correspondente:
 
-O \gls{ADC}, seguido do circuito de condicionamento de sinais, tem dois modos de leitura: \textit{Data-Ready} e \textit{Single-Shot}.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \textbf{Multiplicador} & \textbf{Tensão Máxima na Escala (V)} & \textbf{Ganho} & \textbf{Tensão Máxima (V)} \\
+    \hline
+    0.2 & 409.6 & 1 & 4.096 \\
+    0.1 & 204.8 & 2 & 2.048 \\
+    0.05 & 102.4 & 4 & 1.024 \\
+    0.025 & 51.2 & 8 & 0.512 \\
+    0.0125 & 25.6 & 16 & 0.256 \\
+    \hline
+    \end{tabular}
+    \caption{Tabela de multiplicadores de tensão}
+    \label{tab:softw-tensao}
+\end{table}
 
-O modo \textit{Single-Shot} acontece de modo que o processador solicita as leituras do \gls{ADC}, então este a processa e envia os dados requeridos. Este tipo de leitura, apesar de ser o mais simples de implementar e também ser extremamente confiável, por aspectos construtivos do chip escolhido, é muito lento para esta aplicação, alcançando-se no máximo uma taxa de leitura de aproximadamente 500 \gls{SPS}, sendo estes insuficientes para a aquisição desejada da onda.
+Os valores foram obtidos analisando o circuito, de maneira a sempre manter a tensão na leitura abaixo dos 3.3V de tensão suportados pelo \gls{ADC}. Estes devem ser ajustados conforme a necessidade de calibração do dispositivo montado.
 
-Escolheu-se então utilizar o modo \textit{Data-Ready}, que é muito mais complexo de se implentar. Quando uma leitura acontece, o \gls{ADC} então sinaliza ao microcontrolador por meio do levantamento de uma \textit{flag} (como por exemplo, jogar um pino específico para o valor 1) que os dados estão prontos, ficando à espera de uma ação. Quando o processador então solicita estes dados, estes são limpos do \textit{cache} do \gls{ADC} e assim, volta a ser feita uma leitura e entrar neste loop novamente. Com tal processo foi possível a obtenção de 3300 \gls{SPS}, tornando a aquisição da onda mais perto da desejada.
+De maneira similar, o mesmo ocorre com a corrente. Porém, devido a aspectos construtivos do módulo, essa sempre está com o \gls{PGA} na escala \textit{x16}, alterando apenas os multiplicadores conforme a \autoref{tab:softw-corrente}.
+Os ajustes para cada escala tratam-se dos valores de calibração que devem ser alterados conforme a necessidade após ter o dispositivo físico montado.
 
-O valor adquirido pelo ADC então, é tratado dentro do ESP32 para se tornar um valor real. Este processo ocorre com, primeiro, a escolha de um range específico, sendo este processo automático por \textit{Programmable-gain Amplifier}, ou \gls{PGA}. Associado a esta amplificação, está também a calibração de cada range de leitura, sendo este modificador adquirido por meio de testes do protótipo.
+% Tabela de multiplicadores de corrente
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    \textbf{Escala} & \textbf{Multiplicador} \\
+    \hline
+    A & $0.01875 \times \text{ajuste\_A}$ \\
+    mA & $0.0001856 \times \text{ajuste\_mA}$ \\
+    uA & $0.000001875 \times \text{ajuste\_uA}$ \\
+    \hline
+    \end{tabular}
+    \caption{Tabela de multiplicadores de corrente}
+    \label{tab:softw-corrente}
+\end{table}
 
-Após a obtenção dos dados, estes são serializados em JSON e enviados à \textit{webpage} para serem tratados. Caso não exista um \textit{input} adicional do cliente, esta etapa se repete indefinidamente. Caso exista um novo \textit{input} do cliente, o servidor volta ao modo de espera.
+Os valores dos multiplicadores de corrente foram obtidos analisando o comportamento do circuito e fazendo as devidas conversões de tensão para corrente conforme o valor dos resistores utilizados em cada caso, veja \autoref{tab:softw-corrente-values}:
 
-Se o cliente desejar colocar mais um canal de leitura, o microcontrolador então utiliza o protocolo \textit{ESP-NOW} para procurar e parear com um outro dispositivo disponível.
+\begin{table}[h!]
+    \centering
+    \begin{tabularx}{\textwidth}{|X|X|X|X|X|X|X|}
+    \hline
+    \textbf{Range} & \textbf{Resistor shunt} & \textbf{Corrente (A)} & \textbf{Mult. do divisor resistivo} & \textbf{Tensão lida (V)} & \textbf{Mult. inicial (0,125mV/bit)} & \textbf{Mult. final (razão do resistor)} \\
+    \hline
+    uA & 100 & 0,001 & 1,5 & 0,1000 & 0,0001875 & 0,000001875 \\
+    mA & 1,01 & 0,2 & 1,5 & 0,2020 & 0,0001875 & 0,000185644 \\
+    A & 0,01 & 10 & 1,5 & 0,1000 & 0,0001875 & 0,018750 \\
+    \hline
+    \end{tabularx}
+    \caption{Tabela de multiplicadores de corrente}
+    \label{tab:softw-corrente-values}
+\end{table}
 
-Infelizmente, o maior pacote de dados possível para ser mandado entre ESPs pelo protocolo \textit{ESP-NOW} é de 255 bytes. Um ponto de tensão e um ponto de corrente juntos tem o tamanho de 160 bits. Com esta limitação de pacote, o máximo que seria possível de ser transmitido por vez, então, seria aproximadamente 12 pontos de uma onda, o que é um valor muito pequeno, visto que uma onda contém aproximadamente 55 pontos em uma taxa de leitura de 3300 \gls{SPS}.
+Os gráficos são gerados por uma biblioteca do JavaScript chamada Graph.js. Esta biblioteca possibilita a integração de vários gráficos, para a amostragem e apresentação tanto da tensão quanto da corrente simultaneamente, e também a utilização de um \textit{trigger} por programação, para ser possível a visualização da onda estabilizada. Este trigger funciona de forma a detectar a passagem da onda por um ponto escolhido e então sincronizar o gráfico de acordo, tornando aquele o ponto 0 visualizado e então estabilizando a onda.
 
-Por isso, ao suceder no emparelhamento, estabelece-se uma relação de \textit{client} com este outro dispositivo e a ele são fornecidos todos os dados da rede para se conectar e então ter acesso à mesma \textit{webpage} e \textit{Websocket}, sendo a atuação do protocolo \textit{ESP-NOW} é finalizada então. Com toda a comunicação feita diretamente por \textit{Websocket}, economiza-se poder de processamento do microcontrolador e também otimiza-se o delay de comunicação e a transição de dados, pois os pacotes passam de ter um tamanho de 255 bytes para 5 kilobytes.
 
-Ao se iniciar a leitura por \textit{input} do cliente, um sinal de \textit{sync} é enviado do servidor \textit{master} para o módulo do canal adicional, assim se estabelecendo uma referência de tempo e sincronizando as leituras. A adição de canais está limitada a 2, deixando possível uma leitura trifásica.
+Seguindo a lógica proposta, o microcontrolador, ao ser energizado, completa sua rotina de \textit{setup} e permanece disponível para conexões. Após o estabelecimento da conexão, configura-se a relação principal entre o servidor, como \textit{master}, e o dispositivo conectado, como \textit{main client}. Ao acessar o IP do ESP32, ele serve à \textit{webpage} o HTML e JavaScript necessários para sua apresentação e interação. A partir desse ponto, aguarda-se uma entrada do usuário para iniciar a conexão de um módulo ou para dar início às leituras.
+
+Quando a leitura é iniciada, o microcontrolador executa todas as etapas necessárias, incluindo o envio do pulso de \textit{sync} (sincronização), a criação de um delta de tempo para estabelecer um ponto de referência zero, o que possibilita a sincronização das ondas, além do cálculo da frequência e do fator de potência. A aquisição dos dados em si também envolve uma série de processos específicos.
+
+O \gls{ADC}, acompanhado pelo circuito de condicionamento de sinais, opera em dois modos de leitura: \textit{Data-Ready} e \textit{Single-Shot}.
+
+No modo \textit{Single-Shot}, o processador solicita as leituras ao \gls{ADC}, que processa e envia os dados requisitados. Embora esse modo seja simples de implementar e bastante confiável, as limitações do chip escolhido tornam essa solução lenta para a aplicação em questão, alcançando uma taxa máxima de leitura de cerca de 500 \gls{SPS}, insuficiente para a aquisição desejada da forma de onda.
+
+Optou-se, então, pelo modo \textit{Data-Ready}, que é mais complexo de implementar. Nesse modo, após cada leitura, o \gls{ADC} sinaliza ao microcontrolador levantando uma \textit{flag} (por exemplo, elevando um pino específico para 1) indicando que os dados estão prontos, aguardando a ação do processador. Quando o processador requisita os dados, eles são removidos do \textit{cache} do \gls{ADC}, reiniciando o ciclo de leitura. Com esse método, foi possível atingir uma taxa de 3300 \gls{SPS}, permitindo uma aquisição mais precisa da forma de onda.
+
+Os valores adquiridos pelo \gls{ADC} são então processados pelo ESP32 para converterem-se em valores reais. Esse processamento começa com a seleção automática de uma faixa de leitura (\textit{range}) via o \textit{Programmable-gain Amplifier} (\gls{PGA}). Além disso, cada faixa de leitura passa por uma calibração, cujo fator é determinado a partir de testes no protótipo.
+
+Uma vez processados, os dados são serializados em formato JSON e enviados à \textit{webpage} para visualização. Caso não haja novas entradas do cliente, esse processo se repete indefinidamente. No entanto, se um novo \textit{input} for recebido, o servidor retorna ao estado de espera.
+
+Caso o cliente deseje adicionar um canal de leitura, o microcontrolador utiliza o protocolo \textit{ESP-NOW} para procurar e parear com um dispositivo adicional disponível.
+
+Uma limitação do protocolo \textit{ESP-NOW} é o tamanho máximo de 255 bytes por pacote de dados. Um par de pontos de tensão e corrente ocupa cerca de 160 bits. Com essa limitação, é possível transmitir no máximo 12 pontos de uma forma de onda, o que é insuficiente, considerando que uma onda completa requer aproximadamente 55 pontos a uma taxa de 3300 \gls{SPS}.
+
+Após o emparelhamento bem-sucedido, estabelece-se uma relação de \textit{client} com o dispositivo adicional, fornecendo-lhe todas as informações da rede necessárias para que ele acesse a mesma \textit{webpage} e \textit{Websocket}. Nesse momento, o uso do protocolo \textit{ESP-NOW} é finalizado, e toda a comunicação subsequente é realizada diretamente via \textit{Websocket}. Isso reduz a carga de processamento no microcontrolador e otimiza o tempo de comunicação e a transmissão de dados, pois o tamanho dos pacotes aumenta de 255 bytes para até 5 kilobytes.
+
+Ao iniciar uma nova leitura via \textit{input} do cliente, um sinal de \textit{sync} é enviado do servidor \textit{master} para o módulo do canal adicional, estabelecendo assim uma referência temporal para sincronizar as leituras. A adição de canais é limitada a dois, permitindo a leitura trifásica.
 
 
 
@@ -310,7 +365,7 @@ Nota-se também que para efeito de testes e de montagem do protótipo testado, n
 
 \section{\textit{Casing}}\label{Casing}
 
-Para a confecção do envólucro, ou \textit{casing} do protótipo, foi utilizado uma plataforma também gratúita de modelagem para impressoras 3d, chamada .....
+Para a confecção do envólucro, ou \textit{casing} do protótipo, foi utilizado uma plataforma também gratuita de modelagem para impressoras 3d, chamada .....
 
 Foram tiradas as medidas de um módulo de bancada de madeira, que suporta os equipamentos em bancadas dos laboratórios em questão, como demonstrado na \autoref{fig:Modulo-Base-Frente} e então feito o design com estas e também respeitando o tamanho e configuração da \gls{PCB}.
 
