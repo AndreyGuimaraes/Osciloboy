@@ -2,7 +2,7 @@
 
 \chapter{Materiais e Metodologia}\label{cap:materialemetodos}
 
-Neste capítulo, serão discutidos e analisados todos os processos relacionados com o desenvolvimento do protótipo, a justificativa de cada escolha tomada, assim como um \textit{\gls{BOM}} (\textit{Book of Materials}) consolidado, com os preços na data do trabalho, para a confecção de um protótipo.
+Neste capítulo, serão discutidos e analisados todos os processos relacionados com o desenvolvimento do protótipo, a justificativa de cada escolha tomada, assim como um \textit{\gls{BOM}} (\textit{Bill of Materials}) consolidado, com os preços na data do trabalho, para a confecção de um protótipo.
 
 
 \section{Metodologia}\label{sec:metodo}
@@ -48,7 +48,7 @@ A primeira opção a ser considerada foi a \textit{Single-Ended}. Este tipo de l
     \fonte{}
 \end{figure}
 
-Esta topografia promete 4 ranges de leitura tanto para corrente quanto para tensão, sendo estes 200 V, 20 V, 2 V e 200 mV (com precisão de 2\%) e 10 A, 200 mA, 20 mA e 2000 $\mu$A (com precisão de 5\%). É também necessário o uso de \gls{amp-op}s para a seleção do range, para isolar o \gls{ADC} da entrada e também para manter a tensão de entrada do \gls{ADC} dentro do range requerido.
+Esta topologia promete 4 ranges de leitura tanto para corrente quanto para tensão, sendo estes 200 V, 20 V, 2 V e 200 mV (com precisão de 2\%) e 10 A, 200 mA, 20 mA e 2000 $\mu$A (com precisão de 5\%). É também necessário o uso de \gls{amp-op}s para a seleção do range, para isolar o \gls{ADC} da entrada e também para manter a tensão de entrada do \gls{ADC} dentro do range requerido.
 
 Desta maneira, foram calculados os resistores de forma a manter a tensão de entrada dos \gls{amp-op}s sempre entre 30 e -30 V no maior fundo de escala possível (atenuação de 10x), respeitando os aspectos construtivos destes componentes. O cálculo para tais resistores se resume na resolução do seguinte sistema:
 
@@ -100,7 +100,7 @@ Este tipo de leitura, ao invés de comparar a tensão entre um ponto do circuito
 
 Para o dimensionamento dos resistores desta topologia, considerando a necessidade da atenuação da tensão em aproximadamente 100 vezes, pois um sinal de 330 V (o pico máximo suportado pelo sistema) deve ser condicionado a no máximo 3,3 V. Considerando o divisor resistivo, para tal, também se necessita uma relação de aproximadamente 100 vezes entre os resistores. Para se ter uma corrente mínima de entrada, foi escolhido um resistor de 2M$\Omega$, tornando assim o segundo valor 20 k$\Omega$.
 
-Para o offset de tensão, como os erros introduzidos são minimizados pela própria topografia, utiliza-se uma referência tensão menos precisa, diminuindo o custo do circuito regulador como um todo. A referência de tensão utilizada para este projeto é fornecida pelo \gls{CI} TL431A, tendo este ainda assim uma precisão de 1\%, mas sendo muito mais barato que a opção anterior. Além disso, este possibilita mais facilmente a utilização do range inteiro de leitura do \gls{ADC}, tornando assim o offset $3,3/2$, que pode ser regulado pela ação do trimpot junto ao circuito auxiliar. Como não são utilizados \gls{amp-op}s, também não é necessária a utilização do circuito auxiliar \textit{Negative Charge Pump}.
+Para o offset de tensão, como os erros introduzidos são minimizados pela própria topologia, utiliza-se uma referência tensão menos precisa, diminuindo o custo do circuito regulador como um todo. A referência de tensão utilizada para este projeto é fornecida pelo \gls{CI} TL431A, tendo este ainda assim uma precisão de 1\%, mas sendo muito mais barato que a opção anterior. Além disso, este possibilita mais facilmente a utilização do range inteiro de leitura do \gls{ADC}, tornando assim o offset $3,3/2$, que pode ser regulado pela ação do trimpot junto ao circuito auxiliar. Como não são utilizados \gls{amp-op}s, também não é necessária a utilização do circuito auxiliar \textit{Negative Charge Pump}.
 
 Então, com todos estes benefícios em mente, foi escolhida esta topologia e tipo de leitura para o circuito final, como explícito na \autoref{fig:circ-cond-t}. Para a leitura de corrente, a mesma lógica se aplica, pois o resistor shunt é visto como uma fonte de tensão pelo circuito de leitura. Como esta tensão é extremamente baixa, não há a necessidade de um resistor de entrada para a atenuação da mesma, como explícito na \autoref{fig:circ-cond-c}.
 
@@ -118,7 +118,7 @@ Então, com todos estes benefícios em mente, foi escolhida esta topologia e tip
     \fonte{}
 \end{figure}
 
-Também sobre o condicionamento de sinais, é de suma importância se ter um filtro de entrada. Mesmo que a topografia em questão minimize ruídos, quanto mais limpo o sinal de entrada é, melhor serão as leituras e consequentemente o tratamento dos dados. Para este projeto, decidiu-se utilizar um filtro passa-baixas "RC", que consiste de um resistor e um capacitor em \textit{shunt} \cite{filtros}. O cálculo deste filtro é regido pela fórmula \autoref{eqcap}:
+Também sobre o condicionamento de sinais, é de suma importância se ter um filtro de entrada. Mesmo que a topologia em questão minimize ruídos, quanto mais limpo o sinal de entrada é, melhor serão as leituras e consequentemente o tratamento dos dados. Para este projeto, decidiu-se utilizar um filtro passa-baixas "RC", que consiste de um resistor e um capacitor em \textit{shunt} \cite{filtros}. O cálculo deste filtro é regido pela fórmula \autoref{eqcap}:
 
 \begin{equation}
     \label{eqcap}
@@ -161,8 +161,8 @@ Com isso em mente, o microcontrolador utilizado para este projeto é o ESP32, fa
 \begin{itemize}
     \item Performance: O ESP32 opera em \textit{clock speeds} de até 240 MHz, oferecendo um robusto poder de processamento para o código e também para não interferir ou atrasar a aquisição dos sinais;
     \item Suporte: Este microcontrolador tem suporte tanto para \textit{WiFi} quanto para \textit{Bluetooth}, trabalha com o protocolo \gls{$I^2$C}, que será utilizado para fazer a comunicação com o \gls{ADC} e utiliza-se do Arduino como sua principal plataforma de desenvolvimento;
-    \item Ambiente: Este chip é extensamente utilizado em vários setores da tecnologia e tem uma vasta comunidade de usuários, o que garante um extenso leque de \textit{resources} como bibliotecas, tutoriais, videos, forums, entre outros, para ajudar na confecção do software e firmware. Também apresenta suporte oferecido pela própria Espressif sobre as suas funcionalidades muito bem documentados;
-    \item Modularidade: Esta parte crucial do trabalho também é suportada por este microcontrolador, e
+    \item Ambiente: Este módulo é extensamente utilizado em vários setores da tecnologia e tem uma vasta comunidade de usuários, o que garante um extenso leque de \textit{resources} como bibliotecas, tutoriais, videos, forums, entre outros, para ajudar na confecção do software e firmware. Também apresenta suporte oferecido pela própria Espressif sobre as suas funcionalidades muito bem documentados;
+    \item Modularidade: Esta parte importante do trabalho também é facilitada devido ao componente já possuir nativamente protocolos de comunicação da própria fabricante;
     \item Preço: Para todas as funcionalidades providas pelo ESP32, este apresenta um grande custo benefício, além de estar facilmente disponível no mercado.
 \end{itemize}
 
@@ -179,7 +179,7 @@ O circuito transforma pulsos \gls{$I^2$C} em sinais de luz e transfere estas inf
 
 Como objetivo do trabalho, também é colocado como principal a modularidade do circuito, para se obter leituras de duas ou três fases diferentes. Inicialmente, foi considerado o uso do protocolo \gls{$I^2$C} também para a comunicação entre estes módulos. Porém, esta idéia foi descartada devido à complexidade de criação de um protocolo, ou dicionário, para estabelecer um modo comum de interação.
 
-Também, para o demérito da utilização de tal topografia, são necessários muitos fios de interligação entre os módulos, sendo estes:
+Também, para o demérito da utilização de tal topologia, são necessários muitos fios de interligação entre os módulos, sendo estes:
 
 \begin{itemize}
     \item 5 V;
@@ -210,14 +210,61 @@ A alimentação do ESP32 e também do circuito de comunicação isolada foi conv
 
 A programação do dispositivo é separada em duas etapas: \textit{Firmware} e \textit{Software}. O \textit{Firmware} é responsável por garantir a funcionalidade da comunicação do microcontrolador com os módulos \gls{ADC}, bem como manter a comunicação sem fio e sincronizar a amostragem do sinal.
 Já o \textit{Software}, é responsável por receber as entradas do usuário e mostrar, efetivamente, através de gráficos e valores numéricos, as leituras de tensão, corrente, frequência, potências, etc.
+Outra parte importante da programação trata-se da modularidade. Essa está presente tanto no \textit{Firmware} quanto no \textit{Software}. Trata-se da possibilidade de utilizar mais de um dispositivo em conjunto com um principal, permitindo a leitura de mais fases de maneira isolada.
 
-\subsubsection{Modularidade}\label{modular-softw}
+\subsubsection{Disponibilidade do Circuito}\label{availability}
 
-Devido a dificuldades durante o desenvolvimento do projeto, não foi possível implementar por completo a função de modularidade entre os dispositivos. Dessa maneira, não é possível observar mais de um módulo ao mesmo tempo.
-
+O circuito pode ser encontrado na integra no [ANEXO X] ao final do trabalho, bem como de maneira virtual no mesmo anexo. Dada a característica colaborativa da plataforma em que foi desenvolvido, permite que qualquer usuário clone esse circuito e o modifique gratuitamente.
 
 \subsubsection{Firmware}\label{firmw}
 
+O \textit{Firmware} é a parte crítica que roda diretamente no microcontrolador ESP32 e é responsável pela interface com os sensores, controle de comunicação sem fio e envio dos dados coletados para o \textit{Software} via WebSockets. Ele também gerencia a sincronização das leituras do ADC, garantindo que os dados de tensão e corrente sejam capturados e processados de forma precisa.
+
+O desenvolvimento do \textit{Firmware} foi baseado em bibliotecas otimizadas para o ESP32, como a \textit{ESPAsyncWebServer} e a \textit{WebSocketsServer}, que permitem uma comunicação eficiente com o dispositivo remoto (celular ou computador). Além disso, foi utilizada a biblioteca \textit{ADS1015\_WE} para interface com o ADC externo ADS1015, permitindo leituras de alta precisão de sinais analógicos.
+
+A sincronização entre os sinais de tensão e corrente é feita por meio de interrupções, que detectam o momento em que os dados estão prontos para leitura. Isso garante que as amostragens estejam alinhadas e que os gráficos e cálculos de potência sejam precisos. Para garantir a modularidade do sistema, o \textit{Firmware} também possui a capacidade de alterar a faixa de leitura da tensão e da corrente dinamicamente, de acordo com o comando enviado pelo usuário via WebSockets.
+
+Uma parte importante do \textit{Firmware} é a implementação da máquina de estados \autoref{fig:maq-estado-simp}, que gerencia a comunicação com o dispositivo auxiliar. A implementação foi feita para ser expansível, permitindo a futura integração de múltiplos dispositivos sem a necessidade de grandes modificações no código.
+
+\begin{figure}[htb!]
+    \caption{Máquina de estados simplificada para apenas um dispositivo}
+    \label{fig:maq-estado-simp}
+    \includegraphics[width=1.0\textwidth]{figuras/Maquina-Estados-Simplificada.jpg}
+    \fonte{}
+\end{figure}
+
+O processo de comunicação sem fio utiliza o protocolo \textit{WiFi} integrado do ESP32 para criar um ponto de acesso, facilitando a interação com o dispositivo móvel. O firmware também é responsável por lidar com a detecção de conexões e desconexões dos clientes WebSocket, ajustando o comportamento do sistema conforme necessário.
+
+Seguindo a lógica proposta, o microcontrolador, ao ser energizado, completa sua rotina de \textit{setup} e permanece disponível para conexões. Após o estabelecimento da conexão, configura-se a relação principal entre o servidor, como \textit{master}, e o dispositivo conectado, como \textit{main client}. Ao acessar o IP do ESP32, ele serve à \textit{webpage} o HTML e JavaScript necessários para sua apresentação e interação.
+
+Quando a leitura é iniciada, o microcontrolador executa todas as etapas necessárias, incluindo o envio do pulso de \textit{sync} (sincronização), a criação de um delta de tempo para estabelecer um ponto de referência zero, o que possibilita a sincronização das ondas, além do cálculo da frequência e do fator de potência. A aquisição dos dados em si também envolve uma série de processos específicos.
+
+O \gls{ADC}, acompanhado pelo circuito de condicionamento de sinais, opera em dois modos de leitura: \textit{Data-Ready} e \textit{Single-Shot}.
+
+No modo \textit{Single-Shot}, o processador solicita as leituras ao \gls{ADC}, que processa e envia os dados requisitados. Embora esse modo seja simples de implementar e bastante confiável, as limitações do chip escolhido tornam essa solução lenta para a aplicação em questão, alcançando uma taxa máxima de leitura de cerca de 500 \gls{SPS}, insuficiente para a aquisição desejada da forma de onda.
+
+Optou-se, então, pelo modo \textit{Data-Ready}, que é mais complexo de implementar. Nesse modo, após cada leitura, o \gls{ADC} sinaliza ao microcontrolador levantando uma \textit{flag} (por exemplo, elevando um pino específico para 1) indicando que os dados estão prontos, aguardando a ação do processador. Quando o processador requisita os dados, eles são removidos do \textit{cache} do \gls{ADC}, reiniciando o ciclo de leitura. Com esse método, foi possível atingir uma taxa de 3300 \gls{SPS}, permitindo uma aquisição mais precisa da forma de onda.
+
+Os valores adquiridos pelo \gls{ADC} são então processados pelo ESP32 para converterem-se em valores reais. Esse processamento começa com a seleção de uma faixa de leitura (\textit{range}) via o \textit{Programmable-gain Amplifier} (\gls{PGA}).
+
+Uma vez processados, os dados puros são armazenados em uma \textit{struct}, conforme a estrutura da \autoref{tab:struct-graph}, serializados em formato JSON e enviados à \textit{webpage} para visualização. Caso não haja novas entradas do cliente, esse processo se repete indefinidamente.
+
+\begin{table}[h!]
+\centering
+\caption{Chart data}
+\begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Tipo} & \textbf{Nome da Variável} & \textbf{Descrição} \\ \hline
+    int8\_t & chart\_id & Identificação do gráfico (usada somente para modularidade) \\ \hline
+    int8\_t & voltage\_gain & Ganho de tensão a ser informado para o WebServer \\ \hline
+    int8\_t & current\_type & Ganho/faixa de corrente a ser informada para o WebServer (mA, A, uA) \\ \hline
+    int16\_t & voltage\_value[ ] & Array de valores das tensões lidas \\ \hline
+    int16\_t & current\_value[ ] & Array de valores das correntes lidas \\ \hline
+    int64\_t & voltage\_time[ ] & Array de valores dos tempos em que cada tensão foi lida \\ \hline
+    int64\_t & current\_time[ ] & Array de valores dos tempos em que cada corrente foi lida \\ \hline
+\end{tabular}
+\label{tab:struct-graph}
+\end{table}
 
 \subsubsection{Software}\label{softwa}
 
@@ -229,18 +276,18 @@ Para diferentes configurações de escala de tensão, o código utiliza multipli
 
 \begin{table}[h!]
     \centering
-    \begin{tabular}{|c|c|c|c|}
-    \hline
-    \textbf{Multiplicador} & \textbf{Tensão Máxima na Escala (V)} & \textbf{Ganho} & \textbf{Tensão Máxima (V)} \\
-    \hline
-    0.2 & 409.6 & 1 & 4.096 \\
-    0.1 & 204.8 & 2 & 2.048 \\
-    0.05 & 102.4 & 4 & 1.024 \\
-    0.025 & 51.2 & 8 & 0.512 \\
-    0.0125 & 25.6 & 16 & 0.256 \\
-    \hline
-    \end{tabular}
     \caption{Tabela de multiplicadores de tensão}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Multiplicador} & \textbf{Tensão Máxima na Escala (V)} & \textbf{Ganho} & \textbf{Tensão Máxima (V)} \\
+        \hline
+        0.2 & 409.6 & 1 & 4.096 \\
+        0.1 & 204.8 & 2 & 2.048 \\
+        0.05 & 102.4 & 4 & 1.024 \\
+        0.025 & 51.2 & 8 & 0.512 \\
+        0.0125 & 25.6 & 16 & 0.256 \\
+        \hline
+    \end{tabular}
     \label{tab:softw-tensao}
 \end{table}
 
@@ -252,16 +299,16 @@ Os ajustes para cada escala tratam-se dos valores de calibração que devem ser 
 % Tabela de multiplicadores de corrente
 \begin{table}[h!]
     \centering
-    \begin{tabular}{|c|c|}
-    \hline
-    \textbf{Escala} & \textbf{Multiplicador} \\
-    \hline
-    A & $0.01875 \times \text{ajuste\_A}$ \\
-    mA & $0.0001856 \times \text{ajuste\_mA}$ \\
-    uA & $0.000001875 \times \text{ajuste\_uA}$ \\
-    \hline
-    \end{tabular}
     \caption{Tabela de multiplicadores de corrente}
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Escala} & \textbf{Multiplicador} \\
+        \hline
+        A & $0.01875 \times \text{ajuste\_A}$ \\
+        mA & $0.0001856 \times \text{ajuste\_mA}$ \\
+        uA & $0.000001875 \times \text{ajuste\_uA}$ \\
+        \hline
+    \end{tabular}
     \label{tab:softw-corrente}
 \end{table}
 
@@ -269,47 +316,65 @@ Os valores dos multiplicadores de corrente foram obtidos analisando o comportame
 
 \begin{table}[h!]
     \centering
-    \begin{tabularx}{\textwidth}{|X|X|X|X|X|X|X|}
-    \hline
-    \textbf{Range} & \textbf{Resistor shunt} & \textbf{Corrente (A)} & \textbf{Mult. do divisor resistivo} & \textbf{Tensão lida (V)} & \textbf{Mult. inicial (0,125mV/bit)} & \textbf{Mult. final (razão do resistor)} \\
-    \hline
-    uA & 100 & 0,001 & 1,5 & 0,1000 & 0,0001875 & 0,000001875 \\
-    mA & 1,01 & 0,2 & 1,5 & 0,2020 & 0,0001875 & 0,000185644 \\
-    A & 0,01 & 10 & 1,5 & 0,1000 & 0,0001875 & 0,018750 \\
-    \hline
-    \end{tabularx}
     \caption{Tabela de multiplicadores de corrente}
+    \begin{tabularx}{\textwidth}{|X|X|X|X|X|X|X|}
+        \hline
+        \textbf{Range} & \textbf{Resistor shunt} & \textbf{Corrente (A)} & \textbf{Mult. do divisor resistivo} & \textbf{Tensão lida (V)} & \textbf{Mult. inicial (0,125mV/bit)} & \textbf{Mult. final (razão do resistor)} \\
+        \hline
+        uA & 100 & 0,001 & 1,5 & 0,1000 & 0,0001875 & 0,000001875 \\
+        mA & 1,01 & 0,2 & 1,5 & 0,2020 & 0,0001875 & 0,000185644 \\
+        A & 0,01 & 10 & 1,5 & 0,1000 & 0,0001875 & 0,018750 \\
+        \hline
+    \end{tabularx}
     \label{tab:softw-corrente-values}
 \end{table}
 
+\subsubsubsection{Apresentação Visual}
+
 Os gráficos são gerados por uma biblioteca do JavaScript chamada Graph.js. Esta biblioteca possibilita a integração de vários gráficos, para a amostragem e apresentação tanto da tensão quanto da corrente simultaneamente, e também a utilização de um \textit{trigger} por programação, para ser possível a visualização da onda estabilizada. Este trigger funciona de forma a detectar a passagem da onda por um ponto escolhido e então sincronizar o gráfico de acordo, tornando aquele o ponto 0 visualizado e então estabilizando a onda.
 
+A parte estrutural da página foi desenvolvida utilizando \gls{HTML}. Exemplos das telas durante a leitura podem ser vistos na \autoref{fig:webpage1} e \autoref{fig:webpage2}.
 
-Seguindo a lógica proposta, o microcontrolador, ao ser energizado, completa sua rotina de \textit{setup} e permanece disponível para conexões. Após o estabelecimento da conexão, configura-se a relação principal entre o servidor, como \textit{master}, e o dispositivo conectado, como \textit{main client}. Ao acessar o IP do ESP32, ele serve à \textit{webpage} o HTML e JavaScript necessários para sua apresentação e interação. A partir desse ponto, aguarda-se uma entrada do usuário para iniciar a conexão de um módulo ou para dar início às leituras.
+\begin{figure}[h!]
+    \centering
+    \caption{Detalhe do cabeçalho de informações da página da Web gerada pelo dispositivo}
+    \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{webpage-tela1.png}
+    \label{fig:webpage1}
+    \fonte{}
+\end{figure}
 
-Quando a leitura é iniciada, o microcontrolador executa todas as etapas necessárias, incluindo o envio do pulso de \textit{sync} (sincronização), a criação de um delta de tempo para estabelecer um ponto de referência zero, o que possibilita a sincronização das ondas, além do cálculo da frequência e do fator de potência. A aquisição dos dados em si também envolve uma série de processos específicos.
+\begin{figure}[h!]
+    \centering
+    \caption{Detalhe do gráfico da página da Web gerada pelo dispositivo}
+    \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{webpage-tela2.png}
+    \label{fig:webpage2}
+    \fonte{}
+\end{figure}
 
-O \gls{ADC}, acompanhado pelo circuito de condicionamento de sinais, opera em dois modos de leitura: \textit{Data-Ready} e \textit{Single-Shot}.
+\subsubsection{Modularidade}\label{modular-softw}
 
-No modo \textit{Single-Shot}, o processador solicita as leituras ao \gls{ADC}, que processa e envia os dados requisitados. Embora esse modo seja simples de implementar e bastante confiável, as limitações do chip escolhido tornam essa solução lenta para a aplicação em questão, alcançando uma taxa máxima de leitura de cerca de 500 \gls{SPS}, insuficiente para a aquisição desejada da forma de onda.
+Devido a dificuldades durante o desenvolvimento do projeto, não foi possível implementar por completo a função de modularidade entre os dispositivos. Dessa maneira, não é possível observar mais de um módulo ao mesmo tempo.
+O conceito da comunicação, porém, foi testado utilizando-se dois módulos \textit{ESP32} e dados pré-programados de leitura, permitindo que fosse possível estabelecer o conceito da comunicação e elaborar a máquina de estados que define como a comunicação precisa ser tratada.
 
-Optou-se, então, pelo modo \textit{Data-Ready}, que é mais complexo de implementar. Nesse modo, após cada leitura, o \gls{ADC} sinaliza ao microcontrolador levantando uma \textit{flag} (por exemplo, elevando um pino específico para 1) indicando que os dados estão prontos, aguardando a ação do processador. Quando o processador requisita os dados, eles são removidos do \textit{cache} do \gls{ADC}, reiniciando o ciclo de leitura. Com esse método, foi possível atingir uma taxa de 3300 \gls{SPS}, permitindo uma aquisição mais precisa da forma de onda.
+\begin{figure}[h!]
+    \centering
+    \caption{Máquina de Estados Completa}
+    \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{state-machine-complete.png}
+    \label{fig:maq-estados-completa}
+    \fonte{}
+\end{figure}
 
-Os valores adquiridos pelo \gls{ADC} são então processados pelo ESP32 para converterem-se em valores reais. Esse processamento começa com a seleção automática de uma faixa de leitura (\textit{range}) via o \textit{Programmable-gain Amplifier} (\gls{PGA}). Além disso, cada faixa de leitura passa por uma calibração, cujo fator é determinado a partir de testes no protótipo.
+É possível observar pela \autoref{fig:maq-estados-completa} que sua implementação tornaria o código e o desenvolvimento desse trabalho extremamente complexos. Dessa forma, incentiva-se a continuação dessa proposta em trabalhos futuros.
 
-Uma vez processados, os dados são serializados em formato JSON e enviados à \textit{webpage} para visualização. Caso não haja novas entradas do cliente, esse processo se repete indefinidamente. No entanto, se um novo \textit{input} for recebido, o servidor retorna ao estado de espera.
+Após o processo da máquina de estados padrão, apresentada na \autoref{fig:maq-estado-simp} - com a modularidade futuramente implementada - o funcionamento da máquina de estados completa se daria da seguinte forma:
 
 Caso o cliente deseje adicionar um canal de leitura, o microcontrolador utiliza o protocolo \textit{ESP-NOW} para procurar e parear com um dispositivo adicional disponível.
 
-Uma limitação do protocolo \textit{ESP-NOW} é o tamanho máximo de 255 bytes por pacote de dados. Um par de pontos de tensão e corrente ocupa cerca de 160 bits. Com essa limitação, é possível transmitir no máximo 12 pontos de uma forma de onda, o que é insuficiente, considerando que uma onda completa requer aproximadamente 55 pontos a uma taxa de 3300 \gls{SPS}.
+Uma limitação do protocolo \textit{ESP-NOW} é o tamanho máximo de 255 bytes por pacote de dados. Um par de pontos de tensão e corrente ocupa cerca de 160 bits. Com essa limitação, é possível transmitir no máximo 12 pontos de uma forma de onda, o que é insuficiente, considerando que uma onda completa requer aproximadamente 55 pontos a uma taxa de 3300 \gls{SPS} e que, para uma análise adequada de uma rede trifásica, é necessário amostrar ao menos 3 ciclos de onda.
 
-Após o emparelhamento bem-sucedido, estabelece-se uma relação de \textit{client} com o dispositivo adicional, fornecendo-lhe todas as informações da rede necessárias para que ele acesse a mesma \textit{webpage} e \textit{Websocket}. Nesse momento, o uso do protocolo \textit{ESP-NOW} é finalizado, e toda a comunicação subsequente é realizada diretamente via \textit{Websocket}. Isso reduz a carga de processamento no microcontrolador e otimiza o tempo de comunicação e a transmissão de dados, pois o tamanho dos pacotes aumenta de 255 bytes para até 5 kilobytes.
+Assim, após o emparelhamento bem-sucedido, estabelece-se uma relação de \textit{client} com o dispositivo adicional, fornecendo-lhe todas as informações da rede necessárias para que ele acesse a mesma \textit{webpage} e \textit{Websocket}. Nesse momento, o uso do protocolo \textit{ESP-NOW} é finalizado, e toda a comunicação subsequente é realizada diretamente via \textit{Websocket}. Isso reduz a carga de processamento no microcontrolador e otimiza o tempo de comunicação e a transmissão de dados, pois o tamanho dos pacotes aumenta de 255 bytes para até 5 kilobytes.
 
 Ao iniciar uma nova leitura via \textit{input} do cliente, um sinal de \textit{sync} é enviado do servidor \textit{master} para o módulo do canal adicional, estabelecendo assim uma referência temporal para sincronizar as leituras. A adição de canais é limitada a dois, permitindo a leitura trifásica.
-
-
-
-
 
 \section{Materiais}\label{sec:materiais}
 
@@ -317,53 +382,54 @@ Esta seção está dedicada à lista de materiais utilizados para a confecção 
 
 Nota-se também que para efeito de testes e de montagem do protótipo testado, não se foi considerada a proteção de entrada por dois fatores: primeiramente esta é extremamente cara e difícil de encontrar (em questão aos fusíveis). Outro motivo é a segurança dos autores, pois testes de proteção são perigosos necessitam aparatos especiais.
 
-\begin{table}[!ht]
-    \centering
-    \caption{\textit{Book of Materials}}
-    \label{tab:Bookofmaterials}
-    \begin{tabular}{|l|l|l|}
-        \hline
-        \textbf{Material}                      & \textbf{Quantidade} & \textbf{Preço por Unidade (R\$)} \\ \hline
-        \textbf{ESP32}                         & 01                  & 60,00                            \\ \hline
-        \textbf{ADC ADS1015}                   & 02                  & 35,00                            \\ \hline
-        \textbf{Buzzer THT}                    & 01                  & 3,50                             \\ \hline
-        \textbf{Capacitor 100 nF}              & 16                  & 0,25                             \\ \hline
-        \textbf{Capacitor 330 pF}              & 04                  & 0,15                             \\ \hline
-        \textbf{Capacitor 10 µF}               & 04                  & 0,20                             \\ \hline
-        \textbf{Capacitor 1 µF}                & 06                  & 0,20                             \\ \hline
-        \textbf{Diodo Schottky 1N5819}         & 04                  & 0,25                             \\ \hline
-        \textbf{Diodo 1N4007}                  & 10                  & 0,15                             \\ \hline
-        \textbf{Trimpot 1 K$\Omega$}           & 04                  & 3,60                             \\ \hline
-        \textbf{Transistor BC547}              & 01                  & 0,25                             \\ \hline
-        \textbf{Resistor 220 $\Omega$}         & 06                  & 0,10                             \\ \hline
-        \textbf{Resistor 1 k$\Omega$}          & 13                  & 0,10                             \\ \hline
-        \textbf{Resistor 330 $\Omega$}         & 02                  & 0,10                             \\ \hline
-        \textbf{Resistor 0 $\Omega$}           & 04                  & \textit{N/A}                     \\ \hline
-        \textbf{Resistor 3k3 $\Omega$}         & 01                  & 0,10                             \\ \hline
-        \textbf{Resistor 1\% 2 M$\Omega$}      & 04                  & 0,08                             \\ \hline
-        \textbf{Resistor 1\% 10 k$\Omega$}     & 04                  & 0,10                             \\ \hline
-        \textbf{Resistor 1\% 100 $\Omega$}     & 04                  & 0,20                             \\ \hline
-        \textbf{Resistor 1\% 1 $\Omega$}       & 04                  & 0,20                             \\ \hline
-        \textbf{Resistor SMD 1\% 10 m$\Omega$} & 01                  & 0,30                             \\ \hline
-        \textbf{Varistor S05K385}              & 02                  & 3,00                             \\ \hline
-        \textbf{Fusível HRC 440 mA}            & 01                  & 45,50                            \\ \hline
-        \textbf{Fusível HRC 11 A}              & 01                  & 49,50                            \\ \hline
-        \textbf{Borne KRE2}                    & 03                  & 1,30                             \\ \hline
-        \textbf{Borne KRE3}                    & 02                  & 2,00                             \\ \hline
-        \textbf{Chave Alavanca 2 posições}     & 01                  & 4,20                             \\ \hline
-        \textbf{LM317T}                        & 02                  & 2,30                             \\ \hline
-        \textbf{LM358}                         & 02                  & 1,10                             \\ \hline
-        \textbf{LM7805}                        & 02                  & 1,60                             \\ \hline
-        \textbf{6N137}                         & 05                  & 3,20                             \\ \hline
-        \textbf{Barra de Pinos Fêmea 40x1}     & 02                  & 3,10                             \\ \hline
-        \textbf{PCB}                           & 01                  & 1,00                             \\ \hline
-        \textbf{Fonte Isolada}                 & 02                  & 12,50                            \\ \hline
-    \end{tabular}
+\begin{table}[h!]
+\centering
+\caption{Lista de Materiais e Custos}
+\label{tab:Bookofmaterials}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Material} & \textbf{Quantidade} & \textbf{Preço por Unidade (R\$)} & \textbf{Valor Total (R\$)} \\ \hline
+ESP32 & 1 & 60,00 & 60,00 \\ \hline
+ADC ADS1015 & 2 & 35,00 & 70,00 \\ \hline
+Buzzer THT & 1 & 3,50 & 3,50 \\ \hline
+Capacitor 100 nF & 16 & 0,25 & 4,00 \\ \hline
+Capacitor 330 pF & 4 & 0,15 & 0,60 \\ \hline
+Capacitor 10 µF & 4 & 0,20 & 0,80 \\ \hline
+Capacitor 1 µF & 6 & 0,20 & 1,20 \\ \hline
+Diodo Schottky 1N5819 & 4 & 0,25 & 1,00 \\ \hline
+Diodo 1N4007 & 10 & 0,15 & 1,50 \\ \hline
+Trimpot 1 K$\Omega$ & 4 & 3,60 & 14,40 \\ \hline
+Transistor BC547 & 1 & 0,25 & 0,25 \\ \hline
+Resistor 220 $\Omega$ & 6 & 0,10 & 0,60 \\ \hline
+Resistor 1 k$\Omega$ & 13 & 0,10 & 1,30 \\ \hline
+Resistor 330 $\Omega$ & 2 & 0,10 & 0,20 \\ \hline
+Resistor 0 $\Omega$ & 4 & N/A & 0,00 \\ \hline
+Resistor 3k3 $\Omega$ & 1 & 0,10 & 0,10 \\ \hline
+Resistor 1\% 2 M$\Omega$ & 4 & 0,08 & 0,32 \\ \hline
+Resistor 1\% 10 k$\Omega$ & 4 & 0,10 & 0,40 \\ \hline
+Resistor 1\% 100 $\Omega$ & 4 & 0,20 & 0,80 \\ \hline
+Resistor 1\% 1 $\Omega$ & 4 & 0,20 & 0,80 \\ \hline
+Resistor SMD 1\% 10 m$\Omega$ & 1 & 0,30 & 0,30 \\ \hline
+Varistor S05K385 & 2 & 3,00 & 6,00 \\ \hline
+Fusível HRC 440 mA & 1 & 45,50 & 45,50 \\ \hline
+Fusível HRC 11 A & 1 & 49,50 & 49,50 \\ \hline
+Borne KRE2 & 3 & 1,30 & 3,90 \\ \hline
+Borne KRE3 & 2 & 2,00 & 4,00 \\ \hline
+Chave Alavanca 2 posições & 1 & 4,20 & 4,20 \\ \hline
+LM317T & 2 & 2,30 & 4,60 \\ \hline
+LM358 & 2 & 1,10 & 2,20 \\ \hline
+LM7805 & 2 & 1,60 & 3,20 \\ \hline
+6N137 & 5 & 3,20 & 16,00 \\ \hline
+Barra de Pinos Fêmea 40x1 & 2 & 3,10 & 6,20 \\ \hline
+Fonte Isolada & 2 & 12,50 & 25,00 \\ \hline
+\textbf{TOTAL} &  &  & \textbf{332,37} \\ \hline
+\end{tabular}
 \end{table}
+
 
 \section{\textit{Casing}}\label{Casing}
 
-Para a confecção do envólucro, ou \textit{casing} do protótipo, foi utilizado uma plataforma também gratuita de modelagem para impressoras 3d, chamada .....
+Para a confecção do invólucro, ou \textit{casing} do protótipo, foi utilizado uma plataforma também gratuita de modelagem, chamada \textit{Onshape}.
 
 Foram tiradas as medidas de um módulo de bancada de madeira, que suporta os equipamentos em bancadas dos laboratórios em questão, como demonstrado na \autoref{fig:Modulo-Base-Frente} e então feito o design com estas e também respeitando o tamanho e configuração da \gls{PCB}.
 
@@ -373,3 +439,24 @@ Foram tiradas as medidas de um módulo de bancada de madeira, que suporta os equ
     \includegraphics[width=0.8\textwidth]{figuras/Modulo-Base-Frente.jpg}
     \fonte{}
 \end{figure}
+
+O modelo foi pensado para ser o mais simples possível de ser impresso em 3D e modificado. Possui espaço para a placa e periféricos necessários.
+Devido a dificuldades no desenvolvimento do trabalho, o encapsulamento não foi fabricado, apenas teve seu dimensional analisado em ambiente virtual.
+Uma visão geral do modelo pode ser visto na \autoref{fig:osciloboy-isometrico}, juntamente de uma representação simplificada do suporte de madeira citado anteriormente.
+O detalhe dos suportes internos pode ser visto na \autoref{fig:osciloboy-detalhes}.
+
+\begin{figure}[htb!]
+    \caption{Modelo virtual do encapsulamento}
+    \label{fig:osciloboy-isometrico}
+    \includegraphics[width=0.8\textwidth]{figuras/osciloboy-case-1.png}
+    \fonte{}
+\end{figure}
+
+\begin{figure}[htb!]
+    \caption{Detalhes de suportes para PCB e periféricos}
+    \label{fig:Modulo-Base-Frente}
+    \includegraphics[width=0.8\textwidth]{figuras/osciloboy-case-2.png}
+    \fonte{}
+\end{figure}
+
+Assim como os demais elementos desse projeto, pode ser encontrado no [ANEXO X] ao final do trabalho, bem como, dado a característica colaborativa da plataforma, pode ser clonado e modificado sem nenhum custo, conforme a necessidade do usuário.

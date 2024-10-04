@@ -72,7 +72,7 @@ No caso de multimedidores, que são somente de uso específico industrial, algun
 %Input Protection
 \section{Proteção de Entrada}\label{sec:InputProtection}
 
-Proteção de entrada é um assunto extremamente abrangente quando se trata de circuitos eletrônicos. Dependendo da função que este tenha que exercer, existem infinitas topografias que podem ser consideradas. Algumas exigências, porém, são comuns, como a necessidade de um circuito de proteção contra descargas eletrostáticas, ou \gls{ESD} (\textit{Electrostatic Discharge}). Tais descargas podem entregar picos de tensão extremamente altos, chegando até a 30 kV, o que é extremamente danoso a qualquer circuito que use semicondutores. Pulsos de pico tão alto quanto 2500 V (Volts) já são o suficiente para danificar a maioria dos circuitos eletrônicos. Notoriamente, seres humanos são capazes de entregar descargas de até 20 kV por consequência da capacitância inata à sua fisiologia \cite{ONsemicondTVS2}.
+Proteção de entrada é um assunto extremamente abrangente quando se trata de circuitos eletrônicos. Dependendo da função que este tenha que exercer, existem infinitas topologias que podem ser consideradas. Algumas exigências, porém, são comuns, como a necessidade de um circuito de proteção contra descargas eletrostáticas, ou \gls{ESD} (\textit{Electrostatic Discharge}). Tais descargas podem entregar picos de tensão extremamente altos, chegando até a 30 kV, o que é extremamente danoso a qualquer circuito que use semicondutores. Pulsos de pico tão alto quanto 2500 V (Volts) já são o suficiente para danificar a maioria dos circuitos eletrônicos. Notoriamente, seres humanos são capazes de entregar descargas de até 20 kV por consequência da capacitância inata à sua fisiologia \cite{ONsemicondTVS2}.
 
 \subsection{ESD}\label{subsec:electrostaticDischarge}
 Esse tipo de proteção é necessária para circuitos que fazem interface com o meio físico e normalmente é exercida por um circuito básico de componentes \gls{TVS} (\textit{Transient Voltage Suppressor}). Os dispositivos semicondutores mais simples (e também regularmente) utilizados para exercer esta função são diodos Zener \cite{IPblog}.
@@ -183,7 +183,7 @@ Utilizando-se do princípio da Lei da Indução de Faraday, a bobina Rogowski tr
     \caption{Bobina Rogowski aberta}
     \label{fig:rogowski-bobina}
     \includegraphics[width=0.8\textwidth]{figuras/bobina-rogowski.png}
-    \fonte{CITAR Metodos de medição (artigo)}
+    \fonte{\citep{curr_sens_tech}}
 \end{figure}
 
 É um método amplamente utilizado para medições de altas correntes e suporta uma grande faixa de frequências. Tem um custo próximo dos transformadores de corrente e insere menos impedância parasita no circuito \citep{curr_sens_tech}.

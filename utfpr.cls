@@ -145,14 +145,31 @@
 \RequirePackage{indentfirst}%% Recuo do primeiro parágrafo após cabeçalho da seção
 \RequirePackage{morewrites}%% Espaços adicionais para comandos \write*
 
+% %% Configurações do pacote hyperref
+% \hypersetup{%% Opções do pacote hyperref
+%   breaklinks=true,%%
+%   colorlinks=true,%%
+%   citecolor=\@cordosvinculos,%%
+%   filecolor=\@cordosvinculos,%%
+%   linkcolor=\@cordosvinculos,%%
+%   urlcolor=\@cordosvinculos,%%
+%   bookmarksopen=true,%%
+%   bookmarksnumbered=true,%%
+%   pdfdisplaydoctitle=true,%%
+%   pdfpagelayout=SinglePage%%
+% }
+
+%%Andrey - Removendo Hiperlinks do documento
 %% Configurações do pacote hyperref
 \hypersetup{%% Opções do pacote hyperref
+  draft,
+  hidelinks,
   breaklinks=true,%%
-  colorlinks=true,%%
-  citecolor=\@cordosvinculos,%%
-  filecolor=\@cordosvinculos,%%
-  linkcolor=\@cordosvinculos,%%
-  urlcolor=\@cordosvinculos,%%
+  colorlinks=false,%% Desativa a coloração e o comportamento dos links
+  citecolor=black,%% Deixa as citações na cor preta, sem link
+  filecolor=black,%% Deixa os links para arquivos na cor preta, sem link
+  linkcolor=black,%% Deixa os links internos na cor preta, sem link
+  urlcolor=black,%% Deixa os links de URLs na cor preta, sem link
   bookmarksopen=true,%%
   bookmarksnumbered=true,%%
   pdfdisplaydoctitle=true,%%
