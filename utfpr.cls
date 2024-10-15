@@ -161,19 +161,17 @@
 
 %%Andrey - Removendo Hiperlinks do documento
 %% Configurações do pacote hyperref
-\hypersetup{%% Opções do pacote hyperref
-  draft,
-  hidelinks,
-  breaklinks=true,%%
-  colorlinks=false,%% Desativa a coloração e o comportamento dos links
-  citecolor=black,%% Deixa as citações na cor preta, sem link
-  filecolor=black,%% Deixa os links para arquivos na cor preta, sem link
-  linkcolor=black,%% Deixa os links internos na cor preta, sem link
-  urlcolor=black,%% Deixa os links de URLs na cor preta, sem link
-  bookmarksopen=true,%%
-  bookmarksnumbered=true,%%
-  pdfdisplaydoctitle=true,%%
-  pdfpagelayout=SinglePage%%
+\hypersetup{
+  breaklinks=true, %% Permite a quebra de links longos
+  colorlinks=false, %% Desativa a coloração dos links
+  citecolor=black, %% Citações sem links
+  filecolor=black, %% Links para arquivos sem cor/link
+  linkcolor=black, %% Links internos (capítulos/seções) sem cor
+  urlcolor=black, %% Links de URLs sem cor
+  linktoc=all, %% Links apenas para capítulos e seções no sumário
+  bookmarksopen=true, %% Abre automaticamente os marcadores no PDF
+  bookmarksnumbered=true, %% Marca capítulos/seções numerados nos marcadores
+  hidelinks %% Desativa links visíveis nas figuras, tabelas e afins
 }
 
 %%Andrey - Configurações do pacote siunitx
