@@ -2,11 +2,20 @@
 
 \chapter{Testes e Resultados}\label{cap:resultados}
 
-Os testes foram feitos para prova de conceito e demonstração do funcionamento do protótipo, comparando as leituras obtidas \gls{CA} por este com as obtidas por um multímetro e por um osciloscópio.
+Os testes foram feitos para prova de conceito e demonstração do funcionamento do protótipo, comparando as leituras \gls{CA} e \gls{CC} por este com as obtidas por um multímetro e por um osciloscópio.
 
-O primeiro teste se diz respeito à leitura da tensão da rede local, sendo o sinal a ser lido as saídas de uma tomada de 127 V do laboratório. O \textit{setup} básico se encontra nas figuras \ref{fig:setup-main} e \ref{fig:setup-main2}. Para este teste se foi utilizado um reostato pois este tem uma grande capacidade de suportar correntes altas. A resistência deste se dá por 60,3 $\Omega$, como representado na \autoref{fig:resistencia-reostato-teste}.
+\section{Teste de leitura da Rede}\label{sec:l-rede}
 
-Utilizando a lei de ohm $v = r \cdot  i$, espera-se uma leitura de corrente de 2.13 A.
+O primeiro teste se diz respeito à leitura da tensão e corrente de um circuito representado pela \autoref{fig:circuito-rede-falstad}, sendo o sinal a saída de uma tomada de 127 V do laboratório. O \textit{setup} básico se encontra nas figuras \ref{fig:setup-main} e \ref{fig:setup-main2}. Para este teste foi utilizado um reostato pois este possui a capacidade de suportar correntes altas. A resistência deste foi fixa em 60,3 $\Omega$, como representado na \autoref{fig:resistencia-reostato-teste}.
+
+Utilizando a lei de ohm $v = r \cdot  i$, espera-se uma leitura de corrente de 2,11 A.
+
+\begin{figure}[htb!]
+    \caption{Diagrama do circuito do teste de leitura de rede.}
+    \label{fig:circuito-rede-falstad}
+    \includegraphics[width=0.4\textwidth]{figuras/circ-rede-falstad.png}
+    \fonte{}
+\end{figure}
 
 \begin{figure}[htb!]
     \caption{\textit{Setup} básico para testes.}
@@ -29,48 +38,55 @@ Utilizando a lei de ohm $v = r \cdot  i$, espera-se uma leitura de corrente de 2
     \fonte{}
 \end{figure}
 
-A \autoref{fig:leitura-rede-osc} representa a leitura da tensão rede feita pelo osciloscópio, a \autoref{fig:leitura-rede-mult-t} representa a leitura de tensão feita pelo multímetro e a \autoref{fig:leitura-rede-mult-c} a leitura da corrente do circuito feita por este. Pelo protótipo, as figuras \ref{fig:leitura-rede-boy-ondas} e \ref{fig:leitura-rede-boy-valores}, respectivamente, representam as ondas e o valor destas leituras, além também da frequência.
+A \autoref{fig:leitura-rede-osc} representa a leitura da tensão rede feita pelo osciloscópio, a \autoref{fig:leitura-rede-mult-t} representa a leitura de tensão feita pelo multímetro e a \autoref{fig:leitura-rede-mult-c} a leitura da corrente do circuito feita por este. Pelo protótipo, a figura \autoref{fig:leitura-rede-boy-ondas} representa as ondas e o valor destas leituras, respectivamente. Além disso, também é possível obter os dados de frequência da rede, as potências ativa, reativa, aparente e o fator de potência encontrado no circuito.
 
 \begin{figure}[htb!]
-    \caption{Leitura da rede - Osciloscópio.}
+    \caption{Leitura da tensão do circuito do teste de leitura de rede - Osciloscópio.}
     \label{fig:leitura-rede-osc}
     \includegraphics[width=0.8\textwidth]{figuras/leitura-rede-osc.png}
     \fonte{}
 \end{figure}
 
 \begin{figure}[htb!]
-    \caption{Leitura da tensão da rede - Multímetro.}
+    \caption{Leitura da tensão do circuito do teste de leitura de rede - Multímetro.}
     \label{fig:leitura-rede-mult-t}
     \includegraphics[width=0.3\textwidth]{figuras/leitura-rede-mult-t.png}
     \fonte{}
 \end{figure}
 
 \begin{figure}[htb!]
-    \caption{Leitura da corrente do circuito - Multímetro.}
+    \caption{Leitura da corrente do circuito do teste de leitura de rede - Multímetro.}
     \label{fig:leitura-rede-mult-c}
     \includegraphics[width=0.3\textwidth]{figuras/leitura-rede-mult-c.png}
     \fonte{}
 \end{figure}
 
 \begin{figure}[htb!]
-    \caption{Leitura da rede e circuito pelo protótipo - Ondas}
+    \caption{Leitura completa do circuito do teste de leitura de rede - Protótipo}
     \label{fig:leitura-rede-boy-ondas}
     \includegraphics[width=0.8\textwidth]{figuras/leitura-rede-boy-ondas.png}
     \fonte{}
 \end{figure}
 
-\begin{figure}[htb!]
-    \caption{Leitura da rede e circuito pelo protótipo - Valores}
-    \label{fig:leitura-rede-boy-valores}
-    \includegraphics[width=0.8\textwidth]{figuras/leitura-rede-boy-valores.png}
-    \fonte{}
-\end{figure}
+Comparando os sinais obtidos, percebe-se que o protótipo propõe uma qualidade de leitura excepcional para este range. A tabela \autoref{tab:resultados-01} contém os resultados e também o erro do protótipo considerando os valores do osciloscópio (erro 1) e do multímetro (erro 2) como referência.
 
-Comparando os sinais obtidos, percebe-se que o protótipo propõe uma qualidade de leitura excepcional para este range, mantendo o formato da onda fiel e os valores com um erro dentro do proposto pelas especificações.
+\begin{table}[!ht]
+    \centering
+    \caption{Resultados do teste de leitura da rede.}
+    \label{tab:resultados-01}
+    \begin{tabular}{|l|l|l|l|l|l|}
+        \hline
+        \textbf{Leitura} & \textbf{Osciloscópio} & \textbf{Multímetro} & \textbf{Protótipo}  & \textbf{Erro 1}  & \textbf{Erro 2}  \\ \hline
+        Rede (V)         & 130 V                 & 128,7 V             & 128,1 V             & 1,46\%          & 0,46\%           \\ \hline
+        Rede (A)         & -                     & 2,129 A             & 2,130 A             & -               & 0,047\%          \\ \hline
+    \end{tabular}
+\end{table}
 
-Além deste teste da leitura da rede, foram conduzidos dois outros testes para prova de conceito: leitura de um sinal de tensão de pico de aproximadamente 200 mVpp e a leitura de uma corrente na ordem de micro amperes.
 
-O sinal de 200 mVpp foi gerado por um gerador de funções, conforme a \autoref{fig:ger-func-200}.
+
+\section{Teste 200 mVpp}\label{teste-200mv}
+
+O segundo teste propõe a verificação de outro range de leitura do protótipo. Para isto, um sinal de 200 mVpp foi gerado por um gerador de funções, conforme a \autoref{fig:ger-func-200}.
 
 \begin{figure}[htb!]
     \caption{Gerador de funções - Sinal 200 mVpp.}
@@ -79,7 +95,7 @@ O sinal de 200 mVpp foi gerado por um gerador de funções, conforme a \autoref{
     \fonte{}
 \end{figure}
 
-Utilizando-se novamente o osciloscópio e um multímetro, é possível comparar as leituras entre estes e o protótipo, respectivamente nas figuras \ref{fig:leitura-200-osc}, \ref{fig:leitura-200-mult}, \ref{fig:leitura-200-boy-onda} e \ref{fig:leitura-200-boy-valor}.
+Utilizando-se novamente o osciloscópio e um multímetro, é possível comparar as leituras entre estes e o protótipo nas figuras \ref{fig:leitura-200-osc}, \ref{fig:leitura-200-mult} e \ref{fig:leitura-200-boy-onda}.
 
 \begin{figure}[htb!]
     \caption{Leitura da onda de 200 mVpp - Osciloscópio}
@@ -96,45 +112,52 @@ Utilizando-se novamente o osciloscópio e um multímetro, é possível comparar 
 \end{figure}
 
 \begin{figure}[htb!]
-    \caption{Leitura da onda de 200 mVpp do protótipo - Onda}
+    \caption{Leitura da onda de 200 mVpp - Protótipo}
     \label{fig:leitura-200-boy-onda}
     \includegraphics[width=0.8\textwidth]{figuras/leitura-200-boy-onda.png}
     \fonte{}
 \end{figure}
 
-\begin{figure}[htb!]
-    \caption{Leitura da onda de 200 mVpp do protótipo - Valor}
-    \label{fig:leitura-200-boy-valor}
-    \includegraphics[width=0.8\textwidth]{figuras/leitura-200-boy-valor.png}
-    \fonte{}
-\end{figure}
+\begin{table}[!ht]
+    \centering
+    \caption{Resultados do teste de 200 mVpp.}
+    \label{tab:resultados}
+    \begin{tabular}{|p{2cm}|p{3cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
+        \hline
+        \textbf{Leitura} & \textbf{Osciloscópio} & \textbf{Multímetro} & \textbf{Protótipo}    & \textbf{Erro 1}  & \textbf{Erro 2}   \\ \hline
+        200 mVpp         & 143 mVRMS / 244 mVpp & 137 mVRMS          & 188 mVRMS / 263 mVpp & 31,47\% e 7,78\% & 37,23\%           \\ \hline
+    \end{tabular}
+\end{table}
 
 Comparando os sinais obtidos, a diferença entre todos os diferentes instrumentos é notável neste range de leitura. O protótipo apresenta um erro fora do proposto pelas espeficicações. Este range pode ser melhor calibrado por software e seu erro curado a ponto de respeitar tais especificações. Nota-se também que existem valores de corrente e potências, porém o canal de tais não está conectado, sendo estes então descartáveis.
 
-Finalmente, para a leitura de corrente na ordem de micro amperes, foi utilizado um resistor comum de 30 k$\Omega$, sendo este e seu valor representados pela \autoref{fig:res-30k}. Além disto, utilizou-se o gerador de função novamente para gerar uma tensão pequena de 10 Vpp ou 7.07 V. Com estes dados, utilizando novamente a lei de Ohm, se espera uma leitura de corrente de 0,000217 A ou 217 $\mu$A.
+\section{Teste uA}\label{teste-ua}
 
-As leituras obtidas pelo multímetro e pelo protótipo são demonstradas respectivamente pelas figuras \ref{fig:leitura-micro-mult}, \ref{fig:leitura-micro-boy-onda} e \ref{fig:leitura-micro-boy-valor}.
+Para a leitura de corrente no range de micro amperes, foi utilizado um resistor comum de 30 k$\Omega$, sendo este e seu valor representados pela \autoref{fig:res-30k}. Além disto, utilizou-se o gerador de função novamente para gerar uma tensão pequena de 10 Vpp ou 7.07 V. Com estes dados, utilizando novamente a lei de Ohm, se espera uma leitura de corrente de 0,000217 A ou 217 $\mu$A.
+
+As leituras obtidas pelo multímetro e pelo protótipo são demonstradas pelas figuras \ref{fig:leitura-micro-mult} e \ref{fig:leitura-micro-boy-onda}.
+
+\begin{figure}[htb!]
+    \caption{Valor resistor de 30 k$\Omega$.}
+    \label{fig:res-30k}
+    \includegraphics[width=0.3\textwidth]{figuras/res-30k.png}
+    \fonte{}
+\end{figure}
 
 \begin{figure}[htb!]
     \caption{Leitura da corrente de 217 $\mu$A - Multímetro.}
     \label{fig:leitura-micro-mult}
-    \includegraphics[width=0.8\textwidth]{figuras/leitura-micro-mult.png}
+    \includegraphics[width=0.3\textwidth]{figuras/leitura-micro-mult.jpg}
     \fonte{}
 \end{figure}
 
 \begin{figure}[htb!]
-    \caption{Leitura da corrente de 210 $\mu$A do protótipo - Onda.}
+    \caption{Leitura da corrente de 210 $\mu$A - Protótipo.}
     \label{fig:leitura-micro-boy-onda}
     \includegraphics[width=0.8\textwidth]{figuras/leitura-micro-boy-onda.png}
     \fonte{}
 \end{figure}
 
-\begin{figure}[htb!]
-    \caption{Leitura da corrente de 210 $\mu$A do protótipo - Valor.}
-    \label{fig:leitura-micro-boy-valor}
-    \includegraphics[width=0.8\textwidth]{figuras/leitura-micro-boy-valor.png}
-    \fonte{}
-\end{figure}
 
 Olhando para os valores obtidos, percebe-se que o multímetro não apresenta um valor adequado, possívelmente por sua entrada de corrente no valor de micro estar queimada ou defeituosa. Já a leitura do protótipo está extremamente próxima do valor esperado, estando também dentro das especificações.
 
