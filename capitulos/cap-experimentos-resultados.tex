@@ -13,7 +13,7 @@ Utilizando a lei de ohm $v = r \cdot  i$, espera-se uma leitura de corrente de 2
 \begin{figure}[htb!]
     \caption{Diagrama do circuito do teste de leitura de rede.}
     \label{fig:circuito-rede-falstad}
-    \includegraphics[width=0.4\textwidth]{figuras/circ-rede-falstad.png}
+    \includegraphics[width=0.5\textwidth]{figuras/circ-rede-falstad.png}
     \fonte{}
 \end{figure}
 
@@ -77,42 +77,49 @@ Comparando os sinais obtidos, percebe-se que o protótipo propõe uma qualidade 
     \begin{tabular}{|l|l|l|l|l|l|}
         \hline
         \textbf{Leitura} & \textbf{Osciloscópio} & \textbf{Multímetro} & \textbf{Protótipo}  & \textbf{Erro 1}  & \textbf{Erro 2}  \\ \hline
-        Rede (V)         & 130 V                 & 128,7 V             & 128,1 V             & 1,46\%          & 0,46\%           \\ \hline
-        Rede (A)         & -                     & 2,129 A             & 2,130 A             & -               & 0,047\%          \\ \hline
+        Rede (V)         & 130 V                 & 128,7 V             & 128,1 V             & 1,46\%           & 0,47\%           \\ \hline
+        Rede (A)         & -                     & 2,129 A             & 2,130 A             & -                & 0,047\%          \\ \hline
     \end{tabular}
 \end{table}
 
 
 
-\section{Teste 200 mVpp}\label{teste-200mv}
+\section{Teste 200 mVp}\label{teste-200mv}
 
-O segundo teste propõe a verificação de outro range de leitura do protótipo. Para isto, um sinal de 200 mVpp foi gerado por um gerador de funções, conforme a \autoref{fig:ger-func-200}.
+O segundo teste propõe a verificação de outro range de leitura do protótipo. Para isto, um sinal de 200 mV pico foi gerado por um gerador de funções, conforme a \autoref{fig:ger-func-200}. Nota-se que na tela do gerador de funções se encontra a nomenclatura "Vpp", ou tensão de pico a pico, porém esta está equivocada, como demonstrado nos resultados das medições tanto do osciloscópio quanto do protótipo.
 
 \begin{figure}[htb!]
-    \caption{Gerador de funções - Sinal 200 mVpp.}
+    \caption{Gerador de funções - Sinal 200 mVp.}
     \label{fig:ger-func-200}
     \includegraphics[width=0.8\textwidth]{figuras/ger-func-200.png}
+    \fonte{}
+\end{figure}
+
+\begin{figure}[htb!]
+    \caption{Diagrama do circuito do teste de 200 mVp}
+    \label{fig:circ-200}
+    \includegraphics[width=0.5\textwidth]{figuras/circ-200-falstad.png}
     \fonte{}
 \end{figure}
 
 Utilizando-se novamente o osciloscópio e um multímetro, é possível comparar as leituras entre estes e o protótipo nas figuras \ref{fig:leitura-200-osc}, \ref{fig:leitura-200-mult} e \ref{fig:leitura-200-boy-onda}.
 
 \begin{figure}[htb!]
-    \caption{Leitura da onda de 200 mVpp - Osciloscópio}
+    \caption{Leitura da onda de 200 mVp - Osciloscópio}
     \label{fig:leitura-200-osc}
     \includegraphics[width=0.8\textwidth]{figuras/leitura-200-osc.png}
     \fonte{}
 \end{figure}
 
 \begin{figure}[htb!]
-    \caption{Leitura da onda de 200 mVpp - Multímetro (valor RMS)}
+    \caption{Leitura da onda de 200 mVp - Multímetro (valor RMS)}
     \label{fig:leitura-200-mult}
     \includegraphics[width=0.3\textwidth]{figuras/leitura-200-mult.png}
     \fonte{}
 \end{figure}
 
 \begin{figure}[htb!]
-    \caption{Leitura da onda de 200 mVpp - Protótipo}
+    \caption{Leitura da onda de 200 mVp - Protótipo}
     \label{fig:leitura-200-boy-onda}
     \includegraphics[width=0.8\textwidth]{figuras/leitura-200-boy-onda.png}
     \fonte{}
@@ -120,12 +127,12 @@ Utilizando-se novamente o osciloscópio e um multímetro, é possível comparar 
 
 \begin{table}[!ht]
     \centering
-    \caption{Resultados do teste de 200 mVpp.}
-    \label{tab:resultados}
+    \caption{Resultados do teste de 200 mVp.}
+    \label{tab:resultadoss-200}
     \begin{tabular}{|p{2cm}|p{3cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
         \hline
         \textbf{Leitura} & \textbf{Osciloscópio} & \textbf{Multímetro} & \textbf{Protótipo}    & \textbf{Erro 1}  & \textbf{Erro 2}   \\ \hline
-        200 mVpp         & 143 mVRMS / 244 mVpp & 137 mVRMS          & 188 mVRMS / 263 mVpp & 31,47\% e 7,78\% & 37,23\%           \\ \hline
+        200 mVp          & 143 mVRMS / 244 mVp   & 137 mVRMS           & 188 mVRMS / 263 mVp   & 31,47\% e 7,78\% & 37,23\%           \\ \hline
     \end{tabular}
 \end{table}
 
@@ -133,7 +140,14 @@ Comparando os sinais obtidos, a diferença entre todos os diferentes instrumento
 
 \section{Teste uA}\label{teste-ua}
 
-Para a leitura de corrente no range de micro amperes, foi utilizado um resistor comum de 30 k$\Omega$, sendo este e seu valor representados pela \autoref{fig:res-30k}. Além disto, utilizou-se o gerador de função novamente para gerar uma tensão pequena de 10 Vpp ou 7.07 V. Com estes dados, utilizando novamente a lei de Ohm, se espera uma leitura de corrente de 0,000217 A ou 217 $\mu$A.
+Para o range de leitura de corrente de micro amperes, foi utilizado um resistor comum de 30 k$\Omega$, sendo este e seu valor representados pela \autoref{fig:res-30k}. Além disto, utilizou-se o gerador de função novamente para gerar uma tensão pequena de 10 Vp ou 7.07 V. Com estes dados, utilizando novamente a lei de Ohm, se espera uma leitura de corrente de 0,000217 A ou 217 $\mu$A.
+
+\begin{figure}[htb!]
+    \caption{Diagrama do circuito do teste de $\mu$A}
+    \label{fig:circ-ua}
+    \includegraphics[width=0.5\textwidth]{figuras/circ-ua-falstad.png}
+    \fonte{}
+\end{figure}
 
 As leituras obtidas pelo multímetro e pelo protótipo são demonstradas pelas figuras \ref{fig:leitura-micro-mult} e \ref{fig:leitura-micro-boy-onda}.
 
@@ -152,27 +166,91 @@ As leituras obtidas pelo multímetro e pelo protótipo são demonstradas pelas f
 \end{figure}
 
 \begin{figure}[htb!]
-    \caption{Leitura da corrente de 210 $\mu$A - Protótipo.}
+    \caption{Leitura da corrente de 217 $\mu$A - Protótipo.}
     \label{fig:leitura-micro-boy-onda}
     \includegraphics[width=0.8\textwidth]{figuras/leitura-micro-boy-onda.png}
     \fonte{}
 \end{figure}
 
 
-Olhando para os valores obtidos, percebe-se que o multímetro não apresenta um valor adequado, possívelmente por sua entrada de corrente no valor de micro estar queimada ou defeituosa. Já a leitura do protótipo está extremamente próxima do valor esperado, estando também dentro das especificações.
-
-Finalmente, a tabela \ref{tab:resultados} contém todos os testes e seus resultados.
+Olhando para os valores obtidos, percebe-se que tanto o multímetro quanto o protótipo exibem leituras precisas, confirmando assim a capacidade deste de ler sinais relativamente pequenos em ordem de magnitude.
 
 \begin{table}[!ht]
     \centering
-    \caption{Resultados.}
-    \label{tab:resultados}
+    \caption{Resultados do teste de $\mu$A.}
+    \label{tab:resultados-ua}
     \begin{tabular}{|l|l|l|l|}
         \hline
-        \textbf{Leitura} & \textbf{Osciloscópio} & \textbf{Multímetro} & \textbf{Protótipo}    \\ \hline
-        Rede (V)         & 130 V                 & 128,7 V             & 128,1 V               \\ \hline
-        Rede (A)         & -                     & 2,129 A             & 2,130 A               \\ \hline
-        200 mVpp         & 143 mV RMS e 244 mVpp & 137 mV RMS          & 188 mV RMS e 263 mVpp \\ \hline
-        217 $\mu$A       & -                     & 11,8 $\mu$A         & 210,7 $\mu$A          \\ \hline
+        \textbf{Leitura}  & \textbf{Multímetro}  & \textbf{Protótipo}  & \textbf{Erro}   \\ \hline
+        217 $\mu$A        & 214.9 $\mu$A         & 209.5 $\mu$A        & 2,51\%             \\ \hline
+    \end{tabular}
+\end{table}
+
+\section{Teste Wheatstone}\label{teste-Wheatstone}
+
+Para provar a capacidade tanto de leitura DC quanto de leitura de tensão e corrente em pontos diferentes do circuito, foi utilizado um circuito de Wheatstone. Foram feitas as medições de acordo com o diagrama representado pela \autoref{fig:diagrama-circ-wheatstone} e também na \autoref{fig:circuito-wheatstone-full}. Como indicado no diagrama do circuito, são esperadas leituras de 3,75 V e 16,25 mA.
+
+\begin{figure}[htb!]
+    \caption{Diagrama circuito wheatstone}
+    \label{fig:diagrama-circ-wheatstone}
+    \includegraphics[width=0.8\textwidth]{figuras/diagrama-circ-wheatstone.png}
+    \fonte{}
+\end{figure}
+
+\begin{figure}[htb!]
+    \caption{Diagrama circuito wheatstone}
+    \label{fig:circuito-wheatstone-full}
+    \includegraphics[width=0.4\textwidth]{figuras/circuito-wheatstone-full.png}
+    \fonte{}
+\end{figure}
+
+A resistência equivalente deste circuito, quando medida, resultou em 1,21 k$\Omega$, como mostra a imagem \autoref{fig:res-wheatstone}.
+
+\begin{figure}[htb!]
+    \caption{Resistência equivalente do circuito Wheatstone}
+    \label{fig:res-wheatstone}
+    \includegraphics[width=0.3\textwidth]{figuras/res-wheatstone.png}
+    \fonte{}
+\end{figure}
+
+\begin{figure}[htb!]
+    \caption{Leitura de tensão do circuito Wheatstone - Osciloscópio}
+    \label{fig:wheatstone-osc}
+    \includegraphics[width=0.8\textwidth]{figuras/wheatstone-osc.png}
+    \fonte{}
+\end{figure}
+
+\begin{figure}[htb!]
+    \caption{Leitura de tensão do circuito Wheatstone - Multímetro}
+    \label{fig:tensao-wheatstone-mult}
+    \includegraphics[width=0.3\textwidth]{figuras/tensao-wheatstone-mult.png}
+    \fonte{}
+\end{figure}
+
+\begin{figure}[htb!]
+    \caption{Leitura de corrente do circuito Wheatstone - Multímetro}
+    \label{fig:corrente-wheatstone-mult}
+    \includegraphics[width=0.3\textwidth]{figuras/corrente-wheatstone-mult.png}
+    \fonte{}
+\end{figure}
+
+\begin{figure}[htb!]
+    \caption{Leitura do circuito Wheatstone - Protótipo}
+    \label{fig:wheatstone-boy}
+    \includegraphics[width=1\textwidth]{figuras/wheatstone-boy.png}
+    \fonte{}
+\end{figure}
+
+Comparando os resultados obtidos, é possível observar que as leituras de sinais de corrente contínua feitas pelo protótipo são de boa qualidade. Além disso, observa-se que este realmente possui a capacidade de leitura em pontos diferentes do circuito sem interferências ou erros.
+
+\begin{table}[!ht]
+    \centering
+    \caption{Resultados do teste do circuito Wheatstone.}
+    \label{tab:resultados-wheatstone}
+    \begin{tabular}{|l|l|l|l|l|l|}
+        \hline
+        \textbf{Leitura} & \textbf{Osciloscópio} & \textbf{Multímetro} & \textbf{Protótipo}    & \textbf{Erro 1}  & \textbf{Erro 2}   \\ \hline
+        3,75 V           & 3,68 V                & 3,67 V              & 3,54 V                & 3,8\%            & 3,54\%            \\ \hline
+        16,25 mA         & -                     & 16,51 mA            & 16,96 mA              & -                & 2.72\%            \\ \hline
     \end{tabular}
 \end{table}

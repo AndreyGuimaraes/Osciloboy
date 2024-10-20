@@ -2,10 +2,54 @@
 %%
 \chapter{Conclusão}\label{cap:conclusoeseperspectivas}
 
-O propósito deste trabalho foi o desenvolvimento de um multimedidor de baixo custo modular capaz de medir tensão e corrente paralelamente. Devido a complexidade da modularização, essa parte não foi implementada, porém, foi analisada e encaminhada para a funcionalidade em trabalhos futuros.
+A finalidade principal deste trabalho foi desenvolver um multimedidor com comunicação sem fio de baixo custo, capaz de medir tensão e corrente simultaneamente. De maneira sucinta, pode-se concluir que a produção do protótipo e a prova de conceito sobre a sua funcionalidade foram um sucesso.
 
-Para o desenvolvimento do \textit{hardware}, pesquisou-se em trabalhos científicos, manuais, \textit{datasheets}, livros, blogs, entre outras fontes para se ter um melhor entendimento de como funciona um circuito de leitura de sinais elétrico. Para a proteção deste circuito, muito foi pesquisado sobre proteção de entrada para tais instrumentos. Também para alcançar o objetivo de leitura paralela de tensão e corrente, foi necessário o desenvolvimento de um circuito isolado internamente, o que se apresentou como um grande obstáculo.
+A funcionalidade de modularização não foi implementada nesta etapa devido à sua complexidade de implementação, por limitações de protocolos de comunicação \textit{wireless} atrelados à plataforma e o hardware escolhidos e também por limitações de tempo. 
 
-Foi colocado em questão o funcionamento do ADC, o componente mais importante para o objetivo e que também se pôs como a maior barreira para o desenvolvimento deste protótipo. Junto com este, o microcontrolador escolhido também foi estudado sumariamente para se desenvolver o \textit{firmware} necessário para o funcionamento do pacote como um todo. Este \textit{firmware} integra todo o resultado da pesquisa e assim possibilita a comunicação entre o ADC e a plataforma de tratamento de dados.
+As especificações do \gls{ADC} e do microcontrolador são as de maior importância para o desenvolvimento de um protótipo com esta finalidade. Isto se deve às necessidades a serem atendidas ou o propósito do instrumento de medição a ser elaborado, como precisão e ranges de leitura, quais tipos de leitura serão feitas, a interface homem-máquina, velocidade de transmissão de dados, entre várias outras. Uma consideração de suma importância também é a compatibilidade entre estes componentes.
 
-Foi possível se estabelecer a medição e comunicação dos dados com um dispositivo externo, bem como alcançar a precisão necessária para se observar a forma de onda e obter medições adequadas para o ensino.
+Para alcançar o objetivo de leitura paralela de tensão e corrente, foi necessário o desenvolvimento de um circuito isolado internamente, garantindo a integridade dos sinais e dos componentes do circuito. Isto se apresentou como um grande desafio quando se trata de baixo custo e a replicabilidade do protótipo desenvolvido, pois soluções já existentes são em grande maioria custosas e difíceis de se encontrar em mercados não especializados.
+
+Este trabalho demonstra o desenvolvimento de um \textit{firmware}, que é necessário para o funcionamento do equipamento como um todo. Este integra todo o resultado da pesquisa e possibilita a comunicação entre o ADC e a plataforma de tratamento de dados, que pode ser acessada por dispositivos externos como smartphones ou computadores, assim como deixa estruturada uma futura modularização.
+
+É interessante pontuar que as leituras true RMS de multímetros comercias não necessariamente conseguiriam fazer a leitura corretamente quando se tem um circuito que gera sinais com componentes DC devido ao acoplamento AC utilizado por estes multímetros para realizar sua leitura. O protótipo neste trabalho desenvolvido não possui acoplamento AC e considera a onda pura para o cálculo, resultando em um valor mais condizente com a realidade.
+
+Para fazer esta medida com um multímetro true RMS seria necessário fazer uma medida AC, uma DC e calcular o resultado final com a equação $RMS=sqrt(CArms^2+CC^2)$". Multímetros que dispõe tal utilidade são custosos monetáriamente, o que é uma vantagem para o desenvolvimento do protótipo neste trabalho proposto. 
+
+Considerando as especificações adotadas para o protótipo, seguem as tabelas de especificações e resultados referentes, levando em conta as considerações de teste:
+
+\begin{table}[!ht]
+    \centering
+    \caption{Precisões solicitadas e resultados}
+    \label{tab:resultados-precis}
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Parâmetro} & \textbf{Precisão Solicitada} & \textbf{Precisão Atingida} & \textbf{Status}         \\ \hline
+        Tensão (V)         & < 2\%                        & entre 0,47\% e 1,46\%      & Dentro de Especificação \\ \hline
+        Tensão (mV)        & < 2\%                        & entre 31,47\% e 37,23\%    & Fora de Especificação   \\ \hline
+        Corrente (A)       & < 5\%                        & 0,047\%                    & Dentro de Especificação \\ \hline
+        Corrente (mA)      & < 5\%                        & 2,72\%                     & Dentro de Especificação  \\ \hline
+        Corrente ($\mu$A)  & < 5\%                        & 2,51\%                     & Dentro de Especificação   \\ \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \caption{Implementação de funções de acordo com especificações}
+    \label{tab:resultados-func}
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Função}                                  & \textbf{Status} \\ \hline
+        Leitura Simultânea de Tensão e Corrente True RMS & Implementado  \\ \hline
+        Exibição de Formas de Onda de Tensão e Corrente  & Implementado  \\ \hline
+        Cálculo de Potências Ativa, Reativa e Aparente   & Implementado  \\ \hline
+        Cálculo do Fator de Potência                     & Implementado  \\ \hline
+        Modularização e Leitura de Multiplas Fases       & Não Implementado  \\ \hline
+    \end{tabular}
+\end{table}
+
+De acordo com as especificações de aspectos construtivos, foi adicionado um borne a mais para a corrente visto a necessidade de se trocar a entrada desta para leituras de A, mA e $\mu$A. A utilização de fontes internas isoladas foi atendida e o tipo de interface homem-máquina também foi atendido, se dando por smartphone ou computador.
+
+Nota-se que o dispositivo também oferece a leitura da frequência do sinal a ser medido. Além disto, de acordo com o teste utilizando-se o circuito de Wheatstone, a leitura simultânea de sinais de corrente e tensão em partes diferentes do circuito sem interferências é provada.
+
+Quanto aos resultados dos testes, nota-se que as especificações foram em sua grande maioria atendidas, exceto o range de mV. Este pode ser calibrado posteriormente por meio do firmware integrado ao dispositivo para o aperfeiçoamento da aquisição destes sinais e então sua leitura.
