@@ -41,7 +41,7 @@ O resistor de 10 m$\Omega$ é para a leitura de corrente na proporção de Amper
 
 Para se obter um sinal apropriado para o ADC, existem duas possibilidades: leitura "Diferencial" e leitura "\textit{Single-Ended}".
 
-\subsubsection{Modo \textit{Single-Ended}}\label{single-ended}
+\subsubsection{ADC - Modo \textit{Single-Ended}}\label{single-ended}
 
 A primeira opção a ser considerada foi a \textit{Single-Ended}. Este tipo de leitura é feita pela comparação de tensão entre um ponto do circuito e o \textit{ground}. Para fazer tal leitura com diferentes \textit{ranges}, o que é fundamental para se alcançar uma boa precisão, foi primeiro projetado um condicionamento de sinais por divisor resistivo, como representado na \autoref{fig:div-res}.
 
@@ -72,7 +72,7 @@ Obtendo os resultados de $x = 5,505556 \cdot 10^{5}, y = 4,55 \cdot 10^{5}$ e $z
 
 Substituindo x, y e z, respectivamente, em R1, R2 e R3 na \autoref{fig:div-res}, chega-se às tensões condicionadas desejadas. Com isto, agora, é necessário serem respeitadas as necessidades do \gls{ADC}, que é o componente principal do circuito, pois este efetivamente fará as leituras.
 
-Primeiramente, foi escolhido o \gls{ADC} ADS1115 da \textit{Texas Instruments}, pois este possui 16-bits de resolução, o que torna a leitura extremamente precisa. Possui uma referência interna de tensão, sendo desnecessária a construção de uma referência no circuito, tornando-o menos complexo, e compatível com o protocolo de comunicação \gls{$I^2$C} que será utilizado para interfacear este com o microcontrolador. Porém, devido a sua taxa de leitura extremamente baixa, de 860 \textit{samples per second} (\gls{SPS}), prejudicando a leitura até de frequências na faixa de 60 Hz, foi decidido se utilizar o \gls{ADC} ADS1015.
+Primeiramente, foi escolhido o \gls{ADC} ADS1115 da \textit{Texas Instruments}, pois este possui 16-bits de resolução, o que torna a leitura extremamente precisa. Possui uma referência interna de tensão, sendo desnecessária a construção de uma referência no circuito, menos complexa, e compatível com o protocolo de comunicação \gls{$I^2$C} que será utilizado para interfacear este com o microcontrolador. Porém, devido a sua taxa de leitura extremamente baixa, de 860 \textit{samples per second} (\gls{SPS}), prejudicando a leitura até de frequências na faixa de 60 Hz, foi decidido se utilizar o \gls{ADC} ADS1015.
 
 Este, também da \gls{TI}, apesar de ter uma resolução mais baixa de 12-bits, oferece uma taxa de 3300 \gls{SPS}, possibilitando assim uma reconstrução mais fiel da onda a ser lida, possuindo, uma referência interna de tensão e compatibilidade com o protocolo \gls{$I^2$C}. Este \gls{ADC} também possui uma proteção interna contra surtos por \gls{TVS}, tornando-o extremamente robusto. Os requerimentos para o funcionamento adequado deste \gls{ADC} são uma tensão de entrada máxima de 3,3 V e esta não pode ser negativa.
 
@@ -93,7 +93,7 @@ Por fim, para sinais com menor amplitude, é necessário adicionar mais um ampli
 
 Cada amplificador operacional (amp-op) possui um \textit{drift} de saída, o que introduz ainda mais erro na leitura do \gls{ADC}. Além disso, como é necessária uma amplificação final do sinal, quaisquer ruídos introduzidos também serão amplificados. Com esses problemas combinados, decidiu-se realizar a leitura no modo diferencial, que é a outra opção de leitura nativa disponível no \gls{ADC} escolhido.
 
-\subsubsection{Modo Diferencial}\label{modo-diferencial}
+\subsubsection{ADC - Modo Diferencial}\label{modo-diferencial}
 
 Este tipo de leitura, ao invés de comparar a tensão entre um ponto do circuito e o \textit{ground}, compara a tensão entre dois pontos do circuito e mede efetivamente a diferença entre elas, como mostrado na \autoref{fig:difread}. Isso significa que nenhuma das entradas está ligada a uma referência, eliminando assim problemas referentes ao isolamento da leitura com o terra e também eliminando ruídos de entrada, pois como estes são introduzidos dos dois lados, eles se cancelam.
 
@@ -160,17 +160,9 @@ Utilizando a fórmula, para o caso da entrada de corrente e considerando dois re
 
 Para a entrada de tensão do circuito segue-se a mesma lógica, chegando a um valor de aproximadamente 5 nF.
 
-Após a leitura dos sinais e a conversão feita pelo ADC, o sinal digital de saída é processado por um microcontrolador para então ser entregue a uma webpage e assim tratado para visualização pelo usuário. Algumas necessidades básicas devem ser atendidas pelo chip escolhido, como suporte para comunicação \textit{wireless}, seja \textit{WiFi} ou \textit{Bluetooth}, \textit{clock speed} alta o suficiente para não interferir na aquisição de dados e também ter uma boa documentação para ser possível o desenvolvimento do código.
+Após a leitura dos sinais e a conversão feita pelo ADC, o sinal digital de saída é processado por um microcontrolador para então ser entregue a uma webpage e assim tratado para visualização pelo usuário. 
 
-Portanto, o microcontrolador utilizado para este projeto é o ESP32, fabricado pela Espressif. A escolha deste foi feita por vários motivos:
-
-\begin{itemize}
-    \item Performance: O ESP32 opera em \textit{clock speeds} de até 240 MHz, oferecendo um robusto poder de processamento para o código e também para não interferir ou atrasar a aquisição dos sinais;
-    \item Suporte: Este microcontrolador tem suporte tanto para \textit{WiFi} quanto para \textit{Bluetooth}, trabalha com o protocolo \gls{$I^2$C}, que será utilizado para fazer a comunicação com o \gls{ADC} e utiliza-se do Arduino como sua principal plataforma de desenvolvimento;
-    \item Ambiente: Este módulo é extensamente utilizado em vários setores da tecnologia e tem uma vasta comunidade de usuários, o que garante um extenso leque de \textit{resources} como bibliotecas, tutoriais, videos, forums, entre outros, para ajudar na confecção do software e firmware. Também apresenta suporte oferecido pela própria Espressif sobre as suas funcionalidades muito bem documentados;
-    \item Modularidade: Esta parte importante do trabalho também é facilitada devido ao componente já possuir nativamente protocolos de comunicação da própria fabricante;
-    \item Preço: Para todas as funcionalidades providas pelo ESP32, este apresenta um grande custo benefício, além de estar facilmente disponível no mercado.
-\end{itemize}
+\subsubsection{Isolamento}\label{isolamento-metodologia}
 
 Para ter uma comunicação confiável entre os dois \gls{ADC}s conectados a fontes diferentes e o ESP32, é necessário o isolamento entre estes, evitando-se ruídos indesejados. Para isso, foi utilizado um circuito de comunicação isolada por \textit{optocouplers}, como demonstrado na \autoref{fig:circ-comunic}.
 
@@ -183,7 +175,7 @@ Para ter uma comunicação confiável entre os dois \gls{ADC}s conectados a font
 
 O circuito transforma pulsos \gls{$I^2$C} em sinais de luz e transfere estas informações para o outro circuito isolado, desacoplando estes. Para o correto funcionamento do circuito, devido a limitações técnicas dos \textit{optocouplers} escolhidos, é necessária a inserção de uma linha de 5 V para a alimentação do \gls{CI}, bem como o uso de uma linha de 3,3 V para a ativação dos LEDs internos deste chip, bem como o potencial de \textit{pull-up} para as linhas de comunicação \gls{$I^2$C}.
 
-Como objetivo do trabalho, também é colocado como principal a modularidade do circuito, para se obter leituras de duas ou três fases diferentes. Inicialmente, foi considerado o uso do protocolo \gls{$I^2$C} também para a comunicação entre estes módulos. Porém, esta idéia foi descartada devido à complexidade de criação de um protocolo, ou dicionário, para estabelecer um modo comum de interação.
+Como objetivo do trabalho, também é colocado como principal a modularidade do circuito, para se obter leituras de duas ou três fases diferentes. Inicialmente, foi considerado o uso do protocolo \gls{$I^2$C} também para a comunicação entre estes módulos. Porém, esta ideia foi descartada devido à complexidade de criação de um protocolo, ou dicionário, para estabelecer um modo comum de interação.
 
 Também, para o demérito da utilização de tal topologia, são necessários muitos fios de interligação entre os módulos, sendo estes:
 
@@ -196,6 +188,24 @@ Também, para o demérito da utilização de tal topologia, são necessários mu
 \end{itemize}
 
 Por estes dois grandes motivos e também por existirem alternativas mais simples, chegou-se a conclusão de que a utilização do protocolo \textit{ESP-NOW}, desenvolvido pela própria Espressif, para facilitar a comunicação entre chips desta que possuem \textit{WiFi}. Desta maneira, serão necessários somente 2 fios entre módulos, para o envio de um sinal de sincronização. Todo o restante da comunicação inicial é feito através deste protocolo.
+
+\subsubsection{Modularidade no Hardware}\label{modularidade-metodologia}
+
+\subsubsection{Microcontrolador}\label{uC-metodologia}
+
+Algumas necessidades básicas devem ser atendidas pelo chip escolhido, como suporte para comunicação \textit{wireless}, seja \textit{WiFi} ou \textit{Bluetooth}, \textit{clock speed} alta o suficiente para não interferir na aquisição de dados e também ter uma boa documentação para ser possível o desenvolvimento do código.
+
+Portanto, o microcontrolador utilizado para este projeto é o ESP32, fabricado pela Espressif. A escolha deste foi feita por vários motivos:
+
+\begin{itemize}
+    \item Performance: O ESP32 opera em \textit{clock speeds} de até 240 MHz, oferecendo um robusto poder de processamento para o código e também para não interferir ou atrasar a aquisição dos sinais;
+    \item Suporte: Este microcontrolador tem suporte tanto para \textit{WiFi} quanto para \textit{Bluetooth}, trabalha com o protocolo \gls{$I^2$C}, que será utilizado para fazer a comunicação com o \gls{ADC} e utiliza-se do Arduino como sua principal plataforma de desenvolvimento;
+    \item Ambiente: Este módulo é extensamente utilizado em vários setores da tecnologia e tem uma vasta comunidade de usuários, o que garante um extenso leque de \textit{resources} como bibliotecas, tutoriais, videos, forums, entre outros, para ajudar na confecção do software e firmware. Também apresenta suporte oferecido pela própria Espressif sobre as suas funcionalidades muito bem documentados;
+    \item Modularidade: Esta parte importante do trabalho também é facilitada devido ao componente já possuir nativamente protocolos de comunicação da própria fabricante;
+    \item Preço: Para todas as funcionalidades providas pelo ESP32, este apresenta um grande custo benefício, além de estar facilmente disponível no mercado.
+\end{itemize}
+
+\subsubsection{Alimentação e regulação de tensão}
 
 Para a alimentação dos circuitos integrantes do protótipo, existem duas opções: baterias ou fontes. Como este será utilizado em bancada, foi escolhida a alimentação por fontes, pois estas não precisam ser trocadas frequentemente e é possível ligá-las à rede, além de algumas outras vantagens.
 
@@ -212,15 +222,15 @@ Porém, o output das fontes escolhidas é de 12 V, não atendendo as necessidade
 
 A alimentação do ESP32 e também do circuito de comunicação isolada foi convencionada por especificação de projeto, para se manter um padrão e também suprir as necessidades de cada.
 
+\subsubsection{Disponibilidade do Circuito}\label{availability}
+
+O circuito pode ser encontrado na integra no [ANEXO X] ao final do trabalho, bem como de maneira virtual no mesmo anexo. Dada a característica colaborativa da plataforma em que foi desenvolvido, permite que qualquer usuário clone esse circuito e o modifique gratuitamente.
+
 \subsection{Software e Firmware}\label{softfirm}
 
 A programação do dispositivo é separada em duas etapas: \textit{Firmware} e \textit{Software}. O \textit{Firmware} é responsável por garantir a funcionalidade da comunicação do microcontrolador com os módulos \gls{ADC}, bem como manter a comunicação sem fio e sincronizar a amostragem do sinal.
 Já o \textit{Software}, é responsável por receber as entradas do usuário e mostrar, efetivamente, através de gráficos e valores numéricos, as leituras de tensão, corrente, frequência, potências, etc.
 Outra parte importante da programação trata-se da modularidade. Essa está presente tanto no \textit{Firmware} quanto no \textit{Software}. Trata-se da possibilidade de utilizar mais de um dispositivo em conjunto com um principal, permitindo a leitura de mais fases de maneira isolada.
-
-\subsubsection{Disponibilidade do Circuito}\label{availability}
-
-O circuito pode ser encontrado na integra no [ANEXO X] ao final do trabalho, bem como de maneira virtual no mesmo anexo. Dada a característica colaborativa da plataforma em que foi desenvolvido, permite que qualquer usuário clone esse circuito e o modifique gratuitamente.
 
 \subsubsection{Firmware}\label{firmw}
 
@@ -357,8 +367,8 @@ A parte estrutural da página foi desenvolvida utilizando \gls{HTML}. Exemplos d
     \fonte{}
 \end{figure}
 
-\subsubsection{Modularidade}\label{modular-softw}
-
+\subsubsection{Modularidade no Software}\label{modular-softw}
+--TODO--
 Devido a dificuldades durante o desenvolvimento do projeto, não foi possível implementar por completo a função de modularidade entre os dispositivos. Dessa maneira, não é possível observar mais de um módulo ao mesmo tempo.
 O conceito da comunicação, porém, foi testado utilizando-se dois módulos \textit{ESP32} e dados pré-programados de leitura, permitindo que fosse possível estabelecer o conceito da comunicação e elaborar a máquina de estados que define como a comunicação precisa ser tratada.
 
@@ -381,6 +391,9 @@ Uma limitação do protocolo \textit{ESP-NOW} é o tamanho máximo de 255 bytes 
 Assim, após o emparelhamento bem-sucedido, estabelece-se uma relação de \textit{client} com o dispositivo adicional, fornecendo-lhe todas as informações da rede necessárias para que ele acesse a mesma \textit{webpage} e \textit{Websocket}. Nesse momento, o uso do protocolo \textit{ESP-NOW} é finalizado, e toda a comunicação subsequente é realizada diretamente via \textit{Websocket}. Isso reduz a carga de processamento no microcontrolador e otimiza o tempo de comunicação e a transmissão de dados, pois o tamanho dos pacotes aumenta de 255 bytes para até 5 kilobytes.
 
 Ao iniciar uma nova leitura via \textit{input} do cliente, um sinal de \textit{sync} é enviado do servidor \textit{master} para o módulo do canal adicional, estabelecendo assim uma referência temporal para sincronizar as leituras. A adição de canais é limitada a dois, permitindo a leitura trifásica.
+
+\subsection{Dificuldades Encontradas}\label{dificuldades-metodologia}
+--TODO--
 
 \section{Materiais}\label{sec:materiais}
 
