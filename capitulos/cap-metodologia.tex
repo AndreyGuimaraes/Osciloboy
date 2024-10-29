@@ -4,7 +4,6 @@
 
 Neste capítulo, serão discutidos e analisados todos os processos relacionados com o desenvolvimento do protótipo, a justificativa de cada escolha tomada, assim como um \textit{\gls{BOM}} (\textit{Bill of Materials}) consolidado, com os preços na data do trabalho, para a confecção de um protótipo.
 
-
 \section{Metodologia}\label{sec:metodo}
 
 Esta seção será dedicada à discussão sobre todas as partes integrantes do protótipo.
@@ -164,7 +163,45 @@ Após a leitura dos sinais e a conversão feita pelo ADC, o sinal digital de sa�
 
 \subsubsection{Isolamento}\label{isolamento-metodologia}
 
-Para ter uma comunicação confiável entre os dois \gls{ADC}s conectados a fontes diferentes e o ESP32, é necessário o isolamento entre estes, evitando-se ruídos indesejados. Para isso, foi utilizado um circuito de comunicação isolada por \textit{optocouplers}, como demonstrado na \autoref{fig:circ-comunic}.
+Para que a leitura diferencial ocorra de maneira adequada, é necessário que haja um caminho de retorno para os sinais medidos - uma vez que a medição ocorre aferindo a tensão de cada uma das entradas do \gls{ADC} em relação a referência e diferenciando-as \cite{mediff}.
+Essa referência pode ser obtida de maneira direta, utilizando uma conexão separada com a função específica de se tornar o caminho para os sinais de tensão e corrente, representada na \autoref{fig:diff-3-wire}. Ou pode ser obtida de maneira indireta, conectando internamente uma das ponteiras do dispositivo também ao \textit{GND} (ou ponto comum) do \gls{ADC}, fazendo com que não seja necessário o uso de um fio dedicado para esse fim, conforme a \autoref{fig:diff-2-wire}.
+
+\begin{figure}[htb!]
+    \caption{Circuito diferencial simplificado com conexão específica para referência}
+    \label{fig:diff-3-wire}
+    \includegraphics[width=0.7\textwidth]{figuras/diferencial-3-fios.png}
+    \fonte{}
+\end{figure}
+
+\begin{figure}[htb!]
+    \caption{Circuito diferencial simplificado sem conexões adicionais}
+    \label{fig:diff-2-wire}
+    \includegraphics[width=0.7\textwidth]{figuras/diferencial-2-fios.png}
+    \fonte{}
+\end{figure}
+
+Ambas as propostas são funcionais e aplicáveis, porém, devido a especifidades de cada uma, foram descartadas para esse projeto. A leitura feita com a conexão auxiliar implica na necessidade de um uso não convencional e pouco realista do cotidiano do laboratório onde as matérias alvo desse trabalho serão ministradas. Já a topologia que não possui conexões adicionais tornaria a leitura de somente uma grandeza por vez (tensão ou corrente) impossibilitada, dependendo de qual ponto foi escolhido para estar atrelado a referência interna.
+
+Uma vez que não é adequado referenciar o circuito em mais de um ponto, devido a possibilidade de curto-circuitos indesejados conforme a conexão das ponteiras feita pelo usuário, como exemplo a \autoref{fig:curto-diferencial}. Propôs-se o isolamento de cada canal, utilizando fontes internas isoladas.
+
+\begin{figure}[htb!]
+    \caption{Circuito diferencial simplificado com referência em mais de uma ponteira}
+    \label{fig:curto-diferencial}
+    \includegraphics[width=0.7\textwidth]{figuras/diferencial-em-curto.png}
+    \fonte{}
+\end{figure}
+
+Dessa maneira, é possível ter a referência de tensão diretamente na ponteira de leitura para cada um dos canais, sem que haja a possibilidade de curto-circuito e, como consequência indireta da topologia, ainda diminui interferências que as leituras poderiam causar entre si. Essa topologia pode ser melhor visualizada através da \autoref{fig:dif-isolado}.
+Conforme comentado na \autoref{subsec:protecaoTensao}, uma outra alternativa seria a utilização de amplificadores operacionais isolados, porém esses apresentam preço extremamente elevado para o escopo do trabalho, sendo essa alternativa descartada.
+
+\begin{figure}[htb!]
+    \caption{Circuito diferencial simplificado isolado}
+    \label{fig:dif-isolado}
+    \includegraphics[width=0.7\textwidth]{figuras/diferencial-ref-separada.png}
+    \fonte{}
+\end{figure}
+
+Para se ter uma comunicação confiável entre os dois \gls{ADC}s conectados a fontes diferentes e o ESP32, é necessário o isolamento dos sinais utilizados para a comunicação. Para isso, foi utilizado um circuito isolado por \textit{optocouplers}, como demonstrado na \autoref{fig:circ-comunic}.
 
 \begin{figure}[htb!]
     \caption{Circuito de comunicação isolado}
@@ -175,21 +212,35 @@ Para ter uma comunicação confiável entre os dois \gls{ADC}s conectados a font
 
 O circuito transforma pulsos \gls{$I^2$C} em sinais de luz e transfere estas informações para o outro circuito isolado, desacoplando estes. Para o correto funcionamento do circuito, devido a limitações técnicas dos \textit{optocouplers} escolhidos, é necessária a inserção de uma linha de 5 V para a alimentação do \gls{CI}, bem como o uso de uma linha de 3,3 V para a ativação dos LEDs internos deste chip, bem como o potencial de \textit{pull-up} para as linhas de comunicação \gls{$I^2$C}.
 
-Como objetivo do trabalho, também é colocado como principal a modularidade do circuito, para se obter leituras de duas ou três fases diferentes. Inicialmente, foi considerado o uso do protocolo \gls{$I^2$C} também para a comunicação entre estes módulos. Porém, esta ideia foi descartada devido à complexidade de criação de um protocolo, ou dicionário, para estabelecer um modo comum de interação.
-
-Também, para o demérito da utilização de tal topologia, são necessários muitos fios de interligação entre os módulos, sendo estes:
-
-\begin{itemize}
-    \item 5 V;
-    \item 3,3 V;
-    \item SDA;
-    \item SCL e
-    \item \textit{ground}.
-\end{itemize}
-
-Por estes dois grandes motivos e também por existirem alternativas mais simples, chegou-se a conclusão de que a utilização do protocolo \textit{ESP-NOW}, desenvolvido pela própria Espressif, para facilitar a comunicação entre chips desta que possuem \textit{WiFi}. Desta maneira, serão necessários somente 2 fios entre módulos, para o envio de um sinal de sincronização. Todo o restante da comunicação inicial é feito através deste protocolo.
-
 \subsubsection{Modularidade no Hardware}\label{modularidade-metodologia}
+
+Um dos principais objetivos da proposta desenvolvida foi possibilitar a leitura simultânea de duas ou três fases diferentes. Para tanto, o dispositivo precisaria operar com quatro ou seis canais isolados entre si, devido às implicações supracitadas. Essa configuração elevaria o custo, o espaço físico e a complexidade de apenas um dispositivo, sendo que, em diversas etapas das disciplinas de circuitos, apenas a leitura de uma das fases é utilizada – considerando-se o circuito trifásico equilibrado.
+
+Optou-se, então, por tornar o dispositivo modular. Dessa forma, cada módulo é composto por um medidor de tensão e corrente isoladas, e, caso haja a necessidade de expansão, basta adicionar módulos extras e interconectá-los, de modo que comuniquem entre si e enviem os dados lidos.
+
+Assim, um módulo principal coordena as leituras dos módulos secundários, recebe os dados por meio de algum protocolo de comunicação e envia os valores obtidos para a interface homem-máquina, conforme ilustrado no diagrama da \autoref{fig:modularidade-fisica}.
+
+\begin{figure}[htb!]
+    \caption{Diagrama de conexão modular entre dispositivos}
+    \label{fig:modularidade-fisica}
+    \includegraphics[width=0.8\textwidth]{figuras/mod-fisica.png}
+    \fonte{}
+\end{figure}
+
+Inicialmente, considerou-se o uso do protocolo \gls{$I^2$C} para a comunicação entre os módulos. No entanto, essa abordagem foi descartada devido à complexidade de criação de um protocolo ou dicionário que estabelecesse um modo comum de interação. Esse protocolo seria implementado fisicamente da mesma forma proposta para a comunicação isolada entre o ESP32 e o \gls{ADC} (que não compartilham a mesma referência), utilizando optoacopladores, conforme ilustrado na \autoref{fig:circ-comunic}.
+
+Diante dessas considerações, concluiu-se que a utilização do protocolo \textit{ESP-NOW} – desenvolvido pela Espressif para facilitar a comunicação entre chips que possuem \textit{WiFi} – em conjunto com o protocolo de comunicação via \textit{websockets}, já utilizado para a comunicação entre o dispositivo e a interface homem-máquina, seria mais adequada para este caso. Dessa forma, os dados dos dispositivos secundários são transferidos de forma sem fio para o dispositivo principal.
+
+Como as leituras dos dispositivos são sensíveis a atrasos, devido à natureza das medições no tempo, é necessária uma conexão física entre os módulos para sincronizar as leituras. Assim, o dispositivo principal envia aos demais módulos um pulso indicando o início de uma nova série de dados, permitindo que todos realizem a amostragem dentro da mesma janela temporal. Dessa maneira, são necessários apenas dois fios conectando cada dispositivo, sendo estes a saída do sinal isolado, transmitido por meio de um optoacoplador, conforme ilustrado na \autoref{fig:modular-sinc}.
+
+\begin{figure}[htb!]
+    \caption{Detalhe da conexão modular entre dispositivos utilizando dois fios para sincronização de leituras}
+    \label{fig:modular-sinc}
+    \includegraphics[width=1.0\textwidth]{figuras/mod-fisica-detalhe.png}
+    \fonte{}
+\end{figure}
+
+Este circuito adicional, no entanto, não foi implementado no presente trabalho devido a dificuldades encontradas durante o desenvolvimento, conforme descrito na \autoref{dificuldades-futuro}. Sugere-se, portanto, que futuras melhorias neste estudo considerem a aplicação desse circuito, dado seu potencial para expandir o sistema.
 
 \subsubsection{Microcontrolador}\label{uC-metodologia}
 
@@ -201,7 +252,7 @@ Portanto, o microcontrolador utilizado para este projeto é o ESP32, fabricado p
     \item Performance: O ESP32 opera em \textit{clock speeds} de até 240 MHz, oferecendo um robusto poder de processamento para o código e também para não interferir ou atrasar a aquisição dos sinais;
     \item Suporte: Este microcontrolador tem suporte tanto para \textit{WiFi} quanto para \textit{Bluetooth}, trabalha com o protocolo \gls{$I^2$C}, que será utilizado para fazer a comunicação com o \gls{ADC} e utiliza-se do Arduino como sua principal plataforma de desenvolvimento;
     \item Ambiente: Este módulo é extensamente utilizado em vários setores da tecnologia e tem uma vasta comunidade de usuários, o que garante um extenso leque de \textit{resources} como bibliotecas, tutoriais, videos, forums, entre outros, para ajudar na confecção do software e firmware. Também apresenta suporte oferecido pela própria Espressif sobre as suas funcionalidades muito bem documentados;
-    \item Modularidade: Esta parte importante do trabalho também é facilitada devido ao componente já possuir nativamente protocolos de comunicação da própria fabricante;
+    \item Modularidade: Esta parte do trabalho também é facilitada devido ao componente já possuir nativamente protocolos de comunicação da própria fabricante;
     \item Preço: Para todas as funcionalidades providas pelo ESP32, este apresenta um grande custo benefício, além de estar facilmente disponível no mercado.
 \end{itemize}
 
@@ -211,7 +262,7 @@ Para a alimentação dos circuitos integrantes do protótipo, existem duas opç�
 
 Neste projeto são utilizadas duas fontes isoladas galvanicamente, uma para alimentar o circuito de leitura de tensão e outra para alimentar o circuito de leitura de corrente, reduzindo ainda mais possíveis ruídos e interferências entre circuitos, mas também aumentando a confiabilidade do protótipo, pois como o objetivo é realizar leituras simultâneas de corrente e tensão, o isolamento entre eles é necessário para prevenir curtos.
 
-Porém, o output das fontes escolhidas é de 12 V, não atendendo as necessidades de alimentação dos \gls{CI}s envolvidos e também do microcontrolador. Para isso, circuitos de regulação de tensão foram implementados, gerando duas saídas, como explícito na \autoref{fig:circ-conv-T}. Estes circuitos são iguais tanto para a leitura de tensão e de corrente, visto que estes tem as mesmas necessidades.
+Porém, o saída das fontes escolhidas é de 12 V, não atendendo as necessidades de alimentação dos \gls{CI}s envolvidos e também do microcontrolador. Para isso, circuitos de regulação de tensão foram implementados, gerando duas saídas, como explícito na \autoref{fig:circ-conv-T}. Estes circuitos são iguais tanto para a leitura de tensão e de corrente, visto que estes tem as mesmas necessidades.
 
 \begin{figure}[htb!]
     \caption{Circuito de regulação de tensão}
@@ -220,11 +271,11 @@ Porém, o output das fontes escolhidas é de 12 V, não atendendo as necessidade
     \fonte{}
 \end{figure}
 
-A alimentação do ESP32 e também do circuito de comunicação isolada foi convencionada por especificação de projeto, para se manter um padrão e também suprir as necessidades de cada.
+A alimentação do ESP32 e também do circuito de comunicação isolada foi definida como 5 V por especificação de projeto, para manter um padrão e também suprir as necessidades de cada.
 
 \subsubsection{Disponibilidade do Circuito}\label{availability}
 
-O circuito pode ser encontrado na integra no [ANEXO X] ao final do trabalho, bem como de maneira virtual no mesmo anexo. Dada a característica colaborativa da plataforma em que foi desenvolvido, permite que qualquer usuário clone esse circuito e o modifique gratuitamente.
+O circuito pode ser encontrado na integra no [APENDICE X -TODO-] ao final do trabalho, bem como de maneira virtual no mesmo anexo. Dada a característica colaborativa da plataforma em que foi desenvolvido, permite que qualquer usuário clone esse circuito e o modifique gratuitamente.
 
 \subsection{Software e Firmware}\label{softfirm}
 
@@ -240,7 +291,7 @@ O desenvolvimento do \textit{Firmware} foi baseado em bibliotecas otimizadas par
 
 A sincronização entre os sinais de tensão e corrente é feita por meio de interrupções, que detectam o momento em que os dados estão prontos para leitura. Isso garante que as amostragens estejam alinhadas e que os gráficos e cálculos de potência sejam precisos. Para garantir a modularidade do sistema, o \textit{Firmware} também possui a capacidade de alterar a faixa de leitura da tensão e da corrente dinamicamente, de acordo com o comando enviado pelo usuário via WebSockets.
 
-Uma parte importante do \textit{Firmware} é a implementação da máquina de estados \autoref{fig:maq-estado-simp}, que gerencia a comunicação com o dispositivo auxiliar. A implementação foi feita para ser expansível, permitindo a futura integração de múltiplos dispositivos sem a necessidade de grandes modificações no código.
+Uma parte importante do \textit{Firmware} é a implementação da máquina de estados, mostrada na \autoref{fig:maq-estado-simp}, que gerencia a comunicação com o dispositivo auxiliar (interface homem-máquina). A implementação foi feita para ser expansível, permitindo a futura integração de múltiplos dispositivos sem a necessidade de grandes modificações no código.
 
 \begin{figure}[htb!]
     \caption{Máquina de estados simplificada para apenas um dispositivo}
@@ -253,13 +304,13 @@ O processo de comunicação sem fio utiliza o protocolo \textit{WiFi} integrado 
 
 Seguindo a lógica proposta, o microcontrolador, ao ser energizado, completa sua rotina de \textit{setup} e permanece disponível para conexões. Após o estabelecimento da conexão, configura-se a relação principal entre o servidor, como \textit{master}, e o dispositivo conectado, como \textit{main client}. Ao acessar o IP do ESP32, ele serve à \textit{webpage} o HTML e JavaScript necessários para sua apresentação e interação.
 
-Quando a leitura é iniciada, o microcontrolador executa todas as etapas necessárias, incluindo o envio do pulso de \textit{sync} (sincronização), a criação de um delta de tempo para estabelecer um ponto de referência zero, o que possibilita a sincronização das ondas, além do cálculo da frequência e do fator de potência. A aquisição dos dados em si também envolve uma série de processos específicos.
+Quando a leitura é iniciada, o microcontrolador executa todas as etapas necessárias, incluindo o envio do pulso de \textit{sync} (sincronização) e a criação de um delta de tempo para estabelecer um ponto de referência zero. Este último possibilita a sincronização das ondas, além do cálculo da frequência e do fator de potência. A aquisição dos dados em si também envolve uma série de processos específicos.
 
-O \gls{ADC}, acompanhado pelo circuito de condicionamento de sinais, opera em dois modos de leitura: \textit{Data-Ready} e \textit{Single-Shot}.
+O \gls{ADC}, acompanhado pelo circuito de condicionamento de sinais, pode operar em dois modos de leitura: \textit{Data-Ready} e \textit{Single-Shot}.
 
 No modo \textit{Single-Shot}, o processador solicita as leituras ao \gls{ADC}, que processa e envia os dados requisitados. Embora esse modo seja simples de implementar e bastante confiável, as limitações do chip escolhido tornam essa solução lenta para a aplicação em questão, alcançando uma taxa máxima de leitura de cerca de 500 \gls{SPS}, insuficiente para a aquisição desejada da forma de onda.
 
-Optou-se, então, pelo modo \textit{Data-Ready}, que é mais complexo de implementar. Nesse modo, após cada leitura, o \gls{ADC} sinaliza ao microcontrolador levantando uma \textit{flag} (por exemplo, elevando um pino específico para 1) indicando que os dados estão prontos, aguardando a ação do processador. Quando o processador requisita os dados, eles são removidos do \textit{cache} do \gls{ADC}, reiniciando o ciclo de leitura. Com esse método, foi possível atingir uma taxa de 3300 \gls{SPS}, permitindo uma aquisição mais precisa da forma de onda.
+Optou-se, então, pelo modo \textit{Data-Ready}, que é mais complexo. Porém, nesse modo, após cada leitura, o \gls{ADC} sinaliza ao microcontrolador levantando uma \textit{flag} (por exemplo, elevando um pino específico para \textit{high}) indicando que os dados estão prontos, aguardando a ação do processador. Quando o processador requisita os dados, eles são removidos do \textit{cache} do \gls{ADC}, reiniciando o ciclo de leitura. Com esse método, foi possível atingir uma taxa de 3300 \gls{SPS}, permitindo uma aquisição mais precisa da forma de onda.
 
 Os valores adquiridos pelo \gls{ADC} são então processados pelo ESP32 para converterem-se em valores reais. Esse processamento começa com a seleção de uma faixa de leitura (\textit{range}) via o \textit{Programmable-gain Amplifier} (\gls{PGA}).
 
@@ -285,7 +336,8 @@ Uma vez processados, os dados puros são armazenados em uma \textit{struct}, con
 \subsubsection{Software}\label{softwa}
 
 Toda a lógica de conversão dos valores de tensão e corrente em bits do \gls{ADC} para os valores reais é feita através de javascript em uma webpage. Dessa maneira, poupa-se informação transmitida pelo módulo, e utiliza-se um processamento mais robusto (do celular ou computador conectado) para os cálculos de potência.
-Esta webpage, programada em HTML 5 para fazer a inserção de JavaScript e então utilizar Websocket, um protocolo de comunicação que fornece uma via de duas mãos para a conexão entre os servidores do microcontrolador, para cuidar da comunicação entre o ESP32 e o aparelho móvel, fará o tratamento dos dados e os apresentará para o usuário, em forma de gráficos e visualizadores numéricos representando a Tensão RMS, corrente RMS, frequência, Potências: aparente, reativa e ativa, e Fator de Potência.
+
+Esta webpage foi desenvolvida em HTML5 com integração de JavaScript e uso do protocolo WebSocket. Esse protocolo permite uma conexão bidirecional entre o servidor do microcontrolador e o dispositivo móvel. A interface processa os dados e os apresenta ao usuário por meio de gráficos e indicadores numéricos. São exibidos valores de tensão RMS, corrente RMS, frequência, potências (aparente, reativa e ativa) e Fator de Potência.
 
 \subsubsubsection{Tensão e Corrente}
 Para diferentes configurações de escala de tensão, o código utiliza multiplicadores pré-definidos para converter os valores lidos para a tensão real. A \autoref{tab:softw-tensao} descreve os multiplicadores e a escala máxima correspondente:
@@ -368,9 +420,8 @@ A parte estrutural da página foi desenvolvida utilizando \gls{HTML}. Exemplos d
 \end{figure}
 
 \subsubsection{Modularidade no Software}\label{modular-softw}
---TODO--
-Devido a dificuldades durante o desenvolvimento do projeto, não foi possível implementar por completo a função de modularidade entre os dispositivos. Dessa maneira, não é possível observar mais de um módulo ao mesmo tempo.
-O conceito da comunicação, porém, foi testado utilizando-se dois módulos \textit{ESP32} e dados pré-programados de leitura, permitindo que fosse possível estabelecer o conceito da comunicação e elaborar a máquina de estados que define como a comunicação precisa ser tratada.
+
+A comunicação foi testada utilizando-se dois módulos \textit{ESP32} e dados pré-programados de leitura, permitindo que fosse possível estabelecer o conceito da comunicação e elaborar a máquina de estados que define como a comunicação precisa ser tratada.
 
 \begin{figure}[h!]
     \centering
@@ -380,20 +431,56 @@ O conceito da comunicação, porém, foi testado utilizando-se dois módulos \te
     \fonte{}
 \end{figure}
 
-É possível observar pela \autoref{fig:maq-estados-completa} que sua implementação tornaria o código e o desenvolvimento desse trabalho extremamente complexos. Dessa forma, incentiva-se a continuação dessa proposta em trabalhos futuros.
+É possível observar pela \autoref{fig:maq-estados-completa} que sua implementação torna o código e o desenvolvimento desse trabalho extremamente complexos.
 
 Após o processo da máquina de estados padrão, apresentada na \autoref{fig:maq-estado-simp} - com a modularidade futuramente implementada - o funcionamento da máquina de estados completa se daria da seguinte forma:
+\begin{enumerate}
+    \item Caso o cliente deseje adicionar um canal de leitura, o microcontrolador utiliza o protocolo \textit{ESP-NOW} para procurar e parear com um dispositivo adicional disponível.
+    
+    \item Assim, após o emparelhamento bem-sucedido, estabelece-se uma relação de \textit{client} com o dispositivo adicional, fornecendo-lhe todas as informações da rede necessárias para que ele acesse a mesma \textit{webpage} e \textit{Websocket}.
+    
+    \item Nesse momento, o uso do protocolo \textit{ESP-NOW} é finalizado, e toda a comunicação subsequente é realizada diretamente via \textit{Websocket}. Isso reduz a carga de processamento no microcontrolador e otimiza o tempo de comunicação e a transmissão de dados, pois o tamanho dos pacotes aumenta de 255 bytes para até 5 kilobytes
+    
+    \item Ao iniciar uma nova leitura via \textit{input} do cliente, um sinal de \textit{sync} é enviado do servidor \textit{master} para o módulo do canal adicional, estabelecendo assim uma referência temporal para sincronizar as leituras. A adição de canais é limitada a dois, permitindo a leitura trifásica.
+\end{enumerate}
 
-Caso o cliente deseje adicionar um canal de leitura, o microcontrolador utiliza o protocolo \textit{ESP-NOW} para procurar e parear com um dispositivo adicional disponível.
+\subsection{Dificuldades encontradas e trabalhos futuros}\label{dificuldades-futuro}
 
-Uma limitação do protocolo \textit{ESP-NOW} é o tamanho máximo de 255 bytes por pacote de dados. Um par de pontos de tensão e corrente ocupa cerca de 160 bits. Com essa limitação, é possível transmitir no máximo 12 pontos de uma forma de onda, o que é insuficiente, considerando que uma onda completa requer aproximadamente 55 pontos a uma taxa de 3300 \gls{SPS} e que, para uma análise adequada de uma rede trifásica, é necessário amostrar ao menos 3 ciclos de onda.
+Devido a dificuldades durante o desenvolvimento do projeto, não foi possível implementar por completo a função de modularidade entre os dispositivos. Dessa maneira, não é possível observar mais de um módulo ao mesmo tempo com o protótipo desenvolvido.
 
-Assim, após o emparelhamento bem-sucedido, estabelece-se uma relação de \textit{client} com o dispositivo adicional, fornecendo-lhe todas as informações da rede necessárias para que ele acesse a mesma \textit{webpage} e \textit{Websocket}. Nesse momento, o uso do protocolo \textit{ESP-NOW} é finalizado, e toda a comunicação subsequente é realizada diretamente via \textit{Websocket}. Isso reduz a carga de processamento no microcontrolador e otimiza o tempo de comunicação e a transmissão de dados, pois o tamanho dos pacotes aumenta de 255 bytes para até 5 kilobytes.
+\subsubsection{ADC falsificado}\label{adc-falso}
 
-Ao iniciar uma nova leitura via \textit{input} do cliente, um sinal de \textit{sync} é enviado do servidor \textit{master} para o módulo do canal adicional, estabelecendo assim uma referência temporal para sincronizar as leituras. A adição de canais é limitada a dois, permitindo a leitura trifásica.
+Um grande empecilho encontrado foi a não conformidade do \gls{ADC} adquirido para a confecção do protótipo. Esse foi comprado de forma online em uma loja com baixa reputação e, como consequência, possuía sua velocidade de leitura fixada a menos que 500 \gls{SPS}. Devido a complexidade de desenvolvimento do firmware, muito foi testado até se chegar a conclusão de que o CI tratava-se de uma falsificação que não atendia o explicitado no datasheet do ADS1015. Esse foi posteriormente substituído por um de melhor procedência, alcançando os 3300 \gls{SPS} esperados sem maiores dificuldades.
+Ao leitor, recomenda-se evitar o módulo indicado como cópia na \autoref{fig:adc-falsificado}, procurando sempre pelo original.
 
-\subsection{Dificuldades Encontradas}\label{dificuldades-metodologia}
---TODO--
+\begin{figure}[h!]
+    \centering
+    \caption{Comparação entre ADS1015 cópia e original}
+    \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{figuras/adc-fake-comparison.jpeg}
+    \label{fig:adc-falsificado}
+    \fonte{}
+\end{figure}
+
+\subsubsection{Limitação do protocolo \textit{ESP-NOW}}\label{limit-espnow}
+
+De início, foi considerada a utilização do protocolo \textit{ESP-NOW} para o envio de dados entre dispositivos. Visto que trata-se de um protocolo criado pela própria fabricante de microcontrolador utilizado, e possui vasta documentação de uso disponível.
+Uma limitação desse protocolo, porém, é o tamanho máximo de 255 bytes por pacote de dados. Um par de pontos de tensão e corrente ocupa cerca de 160 bits, considerando a \textit{struct} apresentada na \autoref{tab:struct-graph}. Com essa limitação, é possível transmitir no máximo 12 pontos de uma forma de onda, o que é insuficiente, considerando que uma onda completa requer aproximadamente 55 pontos a uma taxa de 3300 \gls{SPS} e que, para uma análise adequada de uma rede trifásica, é necessário amostrar ao menos 3 ciclos de onda \cite{3ph-ozm}.
+Como forma de contornar esse problema, seria necessária a implementação da comunicação entre módulos utilizando \textit{websockets}. O que tornou o desenvolvimento dessa etapa mais complexo do que o esperado.
+
+\subsubsection{Isolamento entre canais}\label{isola-canais-dific}
+
+Conforme discutido na \autoref{isolamento-metodologia}, o isolamento entre os canais de tensão e corrente foi necessário para o correto funcionamento do circuito. E pesquisas e testes para validação de propostas funcionais tomaram mais tempo do que o esperado.
+Tal problema poderia ser contornado alterando alguns requisitos do projeto. 
+Caso o dispositivo fosse projetado para ler apenas tensão e corrente alternadas, por exemplo, seria possível utilizar um transformador de corrente na respectiva entrada do \gls{ADC}, inerentemente isolando este canal do restante do circuito. 
+Ou caso não fosse necessária a medição entre diferentes pontos do circuito - utilizando um ponto comum de medição, como mostrado na \autoref{fig:ponto-comum}. Seria possível manter ambos os canais na mesma referência, levando em consideração apenas o ruído transmitido de um canal para o outro.
+
+\begin{figure}[h!]
+    \centering
+    \caption{Circuito de leitura simplificado utilizando ponto comum de referência}
+    \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{figuras/diferencial-ponto-comum.png}
+    \label{fig:ponto-comum}
+    \fonte{}
+\end{figure}
 
 \section{Materiais}\label{sec:materiais}
 
@@ -478,4 +565,4 @@ O detalhe dos suportes internos pode ser visto na \autoref{fig:osciloboy-detalhe
     \fonte{}
 \end{figure}
 
-Assim como os demais elementos desse projeto, pode ser encontrado no [ANEXO X] ao final do trabalho, bem como, dado a característica colaborativa da plataforma, pode ser clonado e modificado sem nenhum custo, conforme a necessidade do usuário.
+Assim como os demais elementos desse projeto, pode ser encontrado no [APENDICE X -TODO-] ao final do trabalho, bem como, dado a característica colaborativa da plataforma, pode ser clonado e modificado sem nenhum custo, conforme a necessidade do usuário.
