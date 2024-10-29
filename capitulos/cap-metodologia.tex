@@ -273,9 +273,20 @@ Porém, o saída das fontes escolhidas é de 12 V, não atendendo as necessidade
 
 A alimentação do ESP32 e também do circuito de comunicação isolada foi definida como 5 V por especificação de projeto, para manter um padrão e também suprir as necessidades de cada.
 
+\subsubsection{Avisos sonoros}\label{aviso-sonoro}
+
+Foi adicionado ao circuito um \textit{buzzer} como forma de aviso sonoro para diversos fins. Foi utilizado um transistor ligado a entrada do microcontrolador para sua ativação, conforme pode-se ver na \autoref{fig:circ-buzzer-eda}. Sua implementação foi feita através do firmware como um alerta em relação a corrente de entrada lida pelo ADC. Caso o usuário aplique corrente maior do que a esperada na entrada, o \textit{buzzer} dispara um aviso sonoro para informar o usuário da entrada incorreta.
+
+\begin{figure}[htb!]
+    \caption{Circuito utilizando transistor para o buzzer}
+    \label{fig:circ-buzzer-eda}
+    \includegraphics[width=0.8\textwidth]{figuras/circ-buzzer.png}
+    \fonte{}
+\end{figure}
+
 \subsubsection{Disponibilidade do Circuito}\label{availability}
 
-O circuito pode ser encontrado na integra no [APENDICE X -TODO-] ao final do trabalho, bem como de maneira virtual no mesmo anexo. Dada a característica colaborativa da plataforma em que foi desenvolvido, permite que qualquer usuário clone esse circuito e o modifique gratuitamente.
+O circuito pode ser encontrado na integra no \autoref{apendice-a} ao final do trabalho, bem como de maneira virtual no mesmo anexo. Dada a característica colaborativa da plataforma em que foi desenvolvido, permite que qualquer usuário clone esse circuito e o modifique gratuitamente.
 
 \subsubsection{Resumo de Hardware}\label{resumo-hardware}
 
@@ -554,24 +565,24 @@ Fonte Isolada & 2 & 12,50 & 25,00 \\ \hline
 
 Para a confecção do invólucro, ou \textit{casing} do protótipo, foi utilizado uma plataforma também gratuita de modelagem, chamada \textit{Onshape}.
 
-Foram tiradas as medidas de um módulo de bancada de madeira, que suporta os equipamentos em bancadas dos laboratórios em questão, como demonstrado na \autoref{fig:Modulo-Base-Frente} e então feito o design com estas e também respeitando o tamanho e configuração da \gls{PCB}.
+Foram tiradas as medidas de um módulo de bancada de madeira, que suporta os equipamentos em bancadas dos laboratórios em questão, como demonstrado na \autoref{fig:modulo-base-f}. Assim foram respeitadas as medidas dos módulos atuais e o tamanho e disposição das entradas/saídas da \gls{PCB}.
 
 \begin{figure}[htb!]
     \caption{Módulo de Bancada}
-    \label{fig:Modulo-Base-Frente}
+    \label{fig:modulo-base-f}
     \includegraphics[width=0.8\textwidth]{figuras/Modulo-Base-Frente.jpg}
     \fonte{}
 \end{figure}
 
 O modelo foi pensado para ser o mais simples possível de ser impresso em 3D e modificado. Possui espaço para a placa e periféricos necessários.
-Devido a dificuldades no desenvolvimento do trabalho, o encapsulamento não foi fabricado, apenas teve seu dimensional analisado em ambiente virtual.
+Devido a dificuldades no desenvolvimento do trabalho, o encapsulamento não foi fabricado.
 Uma visão geral do modelo pode ser visto na \autoref{fig:osciloboy-isometrico}, juntamente de uma representação simplificada do suporte de madeira citado anteriormente.
 O detalhe dos suportes internos pode ser visto na \autoref{fig:osciloboy-detalhes}.
 
 \begin{figure}[htb!]
     \caption{Modelo virtual do encapsulamento}
+    \includegraphics[width=1.0\textwidth]{figuras/osciloboy-case-1.png}
     \label{fig:osciloboy-isometrico}
-    \includegraphics[width=0.8\textwidth]{figuras/osciloboy-case-1.png}
     \fonte{}
 \end{figure}
 
@@ -582,5 +593,5 @@ O detalhe dos suportes internos pode ser visto na \autoref{fig:osciloboy-detalhe
     \fonte{}
 \end{figure}
 
-Assim como os demais elementos desse projeto, pode ser encontrado no [APENDICE X -TODO-] ao final do trabalho, bem como, dado a característica colaborativa da plataforma, pode ser clonado e modificado sem nenhum custo, conforme a necessidade do usuário.
+Assim como os demais elementos desse projeto, pode ser encontrado no \autoref{apendice-a} ao final do trabalho.
 
