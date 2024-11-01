@@ -157,7 +157,7 @@ Utilizando a fórmula, para o caso da entrada de corrente e considerando dois re
     \fonte{}
 \end{figure}
 
-Para a entrada de tensão do circuito segue-se a mesma lógica, chegando a um valor de aproximadamente 5 nF.
+Para a entrada de tensão do circuito segue-se a mesma lógica e passos da entrada de corrente, chegando a um valor de aproximadamente 5 nF.
 
 Após a leitura dos sinais e a conversão feita pelo ADC, o sinal digital de saída é processado por um microcontrolador para então ser entregue a uma webpage e assim tratado para visualização pelo usuário. 
 
@@ -206,7 +206,7 @@ Para se ter uma comunicação confiável entre os dois \gls{ADC}s conectados a f
 \begin{figure}[htb!]
     \caption{Circuito de comunicação isolado}
     \label{fig:circ-comunic}
-    \fbox{\includegraphics[width=1.0\textwidth]{figuras/circ-comunic.png}}
+    \fbox{\includegraphics[width=0.9\textwidth]{figuras/circ-comunic.png}}
     \fonte{}
 \end{figure}
 
@@ -236,7 +236,7 @@ Como as leituras dos dispositivos são sensíveis a atrasos, devido à natureza 
 \begin{figure}[htb!]
     \caption{Detalhe da conexão modular entre dispositivos utilizando dois fios para sincronização de leituras}
     \label{fig:modular-sinc}
-    \fbox{\includegraphics[width=1.0\textwidth]{figuras/mod-fisica-detalhe.png}}
+    \fbox{\includegraphics[width=0.9\textwidth]{figuras/mod-fisica-detalhe.png}}
     \fonte{}
 \end{figure}
 
@@ -342,7 +342,7 @@ Uma vez processados, os dados puros são armazenados em uma \textit{struct}, con
 \begin{table}[h!]
 \centering
 \caption{Chart data}
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{ c c c }
     \hline
     \textbf{Tipo} & \textbf{Nome da Variável} & \textbf{Descrição} \\ \hline
     int8\_t & chart\_id & Identificação do gráfico (usada somente para modularidade) \\ \hline
@@ -369,7 +369,7 @@ Para diferentes configurações de escala de tensão, o código utiliza multipli
 \begin{table}[h!]
     \centering
     \caption{Tabela de multiplicadores de tensão}
-    \begin{tabular}{|c|c|c|c|}
+    \begin{tabular}{ c c c c }
         \hline
         \textbf{Multiplicador} & \textbf{Tensão Máxima na Escala (V)} & \textbf{Ganho} & \textbf{Tensão Máxima (V)} \\
         \hline
@@ -393,7 +393,7 @@ Os ajustes para cada escala tratam-se dos valores de calibração que devem ser 
 \begin{table}[h!]
     \centering
     \caption{Tabela de multiplicadores de corrente}
-    \begin{tabular}{|c|c|}
+    \begin{tabular}{ c c }
         \hline
         \textbf{Escala} & \textbf{Multiplicador} \\
         \hline
@@ -411,7 +411,7 @@ Os valores dos multiplicadores de corrente foram obtidos analisando o comportame
 \begin{table}[h!]
     \centering
     \caption{Tabela de multiplicadores de corrente}
-    \begin{tabularx}{\textwidth}{|X|X|X|X|X|X|X|}
+    \begin{tabularx}{\textwidth}{ X X X X X X X }
         \hline
         \textbf{Range} & \textbf{Resistor shunt} & \textbf{Corrente (A)} & \textbf{Mult. do divisor resistivo} & \textbf{Tensão lida (V)} & \textbf{Mult. inicial (0,125mV/bit)} & \textbf{Mult. final (razão do resistor)} \\
         \hline
