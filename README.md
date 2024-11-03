@@ -37,6 +37,6 @@ A Universidade Tecnológica Federal do Paraná - campus Curitiba, possui dois la
 - Osciloscópio didático montado em bancada;
 - 3 canais para leitura de tensão e 3 para corrente;
 - Proteção contra tensão e corrente;
-- Conexão com smartphone ou computador por WiFi;
+- Conexão com smartphone ou computador por Wi-Fi;
 - Projeto da PCB, case e código;
 - Baixo custo, facilidade de reparo e obtenção de peças no Brasil (Curitiba).
