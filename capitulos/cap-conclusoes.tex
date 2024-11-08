@@ -2,13 +2,13 @@
 %%
 \chapter{Conclusão}\label{cap:conclusoeseperspectivas}
 
-A finalidade principal deste trabalho foi desenvolver um multimedidor com comunicação \textit{wireless} de baixo custo, capaz de medir tensão e corrente simultaneamente. De maneira sucinta, pode-se concluir que a produção do protótipo e a prova de conceito sobre a sua funcionalidade foram um sucesso.
+A finalidade principal deste trabalho foi desenvolver um multimedidor com comunicação \textit{wireless} de baixo custo, capaz de medir tensão e corrente simultaneamente. De maneira sucinta, pode-se concluir que a produção do protótipo e a prova de conceito sobre a sua funcionalidade trouxeram resultados promissores para subsequentes pesquisas.
 
 As especificações do \gls{ADC} e do microcontrolador são as de maior importância para o desenvolvimento de um protótipo com esta finalidade. Isto se deve às necessidades a serem atendidas ou o propósito do instrumento de medição a ser elaborado, como precisão e ranges de leitura, quais tipos de leitura serão feitas, a interface homem-máquina, velocidade de transmissão de dados, entre várias outras. Uma consideração de suma importância também é a compatibilidade entre estes componentes.
 
 Para alcançar o objetivo de leitura paralela de tensão e corrente, foi necessário o desenvolvimento de um circuito isolado internamente, garantindo a integridade dos sinais e dos componentes do circuito. Isto se apresentou como um grande desafio quando se trata de baixo custo e a replicabilidade do protótipo desenvolvido, pois soluções já existentes são em grande maioria custosas e difíceis de se encontrar em mercados não especializados.
 
-O desenvolvimento do \textit{firmware} é necessário para o funcionamento do equipamento como um todo. Este integra todo o resultado da pesquisa e possibilita a comunicação entre o ADC e a plataforma de tratamento de dados, que pode ser acessada por dispositivos externos como smartphones ou computadores, assim como deixa estruturada uma futura modularização. Isto fez este uma das partes mais críticas do projeto, assim como desafiadora.
+Este trabalho demonstar o desenvolvimento de um \textit{firmware} que é necessário para o funcionamento do equipamento como um todo. Este integra todo o resultado da pesquisa e possibilita a comunicação entre o ADC e a plataforma de tratamento de dados, que pode ser acessada por dispositivos externos como smartphones ou computadores, assim como deixa estruturada uma futura modularização. Isto fez este uma das partes mais críticas do projeto, assim como desafiadora.
 
 É interessante pontuar que as leituras true RMS de multímetros comercias não necessariamente conseguiriam fazer a leitura corretamente quando se tem um circuito que gera sinais com componentes DC devido ao acoplamento AC utilizado por estes multímetros para realizar sua leitura. O protótipo neste trabalho desenvolvido não possui acoplamento AC e considera a onda pura para o cálculo, resultando em um valor mais condizente com a realidade.
 
