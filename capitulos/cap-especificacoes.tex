@@ -3,7 +3,7 @@
 Neste capítulo, serão apresentadas tanto as especificações do protótipo quanto as premissas adotadas, tendo em vista os objetivos do projeto.
 
 \section{Especificações}\label{spec}
-Baseado em relatos dos professores das disciplinas de Fenômenos Eletromagnéticos e Análise de Circuitos A e B da \gls{utfpr} de Curitiba, os equipamentos utilizados nos laboratórios destas disciplinas, bem como os utilizados no \gls{SEMAP}(Setor de Almoxarifado/Manutenção dos Laboratórios) da universidade, definiram-se as seguintes especificações elétricas para o multímetro desenvolvido, conforme a \autoref{tab:specstable}:
+Baseado em relatos dos professores das disciplinas de Fenômenos Eletromagnéticos e Análise de Circuitos A e B da \gls{utfpr} de Curitiba, os equipamentos utilizados nos laboratórios destas disciplinas, bem como os utilizados no \gls{SEMAP} (Setor de Almoxarifado/Manutenção dos Laboratórios) da universidade, definiram-se as seguintes especificações elétricas para o multímetro desenvolvido, conforme a \autoref{tab:specstable}:
 
 \begin{table}[!ht]
     \centering
@@ -24,7 +24,7 @@ Foram também definidas as especificações quanto a construção e sistemas do 
     \item Número de bornes para tensão: 2
     \item Número de bornes para corrente: 2
     \item Tipo de alimentação: Fonte interna isolada
-    \item Display de dados: \textit{Smartphones} com acesso a navegador, por Wi-Fi.
+    \item Display de dados: \textit{Smartphones} com acesso a navegador, por \textit{Wi-Fi}.
 \end{itemize}
 
 Os dados que o dispositivo será capaz de apresentar ao usuário são:
@@ -38,25 +38,25 @@ Os dados que o dispositivo será capaz de apresentar ao usuário são:
 
 \section{Premissas Adotadas}\label{premissas1}
 
-As premissas deste trabalho são de suma importância, visto que o objetivo do mesmo é projetar um protótipo com um alto nível de replicabilidade e sendo o mais barato possível. Para isso, serão utilizadas as plataformas gratúitas descritas em seguida e também será fornecido um link para o repositório no qual será desenvolvido o software.
+As premissas deste trabalho são de suma importância, visto que o objetivo do mesmo é projetar um protótipo com um alto nível de replicabilidade e sendo o mais barato possível. Para isso, serão utilizadas as plataformas gratuitas descritas em seguida e também será fornecido um \textit{link} para o repositório no qual será desenvolvido o software.
 
-\subsection{Hardware}\label{proto}
+\subsection{\textit{Hardware}}\label{proto}
 
-Primeiramente, nota-se que o circuito e a \textit{\gls{PCB}} (\textit{Printed Circuit Board}) estão sendo desenvolvidos em uma plataforma chamada easyEDA. Esta plataforma, além de fornecer todo um sistema para simulações e desenvolvimento, possúi uma \textit{supply chain} integrada, tornando extremamente simplificado o desenvolvimento e a prototipagem do circuito, sendo possível escolher já as footprints de todos os componentes e também já verificar a disponibilidade destes no mercado.
+Primeiramente, nota-se que o circuito e a \textit{\gls{PCB}} estão sendo desenvolvidos em uma plataforma chamada easyEDA. Esta plataforma, além de fornecer todo um sistema para simulações e desenvolvimento, possúi uma \textit{supply chain} integrada, tornando extremamente simplificado o desenvolvimento e a prototipagem do circuito, sendo possível escolher já as \textit{footprints} de todos os componentes e também já verificar a disponibilidade destes no mercado.
 
 O roteamento das trilhas de cobre, definição de sua espessura e também o a modelagem em 3D da \textit{\gls{PCB}} são disponíveis nesta plataforma, tornando-a extremamente versátil. Tudo isto é fornecido de forma gratuita pelo site.
 
-Assim, além de ser desenvolvido em uma plataforma gratúita, o projeto desenvolvido será disponibilizado para acesso pelo link disponibilizado no final deste trabalho..
+Assim, além de ser desenvolvido em uma plataforma gratuita, o projeto desenvolvido será disponibilizado para acesso pelo \textit{link} disponibilizado no final deste trabalho.
 
 \subsection{Software e Firmware}\label{softw}
 
-O desenvolvimento completo do \textit{software} utilizado neste projeto se dá pelo editor de código chamado \textit{Visual Studio Code}, ou em abreviação, \gls{VSCode}. Esta plataforma é gratúita e oferece suporte para todas as linguagens de programação.
+O desenvolvimento completo do \textit{software} utilizado neste projeto se dá pelo editor de código chamado \textit{Visual Studio Code}, ou em abreviação, \gls{VSCode}. Esta plataforma é gratuita e oferece suporte para todas as linguagens de programação.
 
 Dentro deste editor, existem 3 vetores de programação que serão a base do \textit{software} e \textit{firmware}. Primeiramente, se é utilizado \gls{HTML} 5 e \gls{JS} (JavaScript) para a construção do aplicativo web que servirá de monitor para os dados obtidos pelos sensores.
 
-Para o código em Arduino que controlará o ESP32 e também o \textit{Firmware}, será utilizado o PlatformIO, uma \textit{\gls{IDE}} (\textit{Integrated Development Environment}) gratúita que é uma extensão do VSCode.
+Para o código em Arduino que controlará o ESP32 e também o \textit{Firmware}, será utilizado o PlatformIO, uma \textit{\gls{IDE}} (\textit{Integrated Development Environment}) gratuita que é uma extensão do VSCode.
 
-Por último, será utilizado o \gls{Git}, que é um software de controle e versionamento de código, tornando assim possível a disponibilização de todo o software desenvolvido neste projeto e também seu versionamento por meio de um site chamado \gls{GitHub}. Tal software também pode ser utilizado como uma extensão do VSCode, aumentando e simplificando ainda mais a disponibilidade do software desenvolvido. O link para o repositório está disponibilizado no final deste trabalho.
+Por último, será utilizado o \gls{Git}, que é um software de controle e versionamento de código, tornando assim possível a disponibilização de todo o software desenvolvido neste projeto e também seu versionamento por meio de um site chamado \gls{GitHub}. Tal software também pode ser utilizado como uma extensão do VSCode, aumentando e simplificando ainda mais a disponibilidade do software desenvolvido. O \textit{link} para o repositório está disponibilizado no final deste trabalho.
 
 
 

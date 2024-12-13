@@ -11,22 +11,22 @@ Neste trabalho, o objetivo é desenvolver um multímetro capaz de medir tensão 
 
 O multimedidor é um dispositivo geralmente trifásico, que permite a medição simultânea de tensão e corrente, exibindo as formas de onda em um display. Possui três ou mais canais simultâneos. No entanto, apresenta a limitação de possuir apenas um referencial de medição e resolução na ordem de 1 V nos modelos mais baratos e 0,1 V nos modelos mais caros. A mesma limitação (e valores) acontece para a resolução da corrente \cite{fluke434}.
 
-Por outro lado, o multímetro é um dispositivo monofásico que permite a medição de apenas um canal por vez, como tensão, corrente, resistência, capacitância, entre outros. Este não exibe as curvas na tela, fornecendo apenas valores. A resolução varia, sendo que nos modelos mais simples pode chegar a 0,1 mV, enquanto a resolução da corrente é da ordem de 1µA \cite{et1100}.
+Por outro lado, o multímetro é um dispositivo monofásico que permite a medição de apenas um canal por vez, como tensão, corrente, resistência, capacitância, entre outros. Este não exibe as curvas na tela, fornecendo apenas valores. A resolução varia, sendo que nos modelos mais simples utilizados nos laboratórios da UTFPR pode chegar a 0,1 mV, enquanto a resolução da corrente é da ordem de 1µA \cite{et1100}.
 
 O osciloscópio, por sua vez, é uma ferramenta amplamente utilizada para a visualização gráfica de sinais elétricos, oferecendo uma leitura detalhada das variações de tensão ao longo do tempo. Com ele, é possível medir sinais com alta precisão e analisar eventos rápidos que não seriam capturados por multímetros convencionais. Equipado com múltiplos canais, o osciloscópio permite a comparação simultânea de diferentes sinais. Sua resolução de tela varia dependendo do modelo, indo de 800x600 até 1920x1080 pixels, o que proporciona uma visualização clara de formas de onda complexas. Além disso, os sistemas de disparo \textit{(triggering)} garantem a captura e estabilização de sinais repetitivos, essenciais para análises em tempo real \cite{keysight-oscilloscope-guide}.
 
-Considerando que o dispositivo deve ser utilizado como uma ferramenta didática em sala de aula, é essencial que a resolução seja adequada para o bom aproveitamento das disciplinas. Além disso, a apresentação das formas de onda também é relevante. Assim, optou-se por uma abordagem que combina características dos dispositivos.
+Considerando que o dispositivo deve ser utilizado como uma ferramenta didática em sala de aula, a apresentação das formas de onda é relevante e é essencial uma resolução adequada para o bom aproveitamento das disciplinas. Assim, optou-se por uma abordagem que reúne as características de um multímetro e um osciloscópio.
 
-Para o multimedidor, foi utilizado o diagrama de blocos do \textit{oZm3} (\autoref{fig:ozm3flowchart}), um produto \textit{open source} (projeto aberto) já introduzido no mercado, sendo uma versão trifásica de outro, também \textit{open source} chamado \textit{(openZmeter)}. Ambos possuem interface de apresentação dos dados via uma página do navegador de um celular ou computador.
+Como base para o multimedidor foi utilizado o diagrama de blocos do \textit{oZm3} (\autoref{fig:ozm3flowchart}), um produto \textit{open source} (projeto aberto) já introduzido no mercado. O \textit{oZm3}, por sua vez, é uma versão trifásica do \textit{(openZmeter)}. Ambos possuem interface de apresentação dos dados via uma página do navegador de um celular ou computador.
 
 \begin{figure}[htb!]
-    \caption{Diagrama de blocos do multimedidor trifásico oZm3}
+    \caption{Diagrama de blocos do multimedidor trifásico \textit{oZm3}}
     \label{fig:ozm3flowchart}
     \includegraphics[width=0.8\textwidth]{figuras/openzmeter-diagrama.png}
     \fonte{\cite{3ph-ozm}}
 \end{figure}
 
-Para o multímetro, foi utilizado um diagrama de blocos (\autoref{fig:multimeterflowchart}) disponível no site da \textit{Texas Instruments}, que explica o funcionamento de um produto completo.
+Para o multímetro, foi utilizado um diagrama de blocos, conforme \autoref{fig:multimeterflowchart} disponível no site da \textit{Texas Instruments}, que explica o funcionamento de um produto completo.
 
 \begin{figure}[htb!]%% Ambiente figure
     %\captionsetup{width=0.55\textwidth}%% Largura da legenda
@@ -36,7 +36,7 @@ Para o multímetro, foi utilizado um diagrama de blocos (\autoref{fig:multimeter
     \fonte{\cite{DMMTI}}%% Fonte
 \end{figure}
 
-Sobre o padrão comercial, existem diversos dispositivos que atendem a necessidades diferentes, como por exemplo, segurança (CAT rating), resolução, precisão ou até mesmo confiabilidade de leitura em condições de temperaturas elevadas, entre vários outros. Adicionalmente, existem também inúmeros fornecedores, tanto regionais, nacionais como internacionais, salientando a diversidade de produtos.
+Sobre o padrão comercial, existem diversos dispositivos que atendem a necessidades diferentes, como por exemplo, segurança (CAT \textit{rating}), resolução, precisão ou até mesmo confiabilidade de leitura em condições de temperaturas elevadas, entre vários outros. Adicionalmente, existem também inúmeros fornecedores, tanto regionais, nacionais como internacionais, salientando a diversidade de produtos.
 
 Dispositivos como o representado na \autoref{fig:Fluke28-II} possuem boa métrica de confiabilidade e também são portáteis, além de provirem medidas em \textit{True-RMS} (\textit{True Root Mean Square}). Este dispositivo é muito benquisto, tendo boas avaliações no mundo inteiro.
 
@@ -48,24 +48,24 @@ Dispositivos como o representado na \autoref{fig:Fluke28-II} possuem boa métric
     \fonte{\cite{fluke28iixd}}%% Fonte
 \end{figure}
 
-Sobre multímetros digitais, também existem aqueles que são de bancada ou \textit{benchtop}. Tais dispositivos são de uso mais específico, prezando a precisão de leitura, resolução e também contendo algumas \textit{features} a mais. Como exemplo, o DMM7510 7.5 \textit{Digit Graphical Sampling Multimeter} da Tektronix é um dispositivo que porta todas as funções já explicitas e também várias outras de uso extremamente específico, como \textit{profiling} de corrente de consumo de energia em dispositivos \gls{IoT} (\textit{Internet of Things}), como mostrado na \autoref{fig:tektronixdmm}.
+Sobre multímetros digitais, também existem aqueles que são de bancada ou \textit{benchtop}. Tais dispositivos são de uso mais específico, prezando a precisão de leitura, resolução e também contendo algumas \textit{features} a mais. Como exemplo, o DMM7510 7.5 \textit{Digit Graphical Sampling Multimeter} da Tektronix é um dispositivo que porta todas as funções já explicitas e também várias outras de uso extremamente específico, como \textit{profiling} de corrente de consumo de energia em dispositivos \gls{IoT} (Internet das Coisas), como mostrado na \autoref{fig:tektronixdmm}.
 
 \begin{figure}[htb!]%% Ambiente figure
     %\captionsetup{width=0.55\textwidth}%% Largura da legenda
     \caption{Gráfico de corrente de consumo de um dispositivo, feito pelo DMM7510 7.5 Digit Graphical Sampling Multimeter}%% Legenda
     \label{fig:tektronixdmm}%% Rótulo
     \includegraphics[scale=0.8]{tektronixdmm}%% Dimensões e localização
-    \fonte{tektDMM}%% Fonte
+    \fonte{\cite{tektDMM}}%% Fonte
 \end{figure}
 
-No caso de multimedidores, que são somente de uso específico industrial, alguns fornecedores e dispositivos se sobressaem, como a WEG. O dispositivo da \autoref{fig:mmw03weg} é um multimedidor da família MMW, fornecido pela mesma. O multimedidor é capaz de coletar todas as medidas de grandezas elétricas no meio industrial, tem a função de parametrizá-las por meio de aplicativos \gls{IoT}, identifica sequência e falta de fases, entre outras várias funções que são benéficas para tal aplicação.
+No caso de multimedidores, que são somente de uso específico industrial, alguns fornecedores e dispositivos se sobressaem. O dispositivo da \autoref{fig:mmw03weg} é um multimedidor da família MMW e é capaz de coletar todas as medidas de grandezas elétricas no meio industrial, tem a função de parametrizá-las por meio de aplicativos \gls{IoT}, identifica sequência e falta de fases, entre outras várias funções que são benéficas para tal aplicação.
 
 \begin{figure}[htb!]%% Ambiente figure
     %\captionsetup{width=0.55\textwidth}%% Largura da legenda
-    \caption{Dispositivo MMW03}%% Legenda
+    \caption{Exemplo de multimedidor, familia MMW}%% Legenda
     \label{fig:mmw03weg}%% Rótulo
     \includegraphics[scale=0.6]{mmw03weg}%% Dimensões e localização
-    \fonte{WEG}%% Fonte
+    \fonte{(WEG, 2023)}%% Fonte
 \end{figure}
 
 %Input Protection > Pathing > Aquisição de Sinal > ADC > Referência de Tensão > Input Warning > MCU > Interfaceamento > Power Supply > Calibração
@@ -79,7 +79,7 @@ Proteção de entrada é um assunto extremamente abrangente quando se trata de c
 \subsection{ESD}\label{subsec:electrostaticDischarge}
 Esse tipo de proteção é necessária para circuitos que fazem interface com o meio físico e normalmente é exercida por um circuito básico de componentes \gls{TVS} (\textit{Transient Voltage Suppressor}). Os dispositivos semicondutores mais simples (e também regularmente) utilizados para exercer esta função são diodos Zener \cite{IPblog}.
 
-Ao serem submetidos a uma tensão maior que à especificada como limite de operação do circuito a ser protegido, diodos Zener apresentam uma resistência baixa, fechando a passagem de corrente entre o circuito e o \textit{ground} do equipamento. Este circuito pode apresentar uma configuração unidirecional ou bidirecional, dependendo da necessidade do circuito a ser protegido \cite{TIESD}.
+Ao serem submetidos a uma tensão maior que à especificada como limite de operação do circuito a ser protegido, diodos Zener apresentam uma resistência baixa, fechando a passagem de corrente entre o circuito e o terra do equipamento. Este circuito pode apresentar uma configuração unidirecional ou bidirecional, dependendo da necessidade do circuito a ser protegido \cite{TIESD}.
 
 As Figuras \ref{fig:tvsUnidirecional} e \ref{fig:tvsBidirecional} demonstram a utilização básica de tal circuito e o conceito por trás da tensão de ruptura de tal semicondutor.
 
@@ -101,7 +101,7 @@ As Figuras \ref{fig:tvsUnidirecional} e \ref{fig:tvsBidirecional} demonstram a u
 
 \subsection{Proteção Específica para Equipamentos de Medição de Sinais Elétricos}\label{subsec:especProtec}
 
-Primeiramente, se faz necessário explicar sobre a classificação de proteção em relação a equipamentos elétricos. A classificação mais robustamente utilizada é a CAT, que funciona conforme a \autoref{fig:CATrating}. Os numerais indicam o potencial de energia que o sistema pode entregar caso ocorra um curto-circuito ou um transiente de tensão, \textit{i.e.} um instrumento CAT III tem que estar protegido contra transientes muito maiores que um dispositivo CAT II.
+Primeiramente, se faz necessário explicar sobre a classificação de proteção em relação a equipamentos elétricos. A classificação mais robustamente utilizada é a CAT, definida pela norma IEC 61010-1, que funciona conforme a \autoref{fig:CATrating}. Os numerais indicam o potencial de energia que o sistema pode entregar caso ocorra um curto-circuito ou um transiente de tensão, \textit{i.e.} um instrumento CAT III tem que estar protegido contra transientes muito maiores que um dispositivo CAT II.
 
 Dispositivos CAT IV devem estar protegidos a nível de distribuição de energia, pois estes serão utilizados em conexão entrada de energia de uma facilidade. Dispositivos CAT III devem estar protegidos a nível de distribuição interna (quadros de distribuição), podendo esta ser trifásica ou monofásica. Dispositivos CAT II devem estar protegidos a nível de equipamento terminal ou de uso comum, sendo estes eletrodomésticos e afins. Dispositivos CAT I devem estar protegidos a nível de circuitos eletrônicos e transformadores de baixa potência \cite{CATratingu}. %%ref: https://www.ecmweb.com/test-measurement/article/21247639/understanding-the-cat-rating-system
 
@@ -117,21 +117,21 @@ Dispositivos CAT IV devem estar protegidos a nível de distribuição de energia
 
 \subsubsection{Proteção de Entrada para Circuitos de Corrente}\label{subsec:protecaoCorrente}
 
-O circuito de proteção para a entrada de correntes se divide em duas partes, sendo uma delas para o range de A (Amperes) e os ranges de mA e µA.
+O circuito de proteção para a entrada de correntes se divide em duas partes, sendo uma delas para o \textit{range} de A (Amperes) e os \textit{ranges} de mA e µA.
 
-Para a entrada de Amperes, é utilizado um fusível \gls{HRC} (\textit{High Rupturing Capacity}), geralmente de 11 A e 1000 V (para se adequar à classificação CAT III, no caso do multímetro que foi estudado), para se prevenir arcos voltaicos após a queima do fusível, negando a possibilidade de uma continuação da condução de curto-circuito ou sobrecorrente. Logo após, é conectado um shunt, 0R01 $\Omega$, entre o ground e a entrada, no qual será feita a medida.
+Para a entrada de Amperes, é utilizado um fusível \gls{HRC} (\textit{High Rupturing Capacity}), geralmente de 11 A e 1000 V (para se adequar à classificação CAT III, no caso do multímetro que foi estudado), para se prevenir arcos voltaicos após a queima do fusível, negando a possibilidade de uma continuação da condução de curto-circuito ou sobrecorrente. Logo após, é conectado um \textit{shunt}, 0R01 $\Omega$, entre o terra e a entrada, no qual será feita a medida.
 
-Para a entrada de mA e µA, também é utilizado um fusível \gls{HRC}, mas de 500 mA e 1000 V. Em sequência, é colocado um retificador em ponte de diodos entre o canal e o ground, para dar clamp em possíveis sobretensões (normalmente ocasionada pela utilização errônea do equipamento, colocando-se a entrada de corrente para medir tensão) até que o fusível possa atuar. Internamente, há um switch entre mA e µA \cite{fluke27manual}.
+Para a entrada de mA e µA, também é utilizado um fusível \gls{HRC}, mas de 500 mA e 1000 V. Em sequência, é colocado um retificador em ponte de diodos entre o canal e o terra, para dar clamp em possíveis sobretensões (normalmente ocasionada pela utilização errônea do equipamento, colocando-se a entrada de corrente para medir tensão) até que o fusível possa atuar. Internamente, há um \textit{switch} entre mA e µA \cite{fluke27manual}.
 
-Para o switch de mA, é conectado em série um resistor shunt de 1 $\Omega$ com o shunt do range de A (0R01 $\Omega$), para ser feita a medição em uma resistência aproximada de 1 $\Omega$.
+Para o \textit{switch} de mA, é conectado em série um resistor \textit{shunt} de 1 $\Omega$ com o \textit{shunt} do \textit{range} de A (0R01 $\Omega$), para ser feita a medição em uma resistência aproximada de 1 $\Omega$.
 
-Para o switch de µA, é conectado um resistor shunt de 100 $\Omega$, no qual será feita a medição. \cite{IPblog}%%ref: https://lygte-info.dk/info/DMMDesignProtection%20UK.html
+Para o \textit{switch} de µA, é conectado um resistor \textit{shunt} de 100 $\Omega$, no qual será feita a medição. \cite{IPblog}%%ref: https://lygte-info.dk/info/DMMDesignProtection%20UK.html
 
 \subsubsection{Proteção de Entrada para Circuitos de Tensão}\label{subsec:protecaoTensao}
 
 O circuito de proteção para a entrada de tensão é simples, sendo composto por um termistor \gls{PTC} (\textit{Positive Temperature Coefficient}) em série com um resistor de 10 M$\Omega$, no qual será feita a medida \cite{fluke27manual}. Esse termistor atua limitando a corrente inicial, enquanto o resistor é responsável pela medição precisa da tensão.
 
-Para complementar essa proteção, conectado em paralelo ao resistor de 10 M$\Omega$ com o ground input, há uma série de varistores \gls{MOV} (\textit{Metal Oxide Varistor}) de rápida atuação. Esses varistores protegem contra transientes de sobretensão enquanto o termistor está esquentando e ajustando sua resistência. Embora seja possível utilizar apenas um varistor, a utilização de vários em série aumenta a distância de fuga de corrente, reduz a chance de arcos voltaicos e dissipa a energia entre os componentes, resultando em uma proteção mais eficiente \cite{flukeblog}.
+Para complementar essa proteção, conectado em paralelo ao resistor de 10 M$\Omega$ com o \textit{ground input}, há uma série de varistores \gls{MOV} (\textit{Metal Oxide Varistor}) de rápida atuação. Esses varistores protegem contra transientes de sobretensão enquanto o termistor está esquentando e ajustando sua resistência. Embora seja possível utilizar apenas um varistor, a utilização de vários em série aumenta a distância de fuga de corrente, reduz a chance de arcos voltaicos e dissipa a energia entre os componentes, resultando em uma proteção mais eficiente \cite{flukeblog}.
 
 Uma parte comum do design geral da \gls{PCB} (\textit{Printed Circuit Board}) são \textit{slots} de isolamento de alta tensão, que se resumem a espaços abertos entre partes da placa, que vão receber altas tensões em funcionamento indesejado, para minimizar as chances de arcos voltaicos entre partes do circuito, como destacado na \autoref{fig:exemploPCB}. %%ref: https://lygte-info.dk/info/DMMDesignProtection%20UK.html
 
@@ -146,13 +146,13 @@ Uma parte comum do design geral da \gls{PCB} (\textit{Printed Circuit Board}) s�
 %Pathing
 \section{Condicionamento e Aquisição de Sinal}\label{sec:signalConditioningandPathing}
 
-O condicionamento de sinal refere-se ao processo de ajustar e controlar o sinal de entrada que será avaliado pelo ADC (Conversor Analógico-Digital). Esse processo é essencial para garantir que o sinal fornecido ao ADC esteja dentro da faixa adequada de operação e com a qualidade necessária para uma conversão precisa. Normalmente, essa seleção de entrada é realizada por um \textit{MUX} (Multiplexador), que alterna entre diferentes sinais analógicos, ou por switches mecânicos, conforme ilustrado na \autoref{fig:Fluke28-II-switches}. Em algumas situações, pode-se empregar uma combinação desses dois métodos para otimizar a seleção e o condicionamento do sinal de acordo com as características específicas do sistema.
+O condicionamento de sinal refere-se ao processo de ajustar e controlar o sinal de entrada que será avaliado pelo ADC (Conversor Analógico-Digital). Esse processo é essencial para garantir que o sinal fornecido ao ADC esteja dentro da faixa adequada de operação e com a qualidade necessária para uma conversão precisa. Normalmente, essa seleção de entrada é realizada por um \textit{MUX} (Multiplexador), que alterna entre diferentes sinais analógicos, ou por \textit{switches} mecânicos, conforme ilustrado na \autoref{fig:Fluke28-II-switches}. Em algumas situações, pode-se empregar uma combinação desses dois métodos para otimizar a seleção e o condicionamento do sinal de acordo com as características específicas do sistema.
 
 Além de garantir que o sinal analógico esteja dentro do intervalo correto, o condicionamento de sinal também pode envolver o uso de filtros e amplificadores para eliminar ruídos indesejados e aumentar a resolução da medição. Dessa forma, o sinal que chega ao ADC está devidamente ajustado, garantindo maior precisão e confiabilidade nos dados convertidos \cite{dmmblog}.
 
 \begin{figure}[htb!]%% Ambiente figure
     %\captionsetup{width=0.55\textwidth}%% Largura da legenda
-    \caption{Switches de um Fluke 28-II}%% Legenda
+    \caption{\textit{Switches} de um Fluke 28-II}%% Legenda
     \label{fig:Fluke28-II-switches}%% Rótulo
     \includegraphics[scale=0.8]{Fluke28-II-switches}%% Dimensões e localização
     \fonte{\cite{flukeforum}}%% Fonte
@@ -165,10 +165,10 @@ A aquisição de sinal é o processo de captura e conversão de sinais físicos 
 
 Essa pode ser realizada de diferentes maneiras, dependendo do caso. Em alguns cenários, utiliza-se sondas específicas para cada aplicação, as quais permitem capturar e registrar os parâmetros elétricos de forma precisa. Por outro lado, em certos casos, a aquisição ocorre internamente dentro do circuito do próprio medidor, proporcionando uma solução integrada e simplificada para a captura e registro dos sinais elétricos.
 
-\subsection{Resistor Shunt}\label{subsec:resiShunt}
+\subsection{Resistor \textit{Shunt}}\label{subsec:resiShunt}
 Neste tipo de medição, um resistor de baixo valor (< 0,1 $\Omega$) é colocado em série com o circuito no qual se deseja medir a corrente elétrica, quando esta atravessa o componente, ocorre uma queda de tensão proporcional. Essa queda de tensão pode ser então medida diretamente através de um \gls{ADC} ou amplificada e então medida para se obter os valores da corrente original \citep{curr_sens_tech}.
 
-Para a aplicação em 3 canais independentes de corrente, torna-se necessária algum tipo de isolação. Isso pode ser obtido utilizando-se de amplificadores isoladores --- amplificadores operacionais que possuem duas referências isoladas entre si. Permitindo uma medição da queda de tensão sobre o resistor shunt para cada canal sem interferência mútua, como exemplo o AD202 na \autoref{AD202}.
+Para a aplicação em 3 canais independentes de corrente, torna-se necessária algum tipo de isolação. Isso pode ser obtido utilizando-se de amplificadores isoladores --- amplificadores operacionais que possuem duas referências isoladas entre si. Permitindo uma medição da queda de tensão sobre o resistor \textit{shunt} para cada canal sem interferência mútua, como exemplo o AD202 na \autoref{AD202}.
 
 \begin{figure}[htb!]
     \caption{AD202 um exemplo de amplificador isolador}
@@ -194,9 +194,9 @@ Utilizando-se do princípio da Lei da Indução de Faraday, a bobina Rogowski tr
 
 \subsection{Circuito Integrado de Medição \textit{(hall effect)}}\label{subsec:halleffect}
 
-Existem circuitos integrados capazes de medir a corrente alternada de maneira isolada do restante do circuito. Utilizando-se do efeito hall, o campo magnético gerado pela corrente que passa entre seus terminais é medida por um sensor montado diretamente no substrato do chip. A saída do CI é uma tensão proporcional ao campo magnético e pode ser medida por um ADC, recuperando-se o valor da corrente original.
+Existem circuitos integrados capazes de medir a corrente alternada de maneira isolada do restante do circuito. Utilizando-se do efeito hall, o campo magnético gerado pela corrente que passa entre seus terminais é medida por um sensor montado diretamente no substrato do \textit{chip}. A saída do CI (Circuito Integrado) é uma tensão proporcional ao campo magnético e pode ser medida por um ADC, recuperando-se o valor da corrente original.
 
-O uso dessa tecnologia traz custo baixo em relação ao uso de TC's ou bobinas Rogowski, fácil implementação no sistema, isolamento diretamente no chip. Tal medição, porém, possui uma resolução na ordem de \SI{100}{\milli\volt\per\ampere} (considerando um CI que suporte acima de 10 A) e um ruído intrínseco de 11 mV. Como é o caso do ACS712 \citep{acs712}.
+O uso dessa tecnologia traz custo baixo em relação ao uso de TC's ou bobinas Rogowski, fácil implementação no sistema, isolamento diretamente no \textit{chip}. Tal medição, porém, possui uma resolução na ordem de \SI{100}{\milli\volt\per\ampere} (considerando um CI que suporte acima de 10 A) e um ruído intrínseco de 11 mV. Como é o caso do ACS712 \citep{acs712}.
 
 %ADC
 \section{Conversor Analógico Digital}\label{sec:ADC}
@@ -227,12 +227,12 @@ Para fins de objetividade, será somente apresentado o \gls{SAR} (\textit{Succes
 
 \subsection{Flash ADC}\label{flashADC}
 
-Este \gls{ADC} delimita o principio de funcionamento desse tipo de dispositivo. Formado de uma série de comparadores, como mostrado na \autoref{fig:flashADC}, este compara o sinal de entrada com uma tensão de referência única para cada comparador. A saída destes comparadores são conectadas à um \textit{encoder} de prioridade que produz uma saída binária.
-Esta topologia não só é a mais simples em termos de operação, mas também é o mais eficiente, em termos de velocidade, sendo limitado só pelos comparadores e \textit{delays} de propagação dos gates. Infelizmente, o \textit{flash} \gls{ADC} necessita de um número excessivo de componentes, sendo necessários 255 comparadores para uma saída de 8-bits, que seria a necessidade de \textit{output} de qualquer \gls{ADC} moderno.
+Este \gls{ADC} delimita o principio de funcionamento desse tipo de dispositivo, formado de uma série de comparadores, como mostrado na \autoref{fig:flashADC}. Este compara o sinal de entrada com uma tensão de referência única para cada comparador. A saída destes comparadores são conectadas à um \textit{encoder} de prioridade que produz uma saída binária.
+Esta topologia não só é a mais simples em termos de operação, mas também é o mais eficiente, em termos de velocidade, sendo limitado só pelos comparadores e \textit{delays} de propagação dos gates. Infelizmente, o \textit{flash} \gls{ADC} necessita de um número excessivo de componentes, sendo necessários 255 comparadores para uma saída de 8-bits, que seria a necessidade de saída de qualquer \gls{ADC} moderno.
 
 \begin{figure}[htb!]%% Ambiente figure
     %\captionsetup{width=0.55\textwidth}%% Largura da legenda
-    \caption{Diagrama de blocos de um ADC Flash}%% Legenda
+    \caption{Diagrama de blocos de um ADC \textit{Flash}}%% Legenda
     \label{fig:flashADC}%% Rótulo
     \includegraphics[scale=0.6]{flashADC}%% Dimensões e localização
     \fonte{\cite{ADCbook}}%% Fonte: Lessons in Electric Circuits: Volume IV - Digital, by Tony R. Kuphaldt
@@ -264,7 +264,7 @@ O circuito e resultado de leitura do \gls{ADC} em questão, em termos simples, p
 %Referência de tensão
 \section{Referência de Tensão}\label{sec:VoltageReference}
 
-A referência de tensão do ADC, utilizada para a leitura do sinal analógico, pode ser interna ou externa ao chip. Quando interna, trata-se de uma solução mais barata e de menor precisão, adequada para equipamentos que não exigem alta precisão. Quando externa, oferece uma melhor precisão e, consequentemente, uma leitura mais precisa. Atualmente, essa referência externa é fornecida por um \gls{CI} (Circuito Integrado) especializado, como o ICL8069 \cite{icl8069}, amplamente utilizado nas soluções mais avançadas.
+A referência de tensão do ADC, utilizada para a leitura do sinal analógico, pode ser interna ou externa ao \textit{chip}. Quando interna, trata-se de uma solução mais barata e de menor precisão, adequada para equipamentos que não exigem alta precisão. Quando externa, oferece uma melhor precisão e, consequentemente, uma leitura mais precisa. Atualmente, essa referência externa é fornecida por um \gls{CI} (Circuito Integrado) especializado, como o ICL8069 \cite{icl8069}, amplamente utilizado nas soluções mais avançadas.
 
 %input Warning
 \section{Aviso de Entrada Incorreta \textit{(Input Warning)}}\label{sec:inpWarning}
@@ -302,9 +302,9 @@ Por outro lado, em casos mais sérios, onde há risco de dano ao aparelho de med
 
 Um erro comum em laboratórios de eletrônica é a tentativa de medição de tensão elétrica utilizando-se do modo de medição de corrente elétrica do dispositivo.
 
-Comumente a corrente é medida através da queda de tensão em um resistor \textit{shunt}, conforme discorrido em \ref{subsec:resiShunt}. Colocar as ponteiras em um ponto onde haja tensão sem nenhum dispositivo limitador de corrente, faria com que o resistor shunt sofresse um enorme estresse levando possivelmente a sua falha ou diminuição drástica da vida útil.
+Comumente a corrente é medida através da queda de tensão em um resistor \textit{shunt}, conforme discorrido em \ref{subsec:resiShunt}. Colocar as ponteiras em um ponto onde haja tensão sem nenhum dispositivo limitador de corrente, faria com que o resistor \textit{shunt} sofresse um enorme estresse levando possivelmente a sua falha ou diminuição drástica da vida útil.
 
-Como geralmente há um sistema de proteção nesses dispositivos, muitas vezes, há a queima de um elemento fusível no lugar do resistor shunt. Porém, é necessário alertar o usuário de que o uso do equipamento foi incorreto e, caso a corrente seja removida a tempo, preservar a própria proteção. Caso essa seja rompida, também é importante notificar o usuário de que a mesma deve ser substituída.
+Como geralmente há um sistema de proteção nesses dispositivos, muitas vezes, há a queima de um elemento fusível no lugar do resistor \textit{shunt}. Porém, é necessário alertar o usuário de que o uso do equipamento foi incorreto e, caso a corrente seja removida a tempo, preservar a própria proteção. Caso essa seja rompida, também é importante notificar o usuário de que a mesma deve ser substituída.
 
 Para tanto, pode-se utilizar um \textit{buzzer} com o som alto o suficiente para notificar o usuário mesmo em um ambiente com certo ruído, como é o caso de um laboratório de aula.
 
@@ -315,11 +315,11 @@ Para tanto, pode-se utilizar um \textit{buzzer} com o som alto o suficiente para
 
 O \gls{MCU} ou \textit{Microcontroller Unit} é um dispositivo eletrônico altamente integrado contendo um processador, memória e periféricos de entrada e saída. Os microcontroladores são amplamente utilizados em uma variedade de aplicações, desde eletrodomésticos e automóveis até dispositivos médicos e sistemas de controle industrial.
 
-Ele é projetado para ser compacto, de baixo consumo de energia e fácil de programar. Eles são usados para controlar e executar tarefas específicas em um sistema eletrônico. Ao contrário de um microprocessador, que é projetado para executar uma ampla variedade de tarefas e requer componentes externos adicionais, o \gls{MCU} possui praticamente todos os recursos necessários integrados em um único chip.
+Ele é projetado para ser compacto, de baixo consumo de energia e fácil de programar. Eles são usados para controlar e executar tarefas específicas em um sistema eletrônico. Ao contrário de um microprocessador, que é projetado para executar uma ampla variedade de tarefas e requer componentes externos adicionais, o \gls{MCU} possui praticamente todos os recursos necessários integrados em um único \textit{chip}.
 
 No caso dos medidores, o \gls{MCU} é utilizado como o interpretador dos sinais obtidos pelo \gls{ADC}, podendo realizar as operações matemáticas necessárias para se obter os valores médios, eficazes, pico, e demais necessários, a partir da amostragem obtida. Esse é o caso do \textit{3Ph-ozm}, que utiliza um microcontrolador com pré-processador dos dados e como sistema de controle para as funções fundamentais do dispositivo \cite{3ph-ozm}.
 
-Juntamente do \gls{MCU}, o \textit{3Ph-ozm} utiliza um microprocessador para realizar o trabalho de comunicação através de Wi-Fi e Bluetooth.
+Juntamente do \gls{MCU}, o \textit{3Ph-ozm} utiliza um microprocessador para realizar o trabalho de comunicação através de \textit{Wi-Fi} e \textit{Bluetooth}.
 Tal abordagem, porém, traz um custo mais alto ao projeto, uma vez que um microprocessador é mais caro que um microcontrolador --- que pode ser capaz de tanto processar, como enviar os sinais \cite{uCdiff}.
 
 \subsubsection{Microcontroladores Considerados} \label{subsubsec:uc-disp}
@@ -331,10 +331,10 @@ Para tanto, foram considerados os seguintes pontos:
     \item Popularidade --- um item popularmente conhecido pode ser encontrado com maior facilidade em lojas locais;
     \item Facilidade de programação --- como um dos objetivos primordiais do projeto é a replicabilidade e a disponibilização por meios \textit{open source}, a simplicidade na programação deve ser levada em conta;
     \item Preço --- o microcontrolador tem potencial para ser o item único mais custoso do projeto, reduzir seu preço auxiliaria na questão do baixo custo;
-    \item Comunicação --- dispositivos com Wi-Fi, \gls{$I^2$C}, UART ou demais protocolos de comunicação já embarcados auxiliariam no processo de transmissão e tratamento dos dados obtidos.
+    \item Comunicação --- dispositivos com \textit{Wi-Fi}, \gls{$I^2$C}, UART ou demais protocolos de comunicação já embarcados auxiliariam no processo de transmissão e tratamento dos dados obtidos.
 \end{itemize}
 
-Seguindo esses critérios e as informações disponíveis no artigo \textit{How to Select the Microcontroller for Your New Product} \cite{select_uC}, os \gls{MCU}'s adequados à finalidade de medição seriam os que possuem arquitetura de 32 bits, uma vez que estes possuem também certas características de microprocessadores como, por exemplo, a lógica de prioridade nas interrupções e a velocidade de trabalho com ponto flutuante.
+Seguindo esses critérios e as informações disponíveis no artigo \textit{How to Select the Microcontroller for Your New Product} \cite{select_uC}, os \gls{MCU}'s adequados à finalidade de medição seriam os que possuem arquitetura de 32 bits. Estes possuem também certas características de microprocessadores como, por exemplo, a lógica de prioridade nas interrupções e a velocidade de trabalho com ponto flutuante.
 
 Os \gls{MCU}'s mais populares dessa arquitetura são os da família STM32, representado na \autoref{fig:stm32-family}.
 
@@ -342,10 +342,10 @@ Os \gls{MCU}'s mais populares dessa arquitetura são os da família STM32, repre
     \caption{Família STM32 separada por função}
     \label{fig:stm32-family}
     \includegraphics[width=0.7\textwidth]{figuras/STM32-family.png}
-    \fonte{Mouser}
+    \fonte{(Mouser, 2023)}
 \end{figure}
 
-Para a seleção de um microcontrolador adequado, pode-se seguir a linha \textit{mainstream} da \autoref{fig:stm32-family}, pois tratam-se de \gls{MCU}'s populares e que possuem vasta documentação disponível online. Porém, ao utilizar tais microcontroladores, seria necessária a utilização de outro periférico para a função de Wi-Fi e/ou Bluetooth.
+Para a seleção de um microcontrolador adequado, pode-se seguir a linha \textit{mainstream} da \autoref{fig:stm32-family}, pois tratam-se de \gls{MCU}'s populares e que possuem vasta documentação disponível online. Porém, ao utilizar tais microcontroladores, seria necessária a utilização de outro periférico para a função de \textit{Wi-Fi} e/ou \textit{Bluetooth}.
 
 \subsection{Apresentação dos dados e Comunicação}\label{sec:Interface}
 
@@ -357,7 +357,7 @@ Os dados também podem ser enviados a um sistema externo que fará a apresentaç
 
 Para realizar esse envio, podem-se utilizar diversas tecnologias diferentes, desde protocolos com fio (CAN, MODBUS, \gls{$I^2$C}, UART, etc.) até protocolos \textit{wireless} --- que serão os mais aprofundados nessa seção.
 
-Baseando-se no artigo \citet{lowcost-smartmeter}, as tecnologias que podem ser usadas são as encontradas no ambiente de IoT (Internet das Coisas) como LoRa, Sigfox e NB-IoT. Também é possível utilizar tecnologias mais populares, como é o caso do \citet{3ph-ozm} que utiliza Wi-Fi e Bluetooth para realizar sua comunicação e o display de seus dados através de uma interface web conforme a \autoref{fig:interface-3ph-ozm}.
+Baseando-se no artigo \cite{lowcost-smartmeter}, as tecnologias que podem ser usadas são as encontradas no ambiente de IoT como LoRa, Sigfox e NB-IoT. Também é possível utilizar tecnologias mais populares, como é o caso do \cite{3ph-ozm} que utiliza \textit{Wi-Fi} e \textit{Bluetooth} para realizar sua comunicação e o display de seus dados através de uma interface web conforme a \autoref{fig:interface-3ph-ozm}.
 
 \begin{figure}[htb!]
     \caption{Interface WEB usada no 3Ph-ozm}
@@ -368,9 +368,9 @@ Baseando-se no artigo \citet{lowcost-smartmeter}, as tecnologias que podem ser u
 
 \subsection{Soluções completas}\label{subsec:solucomp}
 
-Há também a possibilidade da utilização de módulos que possuem um microcontrolador e outras funções integradas. Como é o caso do ESP32-WROOM-32D (\autoref{fig:esp32-frente-verso}), construído em torno do chip ESP32.
+Há também a possibilidade da utilização de módulos que possuem um microcontrolador e outras funções integradas. Como é o caso do ESP32-WROOM-32D (\autoref{fig:esp32-frente-verso}), construído em torno do \textit{chip} ESP32.
 
-Esse módulo possui um microprocessador \textit{Xtensa® Dual-Core 32-bit LX6} e as funções principais de um microcontrolador, como \gls{ADC} próprio e tratamento de interrupções por ordem de relevância. Além de possuir dois \gls{DAC}'s. O principal diferencial desse módulo, porém, é a sua capacidade de trabalhar com Wi-Fi e Bluetooth sem a necessidade de nenhum periférico extra, além de possuir grande facilidade em sua programação \cite{esp32-datasheet}.
+Esse módulo possui um microprocessador \textit{Xtensa® Dual-Core 32-bit LX6} e as funções principais de um microcontrolador, como \gls{ADC} próprio e tratamento de interrupções por ordem de relevância. Além de possuir dois \gls{DAC}s. O principal diferencial desse módulo, porém, é a sua capacidade de trabalhar com \textit{Wi-Fi} e \textit{Bluetooth} sem a necessidade de nenhum periférico extra, além de possuir grande facilidade em sua programação \cite{esp32-datasheet}.
 
 \begin{figure}[htb!]
     \caption{Módulo ESP32-WROOM-32D frente e verso}
@@ -382,7 +382,7 @@ Esse módulo possui um microprocessador \textit{Xtensa® Dual-Core 32-bit LX6} e
 %power management
 \section{\textit{Power Management}}\label{powerManagement}
 
-Multímetros digitais se apresentam em duas configurações, sendo estas de bancada e portátil. Na configuração portátil, se é utilizado pilhas ou baterias para prover a tensão necessária para se ligar todos os subsistemas do aparelho. Já na configuração de bancada, é utilizada uma fonte isolada, conectada à rede de energia para fornecer a tensão adequada para se ligar todos os subsistemas do dispositivo, como se pode ver nas Figuras \ref{fig:bathh} e \ref{fig:batbt}, dos designs propostos pela \gls{TI}.
+Multímetros digitais se apresentam em duas configurações, sendo estas de bancada e portátil. Na configuração portátil, se é utilizado pilhas ou baterias para prover a tensão necessária para se ligar todos os subsistemas do aparelho. Já na configuração de bancada, é utilizada uma fonte isolada, conectada à rede de energia para fornecer a tensão adequada para se ligar todos os subsistemas do dispositivo, como se pode ver nas Figuras \ref{fig:bathh} e \ref{fig:batbt}, dos \textit{designs} propostos pela \gls{TI}.
 
 \begin{figure}[htb!]%% Ambiente figure
     %\captionsetup{width=0.55\textwidth}%% Largura da legenda
@@ -411,9 +411,9 @@ Para se calibrar um multímetro, é utilizado um outro dispositivo com no mínim
 
 Tais equipamentos também necessitam ser calibrados, então o fornecedor deve garantir que estes estejam de acordo com os órgãos regionais, nacionais e internacionais em questão de procedência da calibração. Uma documentação e traçabilidade extensivas são requerimentos indispensáveis.
 
-O \textit{calibrator} tem a capacidade de fornecer sinais elétricos precisos e de função variável, que podem ser produzidos de µV a kV, normalmente. Estes sinais, em ranges específicos, serão lidos pela \gls{UUT} (\textit{Unit Under Test}) e então serão anotados os resultados da medição, fazendo-se um levantamento de dados do multímetro. Após tal levantamento, realiza-se os passos necessários para calibrar tal dispositivo, dependendo das suas necessidades e também do fabricante do mesmo. Este equipamento também consegue fazer medições de precisão, caso seja necessário.
+O \textit{calibrator} tem a capacidade de fornecer sinais elétricos precisos e de função variável, que podem ser produzidos de µV a kV, normalmente. Estes sinais, em \textit{ranges} específicos, serão lidos pela \gls{UUT} (\textit{Unit Under Test}) e então serão anotados os resultados da medição, fazendo-se um levantamento de dados do multímetro. Após tal levantamento, realiza-se os passos necessários para calibrar tal dispositivo, dependendo das suas necessidades e também do fabricante do mesmo. Este equipamento também consegue fazer medições de precisão, caso seja necessário.
 
-O \textit{standard} cumpre a mesma função do calibrator, mas geralmente é limitado a poucos ranges de geração de sinal e somente uma função, o que possibilita uma performance e precisão muito maior que a do \textit{calibrator}.
+O \textit{standard} cumpre a mesma função do calibrator, mas geralmente é limitado a poucos \textit{ranges} de geração de sinal e somente uma função, o que possibilita uma performance e precisão muito maior que a do \textit{calibrator}.
 
 Entretanto, existe uma proposta de calibração do equipamento on-board, feita pela \gls{TI} (\textit{Texas Instruments}), utilizando-se um \gls{DAC} para corrigir erros de leitura, seja por mudanças de temperatura, mudança na tensão de referência do \gls{ADC} ou qualquer outro fator que possa afetar a leitura do sinal. Também nesse circuito é incluído um sensor de temperatura para avisar o usuário sobre mudanças consideráveis de temperatura.
 
