@@ -887,22 +887,22 @@
       \large\textbf{\allcaps{\@author}}\\
     \end{center}
     %\vspace{30mm}
-    \vspace{15mm}
+    \vspace{5mm}
     \begin{center}
       \large\textbf{\allcaps{\@title}}\par
     \end{center}
     %\vspace{60pt}
-    \vspace{10mm}
+    \vspace{6mm}
     \hfill\begin{minipage}{.5\textwidth}
       \singlespacing
       \hyphenpenalty=10000
       \@goalfulltext\par
     \end{minipage}
     %\vspace{15mm}
-    \vspace{10mm}
+    \vspace{6mm}
     \begin{center}
       {\large Data de aprovação: \@approvaldate}
-      \vspace{0,6cm}
+      \vspace{3mm}
       \printevalboard
     \end{center}
     \vfill
