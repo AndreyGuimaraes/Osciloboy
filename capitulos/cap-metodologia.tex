@@ -14,6 +14,7 @@ O circuito foi projetado para seguir um fluxo de informações conforme o diagra
 
 \begin{figure}[htb!]
     \caption{Diagrama de Blocos da Lógica de Funcionamento}
+    \vspace*{5mm}
     \label{fig:dflux}
     \includegraphics[width=1.0\textwidth]{figuras/dblocflux.png}
     \fonte{}
@@ -29,6 +30,7 @@ A disposição desses componentes e sua montagem estão detalhadas na \autoref{f
 
 \begin{figure}[htb!]
     \caption{Entrada de Tensão e Corrente}
+    \vspace*{5mm}
     \label{fig:circ-prot}
     \fbox{\includegraphics[width=0.9\textwidth]{figuras/circ-prot.png}}
     \fonte{}
@@ -46,6 +48,7 @@ A primeira opção a ser considerada foi a \textit{Single-Ended}. Este tipo de l
 
 \begin{figure}[htb!]
     \caption{Condicionamento de sinais por divisor resistivo para leitura \textit{Single-Ended}}
+    \vspace*{5mm}
     \label{fig:div-res}
     \includegraphics[width=0.6\textwidth]{figuras/div-res.png}
     \fonte{}
@@ -85,6 +88,7 @@ Por fim, para sinais com menor amplitude, é necessário adicionar mais um amp-o
 
 \begin{figure}[htb!]
     \caption{Condicionamento de sinais por divisor resistivo para leitura \textit{Single-Ended}, menor range}
+    \vspace*{5mm}
     \label{fig:cascata}
     \fbox{\includegraphics[width=0.8\textwidth]{figuras/cascata.png}}
     \fonte{}
@@ -98,6 +102,7 @@ Este tipo de leitura, ao invés de comparar a tensão entre um ponto do circuito
 
 \begin{figure}[htb!]
     \caption{Condicionamento de sinais por divisor resistivo para leitura diferencial}
+    \vspace*{5mm}
     \label{fig:difread}
     \fbox{\includegraphics[width=0.6\textwidth]{figuras/difread.png}}
     \fonte{}
@@ -111,6 +116,7 @@ Então, com todos estes benefícios em mente, foi escolhida esta topologia e tip
 
 \begin{figure}[htb!]
     \caption{Circuito de condicionamento de sinais para tensão}
+    \vspace*{5mm}
     \label{fig:circ-cond-t}
     \fbox{\includegraphics[width=0.8\textwidth]{figuras/circ-cond-t.png}}
     \fonte{}
@@ -118,6 +124,7 @@ Então, com todos estes benefícios em mente, foi escolhida esta topologia e tip
 
 \begin{figure}[htb!]
     \caption{Circuito de condicionamento de sinais para corrente}
+    \vspace*{5mm}
     \label{fig:circ-cond-c}
     \fbox{\includegraphics[width=0.8\textwidth]{figuras/circ-cond-c.png}}
     \fonte{}
@@ -136,6 +143,7 @@ Para o cálculo deste filtro, precisa-se encontrar o R equivalente nos nós do c
 
 \begin{figure}[htb!]
     \caption{Simulação da resistência de \textit{Thevenin}}
+    \vspace*{5mm}
     \label{fig:r-thevenin}
     \fbox{\includegraphics[width=0.9\textwidth]{figuras/r-thevenin.png}}
     \fonte{}
@@ -145,6 +153,7 @@ Utilizando a fórmula, para o caso da entrada de corrente e considerando dois re
 
 \begin{figure}[htb!]
     \caption{Simulação sem filtro passa-baixa para a corrente}
+    \vspace*{5mm}
     \label{fig:simco1}
     \fbox{\includegraphics[width=0.9\textwidth]{figuras/sim-co-1.png}}
     \fonte{}
@@ -152,6 +161,7 @@ Utilizando a fórmula, para o caso da entrada de corrente e considerando dois re
 
 \begin{figure}[htb!]
     \caption{Simulação com filtro passa-baixa para a corrente}
+    \vspace*{5mm}
     \label{fig:simco2}
     \fbox{\includegraphics[width=0.9\textwidth]{figuras/sim-co-2.png}}
     \fonte{}
@@ -168,6 +178,7 @@ Essa referência pode ser obtida de maneira direta, utilizando uma conexão sepa
 
 \begin{figure}[htb!]
     \caption{Circuito diferencial simplificado com conexão específica para referência}
+    \vspace*{5mm}
     \label{fig:diff-3-wire}
     \fbox{\includegraphics[width=0.7\textwidth]{figuras/diferencial-3-fios.png}}
     \fonte{}
@@ -175,6 +186,7 @@ Essa referência pode ser obtida de maneira direta, utilizando uma conexão sepa
 
 \begin{figure}[htb!]
     \caption{Circuito diferencial simplificado sem conexões adicionais}
+    \vspace*{5mm}
     \label{fig:diff-2-wire}
     \fbox{\includegraphics[width=0.7\textwidth]{figuras/diferencial-2-fios.png}}
     \fonte{}
@@ -186,6 +198,7 @@ Uma vez que não é adequado referenciar o circuito em mais de um ponto, devido 
 
 \begin{figure}[htb!]
     \caption{Circuito diferencial simplificado com referência em mais de uma ponteira}
+    \vspace*{5mm}
     \label{fig:curto-diferencial}
     \fbox{\includegraphics[width=0.7\textwidth]{figuras/diferencial-em-curto.png}}
     \fonte{}
@@ -196,6 +209,7 @@ Conforme comentado na \autoref{subsec:protecaoTensao}, uma outra alternativa ser
 
 \begin{figure}[htb!]
     \caption{Circuito diferencial simplificado isolado}
+    \vspace*{5mm}
     \label{fig:dif-isolado}
     \fbox{\includegraphics[width=0.7\textwidth]{figuras/diferencial-ref-separada.png}}
     \fonte{}
@@ -205,6 +219,7 @@ Para se ter uma comunicação confiável entre os dois \gls{ADC}s conectados a f
 
 \begin{figure}[htb!]
     \caption{Circuito de comunicação isolado}
+    \vspace*{5mm}
     \label{fig:circ-comunic}
     \fbox{\includegraphics[width=0.9\textwidth]{figuras/circ-comunic.png}}
     \fonte{}
@@ -222,6 +237,7 @@ Assim, um módulo principal coordena as leituras dos módulos secundários, rece
 
 \begin{figure}[htb!]
     \caption{Diagrama de conexão modular entre dispositivos}
+    \vspace*{5mm}
     \label{fig:modularidade-fisica}
     \includegraphics[width=0.8\textwidth]{figuras/mod-fisica.png}
     \fonte{}
@@ -235,6 +251,7 @@ Como as leituras dos dispositivos são sensíveis a atrasos, devido à natureza 
 
 \begin{figure}[htb!]
     \caption{Detalhe da conexão modular entre dispositivos utilizando dois fios para sincronização de leituras}
+    \vspace*{5mm}
     \label{fig:modular-sinc}
     \fbox{\includegraphics[width=0.9\textwidth]{figuras/mod-fisica-detalhe.png}}
     \fonte{}
@@ -266,6 +283,7 @@ Porém, a saída das fontes escolhidas é de 12 V, não atendendo as necessidade
 
 \begin{figure}[htb!]
     \caption{Circuito de regulação de tensão}
+    \vspace*{5mm}
     \label{fig:circ-conv-T}
     \fbox{\includegraphics[width=0.8\textwidth]{figuras/circ-conv-T.png}}
     \fonte{}
@@ -279,6 +297,7 @@ Foi adicionado ao circuito um \textit{buzzer} como forma de aviso sonoro para di
 
 \begin{figure}[htb!]
     \caption{Circuito utilizando transistor para o \textit{buzzer}}
+    \vspace*{5mm}
     \label{fig:circ-buzzer-eda}
     \fbox{\includegraphics[width=0.8\textwidth]{figuras/circ-buzzer.png}}
     \fonte{}
@@ -318,6 +337,7 @@ Uma parte importante do \textit{Firmware} é a implementação da máquina de es
 
 \begin{figure}[htb!]
     \caption{Máquina de estados simplificada para apenas um dispositivo}
+    \vspace*{5mm}
     \label{fig:maq-estado-simp}
     \includegraphics[width=1.0\textwidth]{figuras/Maquina-Estados-Simplificada.jpg}
     \fonte{}
@@ -342,6 +362,7 @@ Uma vez processados, os dados puros são armazenados em uma \textit{struct}, con
 \begin{table}[h!]
 \centering
 \caption{Chart data}
+\vspace*{5mm}
 \begin{tabular}{ c c c }
     \hline
     \textbf{Tipo} & \textbf{Nome da Variável} & \textbf{Descrição} \\ \hline
@@ -369,6 +390,7 @@ Para diferentes configurações de escala de tensão, o código utiliza multipli
 \begin{table}[h!]
     \centering
     \caption{Tabela de multiplicadores de tensão}
+    \vspace*{5mm}
     \begin{tabular}{ c c c c }
         \hline
         \textbf{Multiplicador} & \textbf{Tensão Máxima na Escala (V)} & \textbf{Ganho} & \textbf{Tensão Máxima (V)} \\
@@ -393,6 +415,7 @@ Os ajustes para cada escala tratam-se dos valores de calibração que devem ser 
 \begin{table}[h!]
     \centering
     \caption{Tabela de multiplicadores de corrente}
+    \vspace*{5mm}
     \begin{tabular}{ c c }
         \hline
         \textbf{Escala} & \textbf{Multiplicador} \\
@@ -411,6 +434,7 @@ Os valores dos multiplicadores de corrente foram obtidos analisando o comportame
 \begin{table}[h!]
     \centering
     \caption{Tabela de multiplicadores de corrente}
+    \vspace*{5mm}
     \begin{tabularx}{\textwidth}{ X X X X X X X }
         \hline
         \textbf{Range} & \textbf{Resistor shunt} & \textbf{Corrente (A)} & \textbf{Mult. do divisor resistivo} & \textbf{Tensão lida (V)} & \textbf{Mult. inicial (0,125mV/bit)} & \textbf{Mult. final (razão do resistor)} \\
@@ -433,6 +457,7 @@ A parte estrutural da página foi desenvolvida utilizando \gls{HTML}. Exemplos d
 \begin{figure}[h!]
     \centering
     \caption{Detalhe do cabeçalho de informações da página da Web gerada pelo dispositivo}
+    \vspace*{5mm}
     \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{webpage-tela1.png}
     \label{fig:webpage1}
     \fonte{}
@@ -441,6 +466,7 @@ A parte estrutural da página foi desenvolvida utilizando \gls{HTML}. Exemplos d
 \begin{figure}[h!]
     \centering
     \caption{Detalhe do gráfico da página da Web gerada pelo dispositivo}
+    \vspace*{5mm}
     \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{webpage-tela2.png}
     \label{fig:webpage2}
     \fonte{}
@@ -453,6 +479,7 @@ A comunicação foi testada utilizando-se dois módulos \textit{ESP32} e dados p
 \begin{figure}[h!]
     \centering
     \caption{Máquina de Estados Completa}
+    \vspace*{5mm}
     \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{state-machine-complete.png}
     \label{fig:maq-estados-completa}
     \fonte{}
@@ -483,6 +510,7 @@ Ao leitor, recomenda-se evitar o módulo indicado como cópia na \autoref{fig:ad
 \begin{figure}[h!]
     \centering
     \caption{Comparação entre ADS1015 cópia e original}
+    \vspace*{5mm}
     \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{figuras/adc-fake-comparison.jpeg}
     \label{fig:adc-falsificado}
     \fonte{}
@@ -504,6 +532,7 @@ Ou caso não fosse necessária a medição entre diferentes pontos do circuito -
 \begin{figure}[h!]
     \centering
     \caption{Circuito de leitura simplificado utilizando ponto comum de referência}
+    \vspace*{5mm}
     \fbox{\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{figuras/diferencial-ponto-comum.png}}
     \label{fig:ponto-comum}
     \fonte{}
@@ -518,6 +547,7 @@ Nota-se também que para efeito de testes e de montagem do protótipo testado, n
 \begin{table}[h!]
 \centering
 \caption{Lista de Materiais e Custos}
+\vspace*{5mm}
 \label{tab:Bookofmaterials}
 \begin{tabular}{ l c c c }
 \hline
@@ -569,6 +599,7 @@ Foram tiradas as medidas de um módulo de bancada de madeira, que suporta os equ
 
 \begin{figure}[htb!]
     \caption{Módulo de Bancada}
+    \vspace*{5mm}
     \label{fig:modulo-base-f}
     \includegraphics[width=0.8\textwidth]{figuras/Modulo-Base-Frente.jpg}
     \fonte{}
@@ -581,6 +612,7 @@ O detalhe dos suportes internos pode ser visto na \autoref{fig:osciloboy-detalhe
 
 \begin{figure}[htb!]
     \caption{Modelo virtual do encapsulamento}
+    \vspace*{5mm}
     \includegraphics[width=1.0\textwidth]{figuras/osciloboy-case-1.png}
     \label{fig:osciloboy-isometrico}
     \fonte{}
@@ -588,6 +620,7 @@ O detalhe dos suportes internos pode ser visto na \autoref{fig:osciloboy-detalhe
 
 \begin{figure}[htb!]
     \caption{Detalhes de suportes para PCB e periféricos}
+    \vspace*{5mm}
     \label{fig:osciloboy-detalhes}
     \includegraphics[width=0.8\textwidth]{figuras/osciloboy-case-2.png}
     \fonte{}
