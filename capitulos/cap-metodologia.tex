@@ -14,12 +14,13 @@ O circuito foi projetado para seguir um fluxo de informações conforme o diagra
 
 \begin{figure}[htb!]
     \caption{Diagrama de Blocos da Lógica de Funcionamento}
+    \vspace*{5mm}
     \label{fig:dflux}
     \includegraphics[width=1.0\textwidth]{figuras/dblocflux.png}
     \fonte{}
 \end{figure}
 
-Primeiramente, se tem a proteção de entrada. Esta é dividida em duas partes, sendo uma delas a proteção da entrada da tensão e a outra da corrente. Para se proteger a entrada de tensão, utilizam-se um resistor \gls{PTC} e \gls{MOV}s. O \gls{PTC} é projetado para caso a tensão de entrada do circuito seja muito maior que a desejada ou tenha um curto, este esquente e vire uma impedância muito grande, sendo assim uma barreira para qualquer tipo de corrente. Porém, a sua atuação para proteção é demasiada lenta, se pondo necessário a implementação dos \gls{MOV}s, que atuarão mais rapidamente e fecharão um curto entre a entrada e o ground do circuito enquanto o resistor está sendo ativado.
+Primeiramente, se tem a proteção de entrada. Esta é dividida em duas partes, sendo uma delas a proteção da entrada da tensão e a outra da corrente. Para se proteger a entrada de tensão, utilizam-se um resistor \gls{PTC} e \gls{MOV}s. O \gls{PTC} é projetado para caso a tensão de entrada do circuito seja muito maior que a desejada ou tenha um curto-circuito, este esquente e vire uma impedância muito grande, sendo assim uma barreira para qualquer tipo de corrente. Porém, a sua atuação para proteção é demasiada lenta, se pondo necessário a implementação dos \gls{MOV}s, que atuarão mais rapidamente e fecharão um curto-circuito entre a entrada e o terra do circuito enquanto o resistor está sendo ativado.
 
 Para a proteção de corrente, utiliza-se primeiramente fusíveis \gls{HRC}, que são fusíveis especiais projetados para extinguir qualquer possível arco voltaico resultante da queima do filamento interno. Isso evita a continuidade da corrente após a atuação do fusível.
 
@@ -29,12 +30,13 @@ A disposição desses componentes e sua montagem estão detalhadas na \autoref{f
 
 \begin{figure}[htb!]
     \caption{Entrada de Tensão e Corrente}
+    \vspace*{5mm}
     \label{fig:circ-prot}
     \fbox{\includegraphics[width=0.9\textwidth]{figuras/circ-prot.png}}
     \fonte{}
 \end{figure}
 
-Nesta figura, também é possível observar as entradas do circuito. A entrada de tensão está diretamente conectada à próxima etapa, responsável pelo condicionamento dos sinais de tensão. Já a entrada de corrente é composta por resistores que atuam como shunts (R41, R36 e R41), permitindo a leitura da corrente.
+Nesta figura, também é possível observar as entradas do circuito. A entrada de tensão está diretamente conectada à próxima etapa, responsável pelo condicionamento dos sinais de tensão. Já a entrada de corrente é composta por resistores que atuam como shunts (R36, R40 e R41), permitindo a leitura da corrente.
 
 O resistor de 10 m$\Omega$ é para a leitura de corrente na proporção de Amperes, a série entre este e o resistor de 1 $\Omega$ compõe a leitura da entrada de mA e o resistor de 100 $\Omega$ para a leitura de $\mu$A. Para alternar entre as entradas de mA/$\mu$A e A, foi colocada uma chave mecânica de duas posições.
 
@@ -42,10 +44,11 @@ Para se obter um sinal apropriado para o ADC, existem duas possibilidades: leitu
 
 \subsubsection{ADC - Modo \textit{Single-Ended}}\label{single-ended}
 
-A primeira opção a ser considerada foi a \textit{Single-Ended}. Este tipo de leitura é feita pela comparação de tensão entre um ponto do circuito e o \textit{ground}. Para fazer tal leitura com diferentes \textit{ranges}, o que é fundamental para se alcançar uma boa precisão, foi primeiro projetado um condicionamento de sinais por divisor resistivo, como representado na \autoref{fig:div-res}.
+A primeira opção a ser considerada foi a \textit{Single-Ended}. Este tipo de leitura é feita pela comparação de tensão entre um ponto do circuito e o terra. Para fazer tal leitura com diferentes \textit{ranges}, o que é fundamental para se alcançar uma boa precisão, foi primeiro projetado um condicionamento de sinais por divisor resistivo, como representado na \autoref{fig:div-res}.
 
 \begin{figure}[htb!]
     \caption{Condicionamento de sinais por divisor resistivo para leitura \textit{Single-Ended}}
+    \vspace*{5mm}
     \label{fig:div-res}
     \includegraphics[width=0.6\textwidth]{figuras/div-res.png}
     \fonte{}
@@ -53,7 +56,7 @@ A primeira opção a ser considerada foi a \textit{Single-Ended}. Este tipo de l
 
 Esta topologia promete 4 ranges de leitura tanto para corrente quanto para tensão, sendo estes 200 V, 20 V, 2 V e 200 mV e 10 A, 200 mA, 20 mA e 2000 $\mu$A. É também necessário o uso de \gls{amp-op}s para a seleção do range, para isolar o \gls{ADC} da entrada e também para manter a tensão de entrada do \gls{ADC} dentro do range requerido.
 
-Desta maneira, foram calculados os resistores de forma a manter a tensão de entrada dos \gls{amp-op}s sempre entre 30 e -30 V no maior fundo de escala possível (atenuação de 10x), respeitando os aspectos construtivos destes componentes. Fixando-se o resistor de entrada como 9,1 M$\Omega$, o cálculo para os demais resistores se resume na resolução do sistema representado pela \autoref{eq01}:
+Desta maneira, foram calculados os resistores de forma a manter a tensão de entrada dos \gls{amp-op}s sempre entre 30 e -30 V no maior fundo de escala possível (atenuação de 10x), respeitando os aspectos construtivos destes componentes. Fixando-se o resistor de entrada como 9,1 M$\Omega$, o cálculo para os demais resistores se resume na resolução do sistema representado pela \autoref{eq01}, na qual os valores 20, 200 e 300 são os \textit{ranges}:
 
 \begin{equation}
     \label{eq01}
@@ -73,11 +76,11 @@ Substituindo x, y e z, respectivamente, em R1, R2 e R3 na \autoref{fig:div-res},
 
 Primeiramente, foi escolhido o \gls{ADC} ADS1115 da \textit{Texas Instruments}, pois este possui 16-bits de resolução, o que torna a leitura extremamente precisa. Possui uma referência interna de tensão, sendo desnecessária a construção de uma referência no circuito, menos complexa, e compatível com o protocolo de comunicação \gls{$I^2$C} que será utilizado para interfacear este com o microcontrolador. Porém, devido a sua taxa de leitura extremamente baixa, de 860 \textit{samples per second} (\gls{SPS}), prejudicando a leitura até de frequências na faixa de 60 Hz, foi decidido se utilizar o \gls{ADC} ADS1015.
 
-Este, também da \gls{TI}, apesar de ter uma resolução mais baixa de 12-bits, oferece uma taxa de 3300 \gls{SPS}, possibilitando assim uma reconstrução mais fiel da onda a ser lida, possuindo, uma referência interna de tensão e compatibilidade com o protocolo \gls{$I^2$C}. Este \gls{ADC} também possui uma proteção interna contra surtos por \gls{TVS}, tornando-o extremamente robusto. Os requerimentos para o funcionamento adequado deste \gls{ADC} são uma tensão de entrada máxima de 3,3 V e esta não pode ser negativa.
+Este, também da \gls{TI}, apesar de ter uma resolução mais baixa de 12-bits, oferece uma taxa de 3300 \gls{SPS}, possibilitando assim uma reconstrução mais fiel da onda a ser lida e uma referência interna de tensão com compatibilidade com o protocolo \gls{$I^2$C}. Este \gls{ADC} também possui uma proteção interna contra surtos por \gls{TVS}, tornando-o extremamente robusto. Os requerimentos para o funcionamento adequado deste \gls{ADC} são uma tensão de entrada máxima de 3,3 V e esta não pode ser negativa.
 
 Seguindo esses parâmetros, percebe-se que o condicionamento de sinal é inadequado, exigindo mais componentes e circuitos auxiliares para funcionar corretamente. Para garantir a leitura de tensões negativas, limita-se a tensão de entrada a um intervalo entre -1 V e 1 V, adicionando um offset de 1 V. Dessa forma, sinais entre 0 V e 1 V são interpretados como negativos, enquanto sinais entre 1 V e 2 V são interpretados como positivos.
 
-Na leitura \textit{Single-Ended}, após o divisor resistivo e o primeiro buffer, é necessário inverter o sinal de saída do \gls{amp-op}. Para isso, utiliza-se um amplificador operacional (amp-op) em cascata, que inverte o sinal de entrada. Além disso, para que esses componentes suportem tensões negativas, é fundamental que a alimentação do circuito seja simétrica, o que requer a inclusão de um circuito auxiliar chamado \textit{Negative Charge Pump}, capaz de fornecer essa tensão negativa.
+Na leitura \textit{Single-Ended}, após o divisor resistivo e o primeiro buffer, é necessário inverter o sinal de saída do \gls{amp-op}. Para isso, utiliza-se um amplificador operacional (amp-op) em cascata, que inverte o sinal de entrada. Além disso, para que esses componentes suportem tensões negativas é fundamental que a alimentação do circuito seja simétrica, o que requer a inclusão de um circuito auxiliar chamado \textit{Negative Charge Pump}, capaz de fornecer essa tensão negativa.
 
 Outro ponto crucial é que o offset de tensão precisa ser extremamente preciso para minimizar erros na leitura do sinal. Existem \gls{CI}s que oferecem essa precisão, mas eles são bastante caros.
 
@@ -85,6 +88,7 @@ Por fim, para sinais com menor amplitude, é necessário adicionar mais um amp-o
 
 \begin{figure}[htb!]
     \caption{Condicionamento de sinais por divisor resistivo para leitura \textit{Single-Ended}, menor range}
+    \vspace*{5mm}
     \label{fig:cascata}
     \fbox{\includegraphics[width=0.8\textwidth]{figuras/cascata.png}}
     \fonte{}
@@ -94,10 +98,11 @@ Cada amp-op possui um \textit{drift} de saída, o que introduz ainda mais erro n
 
 \subsubsection{ADC - Modo Diferencial}\label{modo-diferencial}
 
-Este tipo de leitura, ao invés de comparar a tensão entre um ponto do circuito e o \textit{ground}, compara a tensão entre dois pontos do circuito e mede efetivamente a diferença entre elas, como mostrado na \autoref{fig:difread}. Isso significa que nenhuma das entradas está ligada a uma referência, eliminando assim problemas referentes ao isolamento da leitura com o terra e também eliminando ruídos de entrada, pois como estes são introduzidos dos dois lados, eles se cancelam.
+Este tipo de leitura, ao invés de comparar a tensão entre um ponto do circuito e o terra, compara a tensão entre dois pontos do circuito e mede efetivamente a diferença entre elas, como mostrado na \autoref{fig:difread}. Isso significa que nenhuma das entradas está ligada a uma referência, eliminando assim problemas referentes ao isolamento da leitura com o terra e também eliminando ruídos de entrada, pois como estes são introduzidos dos dois lados, eles se cancelam.
 
 \begin{figure}[htb!]
     \caption{Condicionamento de sinais por divisor resistivo para leitura diferencial}
+    \vspace*{5mm}
     \label{fig:difread}
     \fbox{\includegraphics[width=0.6\textwidth]{figuras/difread.png}}
     \fonte{}
@@ -111,6 +116,7 @@ Então, com todos estes benefícios em mente, foi escolhida esta topologia e tip
 
 \begin{figure}[htb!]
     \caption{Circuito de condicionamento de sinais para tensão}
+    \vspace*{5mm}
     \label{fig:circ-cond-t}
     \fbox{\includegraphics[width=0.8\textwidth]{figuras/circ-cond-t.png}}
     \fonte{}
@@ -118,6 +124,7 @@ Então, com todos estes benefícios em mente, foi escolhida esta topologia e tip
 
 \begin{figure}[htb!]
     \caption{Circuito de condicionamento de sinais para corrente}
+    \vspace*{5mm}
     \label{fig:circ-cond-c}
     \fbox{\includegraphics[width=0.8\textwidth]{figuras/circ-cond-c.png}}
     \fonte{}
@@ -132,10 +139,11 @@ Também sobre o condicionamento de sinais, é de suma importância se ter um fil
 
 Este filtro age de forma a atenuar em \textit{3dB} (70,7\%) sinais de frequências maiores que a de corte.
 
-Para o cálculo deste filtro, precisa-se encontrar o R equivalente nos nós do capacitor. Para tanto, utiliza-se o teorema de Thevenin (considerando todas as fontes de corrente como circuito aberto e fontes de tensão como curto), como é possível verificar substituindo o capacitor por um ohmímetro na \autoref{fig:r-thevenin}.
+Para o cálculo deste filtro, precisa-se encontrar o R equivalente nos nós do capacitor. Para tanto, utiliza-se o teorema de Thevenin (considerando todas as fontes de corrente como circuito aberto e fontes de tensão como curto-circuito), como é possível verificar substituindo o capacitor por um ohmímetro na \autoref{fig:r-thevenin}.
 
 \begin{figure}[htb!]
-    \caption{Simulação da resistência de Thevenin}
+    \caption{Simulação da resistência de \textit{Thevenin}}
+    \vspace*{5mm}
     \label{fig:r-thevenin}
     \fbox{\includegraphics[width=0.9\textwidth]{figuras/r-thevenin.png}}
     \fonte{}
@@ -145,6 +153,7 @@ Utilizando a fórmula, para o caso da entrada de corrente e considerando dois re
 
 \begin{figure}[htb!]
     \caption{Simulação sem filtro passa-baixa para a corrente}
+    \vspace*{5mm}
     \label{fig:simco1}
     \fbox{\includegraphics[width=0.9\textwidth]{figuras/sim-co-1.png}}
     \fonte{}
@@ -152,6 +161,7 @@ Utilizando a fórmula, para o caso da entrada de corrente e considerando dois re
 
 \begin{figure}[htb!]
     \caption{Simulação com filtro passa-baixa para a corrente}
+    \vspace*{5mm}
     \label{fig:simco2}
     \fbox{\includegraphics[width=0.9\textwidth]{figuras/sim-co-2.png}}
     \fonte{}
@@ -168,6 +178,7 @@ Essa referência pode ser obtida de maneira direta, utilizando uma conexão sepa
 
 \begin{figure}[htb!]
     \caption{Circuito diferencial simplificado com conexão específica para referência}
+    \vspace*{5mm}
     \label{fig:diff-3-wire}
     \fbox{\includegraphics[width=0.7\textwidth]{figuras/diferencial-3-fios.png}}
     \fonte{}
@@ -175,6 +186,7 @@ Essa referência pode ser obtida de maneira direta, utilizando uma conexão sepa
 
 \begin{figure}[htb!]
     \caption{Circuito diferencial simplificado sem conexões adicionais}
+    \vspace*{5mm}
     \label{fig:diff-2-wire}
     \fbox{\includegraphics[width=0.7\textwidth]{figuras/diferencial-2-fios.png}}
     \fonte{}
@@ -186,6 +198,7 @@ Uma vez que não é adequado referenciar o circuito em mais de um ponto, devido 
 
 \begin{figure}[htb!]
     \caption{Circuito diferencial simplificado com referência em mais de uma ponteira}
+    \vspace*{5mm}
     \label{fig:curto-diferencial}
     \fbox{\includegraphics[width=0.7\textwidth]{figuras/diferencial-em-curto.png}}
     \fonte{}
@@ -196,6 +209,7 @@ Conforme comentado na \autoref{subsec:protecaoTensao}, uma outra alternativa ser
 
 \begin{figure}[htb!]
     \caption{Circuito diferencial simplificado isolado}
+    \vspace*{5mm}
     \label{fig:dif-isolado}
     \fbox{\includegraphics[width=0.7\textwidth]{figuras/diferencial-ref-separada.png}}
     \fonte{}
@@ -205,14 +219,15 @@ Para se ter uma comunicação confiável entre os dois \gls{ADC}s conectados a f
 
 \begin{figure}[htb!]
     \caption{Circuito de comunicação isolado}
+    \vspace*{5mm}
     \label{fig:circ-comunic}
     \fbox{\includegraphics[width=0.9\textwidth]{figuras/circ-comunic.png}}
     \fonte{}
 \end{figure}
 
-O circuito transforma pulsos \gls{$I^2$C} em sinais de luz e transfere estas informações para o outro circuito isolado, desacoplando estes. Para o correto funcionamento do circuito, devido a limitações técnicas dos \textit{optocouplers} escolhidos, é necessária a inserção de uma linha de 5 V para a alimentação do \gls{CI}, bem como o uso de uma linha de 3,3 V para a ativação dos LEDs internos deste chip, bem como o potencial de \textit{pull-up} para as linhas de comunicação \gls{$I^2$C}.
+O circuito transforma pulsos \gls{$I^2$C} em sinais de luz e transfere estas informações para o outro circuito isolado, desacoplando estes. Para o correto funcionamento do circuito, devido a limitações técnicas dos \textit{optocouplers} escolhidos, é necessária a inserção de uma linha de 5 V para a alimentação do \gls{CI}, assim como o uso de uma linha de 3,3 V para a ativação dos LEDs internos deste chip e o potencial de \textit{pull-up} para as linhas de comunicação \gls{$I^2$C}.
 
-\subsubsection{Modularidade no Hardware}\label{modularidade-metodologia}
+\subsubsection{Modularidade no \textit{Hardware}}\label{modularidade-metodologia}
 
 Um dos principais objetivos da proposta desenvolvida foi possibilitar a leitura simultânea de duas ou três fases diferentes. Para tanto, o dispositivo precisaria operar com quatro ou seis canais isolados entre si, devido às implicações supracitadas. Essa configuração elevaria o custo, o espaço físico e a complexidade de apenas um dispositivo, sendo que, em diversas etapas das disciplinas de circuitos, apenas a leitura de uma das fases é utilizada – considerando-se o circuito trifásico equilibrado.
 
@@ -222,6 +237,7 @@ Assim, um módulo principal coordena as leituras dos módulos secundários, rece
 
 \begin{figure}[htb!]
     \caption{Diagrama de conexão modular entre dispositivos}
+    \vspace*{5mm}
     \label{fig:modularidade-fisica}
     \includegraphics[width=0.8\textwidth]{figuras/mod-fisica.png}
     \fonte{}
@@ -229,12 +245,13 @@ Assim, um módulo principal coordena as leituras dos módulos secundários, rece
 
 Inicialmente, considerou-se o uso do protocolo \gls{$I^2$C} para a comunicação entre os módulos. No entanto, essa abordagem foi descartada devido à complexidade de criação de um protocolo ou dicionário que estabelecesse um modo comum de interação. Esse protocolo seria implementado fisicamente da mesma forma proposta para a comunicação isolada entre o ESP32 e o \gls{ADC} (que não compartilham a mesma referência), utilizando optoacopladores, conforme ilustrado na \autoref{fig:circ-comunic}.
 
-Diante dessas considerações, concluiu-se que a utilização do protocolo \textit{ESP-NOW} – desenvolvido pela Espressif para facilitar a comunicação entre chips que possuem Wi-Fi – em conjunto com o protocolo de comunicação via \textit{websockets}, já utilizado para a comunicação entre o dispositivo e a interface homem-máquina, seria mais adequada para este caso. Dessa forma, os dados dos dispositivos secundários são transferidos de forma \textit{wireless} para o dispositivo principal.
+Diante dessas considerações, concluiu-se que a utilização do protocolo \textit{ESP-NOW} – desenvolvido pela Espressif para facilitar a comunicação entre chips que possuem \textit{Wi-Fi} – em conjunto com o protocolo de comunicação via \textit{websockets}, já utilizado para a comunicação entre o dispositivo e a interface homem-máquina, seria mais adequada para este caso. Dessa forma, os dados dos dispositivos secundários são transferidos de forma \textit{wireless} para o dispositivo principal.
 
 Como as leituras dos dispositivos são sensíveis a atrasos, devido à natureza das medições no tempo, é necessária uma conexão física entre os módulos para sincronizar as leituras. Assim, o dispositivo principal envia aos demais módulos um pulso indicando o início de uma nova série de dados, permitindo que todos realizem a amostragem dentro da mesma janela temporal. Dessa maneira, são necessários apenas dois fios conectando cada dispositivo, sendo estes a saída do sinal isolado, transmitido por meio de um optoacoplador, conforme ilustrado na \autoref{fig:modular-sinc}.
 
 \begin{figure}[htb!]
     \caption{Detalhe da conexão modular entre dispositivos utilizando dois fios para sincronização de leituras}
+    \vspace*{5mm}
     \label{fig:modular-sinc}
     \fbox{\includegraphics[width=0.9\textwidth]{figuras/mod-fisica-detalhe.png}}
     \fonte{}
@@ -244,14 +261,14 @@ Este circuito adicional, no entanto, não foi implementado no presente trabalho 
 
 \subsubsection{Microcontrolador}\label{uC-metodologia}
 
-Algumas necessidades básicas devem ser atendidas pelo chip escolhido, como suporte para comunicação \textit{wireless}, seja Wi-Fi ou \textit{Bluetooth}, \textit{clock speed} alta o suficiente para não interferir na aquisição de dados e também ter uma boa documentação para ser possível o desenvolvimento do código.
+Algumas necessidades básicas devem ser atendidas pelo chip escolhido, como suporte para comunicação \textit{wireless}, seja \textit{Wi-Fi} ou \textit{Bluetooth}, \textit{clock speed} alta o suficiente para não interferir na aquisição de dados e também ter uma boa documentação para ser possível o desenvolvimento do código.
 
 Portanto, o microcontrolador utilizado para este projeto é o ESP32, fabricado pela Espressif. A escolha deste foi feita por vários motivos:
 
 \begin{itemize}
     \item Performance: O ESP32 opera em \textit{clock speeds} de até 240 MHz, oferecendo um robusto poder de processamento para o código e também para não interferir ou atrasar a aquisição dos sinais;
-    \item Suporte: Este microcontrolador tem suporte tanto para Wi-Fi quanto para \textit{Bluetooth}, trabalha com o protocolo \gls{$I^2$C}, que será utilizado para fazer a comunicação com o \gls{ADC} e utiliza-se do Arduino como sua principal plataforma de desenvolvimento;
-    \item Ambiente: Este módulo é extensamente utilizado em vários setores da tecnologia e tem uma vasta comunidade de usuários, o que garante um extenso leque de \textit{resources} como bibliotecas, tutoriais, videos, forums, entre outros, para ajudar na confecção do software e firmware. Também apresenta suporte oferecido pela própria Espressif sobre as suas funcionalidades muito bem documentados;
+    \item Suporte: Este microcontrolador tem suporte tanto para \textit{Wi-Fi} quanto para \textit{Bluetooth}, trabalha com o protocolo \gls{$I^2$C}, que será utilizado para fazer a comunicação com o \gls{ADC} e utiliza-se do Arduino como sua principal plataforma de desenvolvimento;
+    \item Ambiente: Este módulo é extensamente utilizado em vários setores da tecnologia e tem uma vasta comunidade de usuários, o que garante um extenso leque de \textit{resources} como bibliotecas, tutoriais, videos, forums, entre outros, para ajudar na confecção do \textit{software} e \textit{firmware}. Também apresenta suporte oferecido pela própria Espressif sobre as suas funcionalidades muito bem documentados;
     \item Modularidade: Esta parte do trabalho também é facilitada devido ao componente já possuir nativamente protocolos de comunicação da própria fabricante;
     \item Preço: Para todas as funcionalidades providas pelo ESP32, este apresenta um grande custo benefício, além de estar facilmente disponível no mercado.
 \end{itemize}
@@ -260,12 +277,13 @@ Portanto, o microcontrolador utilizado para este projeto é o ESP32, fabricado p
 
 Para a alimentação dos circuitos integrantes do protótipo, existem duas opções: baterias ou fontes. Como este será utilizado em bancada, foi escolhida a alimentação por fontes, pois estas não precisam ser trocadas frequentemente e é possível ligá-las à rede, além de algumas outras vantagens.
 
-Neste projeto são utilizadas duas fontes isoladas galvanicamente. Uma para alimentar o circuito de leitura de tensão e outra para alimentar o circuito de leitura de corrente, reduzindo ainda mais possíveis ruídos e interferências entre circuitos. Também aumentando a confiabilidade do protótipo, pois como o objetivo é realizar leituras simultâneas de corrente e tensão, o isolamento entre eles é necessário para prevenir curtos.
+Neste projeto são utilizadas duas fontes isoladas galvanicamente. Uma para alimentar o circuito de leitura de tensão e outra para alimentar o circuito de leitura de corrente, reduzindo ainda mais possíveis ruídos e interferências entre circuitos. Também aumentando a confiabilidade do protótipo, pois como o objetivo é realizar leituras simultâneas de corrente e tensão, o isolamento entre eles é necessário para prevenir curto-circuitos.
 
 Porém, a saída das fontes escolhidas é de 12 V, não atendendo as necessidades de alimentação dos \gls{CI}s envolvidos e também do microcontrolador. Para isso, circuitos de regulação de tensão foram implementados, gerando duas saídas, como explícito na \autoref{fig:circ-conv-T}. Estes circuitos são iguais tanto para a leitura de tensão e de corrente, visto que estes tem as mesmas necessidades.
 
 \begin{figure}[htb!]
     \caption{Circuito de regulação de tensão}
+    \vspace*{5mm}
     \label{fig:circ-conv-T}
     \fbox{\includegraphics[width=0.8\textwidth]{figuras/circ-conv-T.png}}
     \fonte{}
@@ -275,10 +293,11 @@ A alimentação do ESP32 e também do circuito de comunicação isolada foi defi
 
 \subsubsection{Avisos sonoros}\label{aviso-sonoro}
 
-Foi adicionado ao circuito um \textit{buzzer} como forma de aviso sonoro para diversos fins. Foi utilizado um transistor ligado a entrada do microcontrolador para sua ativação, conforme pode-se ver na \autoref{fig:circ-buzzer-eda}. Sua implementação foi feita através do firmware como um alerta em relação a corrente de entrada lida pelo ADC. Caso o usuário aplique corrente maior do que a esperada na entrada, o \textit{buzzer} dispara um aviso sonoro para informar o usuário da entrada incorreta.
+Foi adicionado ao circuito um \textit{buzzer} como forma de aviso sonoro para diversos fins. Foi utilizado um transistor ligado a entrada do microcontrolador para sua ativação, conforme pode-se ver na \autoref{fig:circ-buzzer-eda}. Sua implementação foi feita através do \textit{firmware} como um alerta em relação a corrente de entrada lida pelo ADC. Caso o usuário aplique corrente maior do que a esperada na entrada, o \textit{buzzer} dispara um aviso sonoro para informar o usuário da entrada incorreta.
 
 \begin{figure}[htb!]
-    \caption{Circuito utilizando transistor para o buzzer}
+    \caption{Circuito utilizando transistor para o \textit{buzzer}}
+    \vspace*{5mm}
     \label{fig:circ-buzzer-eda}
     \fbox{\includegraphics[width=0.8\textwidth]{figuras/circ-buzzer.png}}
     \fonte{}
@@ -286,27 +305,27 @@ Foi adicionado ao circuito um \textit{buzzer} como forma de aviso sonoro para di
 
 \subsubsection{Disponibilidade do Circuito}\label{availability}
 
-O circuito pode ser encontrado na integra no \autoref{apendice-a} ao final do trabalho, bem como de maneira virtual no mesmo anexo. Dada a característica colaborativa da plataforma em que foi desenvolvido, permite que qualquer usuário clone esse circuito e o modifique gratuitamente.
+O circuito pode ser encontrado na integra no \autoref{apendice-a} ao final do trabalho, assim como de maneira virtual no mesmo anexo. Dada a característica colaborativa da plataforma em que foi desenvolvido, permite que qualquer usuário clone esse circuito e o modifique gratuitamente.
 
-\subsubsection{Resumo de Hardware}\label{resumo-hardware}
+\subsubsection{Resumo de \textit{Hardware}}\label{resumo-hardware}
 
 Por fim, um resumo de todas as partes constituintes e as decisões tomadas.
 
 \begin{itemize}
     \item \textbf{Proteção de Entrada:} Foi decidida a utilização de uma proteção de entrada simplificada, baseada em modelos comerciais, pois não foi possível encontrar bibliografias relevantes e também não se possui equipamento especializado para fazer testes de proteção com segurança, visto que estes podem ser perigosos. Composta por fusíveis e um clamp para a corrente, varistores e um PTC para a tensão (junto com uma proteção TVS interna ao ADC escolhido), esta proteção básica coloca o protótipo dentro da classificação CAT III;
     \item \textbf{Condicionamento e Aquisição de Sinais:} Para a tensão, limita-se o valor máximo do sinal a ser obtido e este é encaminhado diretamente à entrada do ADC para leitura. Para a corrente, utiliza-se um resistor shunt para a obtenção do sinal. Os dois sinais serão lidos diferencialmente pelo ADC.
-    \item \textbf{ADC:} O ADC escolhido foi o ADS1015, do tipo delta-sigma. Este foi escolhido por, além de suas capabilidades, suporte para comunicação em $I^2C$ e uma boa documentação sobre seu firmware.
+    \item \textbf{ADC:} O ADC escolhido foi o ADS1015, do tipo delta-sigma. Este foi escolhido por, além de suas capabilidades, suporte para comunicação em $I^2C$ e uma boa documentação sobre seu \textit{firmware}.
     \item \textbf{Microcontrolador:} O MCU escolhido foi o ESP32, por ser um microcontrolador extremamente potente e possuir suporte para comunicações \textit{wireless} e por $I^2C$. Além disso, sua documentação técnica e o suporte tanto da Espressif quanto da comunidade que utiliza tal microcontrolador são de grande valor.
     \item \textbf{Alimentação:} O tipo de alimentação escolhido e implementado foi por fontes isoladas com reguladores internos para alimentar o circuito. Este método garante a maior segurança quanto à isolação das partes e também torna o protótipo independente de pilhas.
 \end{itemize}
 
-\subsection{Software e Firmware}\label{softfirm}
+\subsection{\textit{Software} e \textit{Firmware}}\label{softfirm}
 
-A programação do dispositivo é separada em duas etapas: \textit{Firmware} e \textit{Software}. O \textit{Firmware} é responsável por garantir a funcionalidade da comunicação do microcontrolador com os módulos \gls{ADC}, bem como manter a comunicação \textit{wireless} e sincronizar a amostragem do sinal.
+A programação do dispositivo é separada em duas etapas: \textit{Firmware} e \textit{Software}. O \textit{Firmware} é responsável por garantir a funcionalidade da comunicação do microcontrolador com os módulos \gls{ADC}, assim como manter a comunicação \textit{wireless} e sincronizar a amostragem do sinal.
 Já o \textit{Software}, é responsável por receber as entradas do usuário e mostrar, efetivamente, através de gráficos e valores numéricos, as leituras de tensão, corrente, frequência, potências, etc.
 Outra parte importante da programação trata-se da modularidade. Essa está presente tanto no \textit{Firmware} quanto no \textit{Software}. Trata-se da possibilidade de utilizar mais de um dispositivo em conjunto com um principal, permitindo a leitura de mais fases de maneira isolada.
 
-\subsubsection{Firmware}\label{firmw}
+\subsubsection{\textit{Firmware}}\label{firmw}
 
 O \textit{Firmware} é a parte crítica que roda diretamente no microcontrolador ESP32 e é responsável pela interface com os sensores, controle de comunicação \textit{wireless} e envio dos dados coletados para o \textit{Software} via WebSockets. Ele também gerencia a sincronização das leituras do ADC, garantindo que os dados de tensão e corrente sejam capturados e processados de forma precisa.
 
@@ -318,12 +337,13 @@ Uma parte importante do \textit{Firmware} é a implementação da máquina de es
 
 \begin{figure}[htb!]
     \caption{Máquina de estados simplificada para apenas um dispositivo}
+    \vspace*{5mm}
     \label{fig:maq-estado-simp}
     \includegraphics[width=1.0\textwidth]{figuras/Maquina-Estados-Simplificada.jpg}
     \fonte{}
 \end{figure}
 
-O processo de comunicação \textit{wireless} utiliza o protocolo Wi-Fi integrado do ESP32 para criar um ponto de acesso, facilitando a interação com o dispositivo móvel. O firmware também é responsável por lidar com a detecção de conexões e desconexões dos clientes WebSocket, ajustando o comportamento do sistema conforme necessário.
+O processo de comunicação \textit{wireless} utiliza o protocolo \textit{Wi-Fi} integrado do ESP32 para criar um ponto de acesso, facilitando a interação com o dispositivo móvel. O \textit{firmware} também é responsável por lidar com a detecção de conexões e desconexões dos clientes WebSocket, ajustando o comportamento do sistema conforme necessário.
 
 Seguindo a lógica proposta, o microcontrolador, ao ser energizado, completa sua rotina de \textit{setup} e permanece disponível para conexões. Após o estabelecimento da conexão, configura-se a relação principal entre o servidor, como \textit{master}, e o dispositivo conectado, como \textit{main client}. Ao acessar o IP do ESP32, ele serve à \textit{webpage} o HTML e JavaScript necessários para sua apresentação e interação.
 
@@ -342,6 +362,7 @@ Uma vez processados, os dados puros são armazenados em uma \textit{struct}, con
 \begin{table}[h!]
 \centering
 \caption{Chart data}
+\vspace*{5mm}
 \begin{tabular}{ c c c }
     \hline
     \textbf{Tipo} & \textbf{Nome da Variável} & \textbf{Descrição} \\ \hline
@@ -357,7 +378,7 @@ Uma vez processados, os dados puros são armazenados em uma \textit{struct}, con
 \fonte{}
 \end{table}
 
-\subsubsection{Software}\label{softwa}
+\subsubsection{\textit{Software}}\label{softwa}
 
 Toda a lógica de conversão dos valores de tensão e corrente em bits do \gls{ADC} para os valores reais é feita através de javascript em uma webpage. Dessa maneira, poupa-se informação transmitida pelo módulo, e utiliza-se um processamento mais robusto (do celular ou computador conectado) para os cálculos de potência.
 
@@ -369,6 +390,7 @@ Para diferentes configurações de escala de tensão, o código utiliza multipli
 \begin{table}[h!]
     \centering
     \caption{Tabela de multiplicadores de tensão}
+    \vspace*{5mm}
     \begin{tabular}{ c c c c }
         \hline
         \textbf{Multiplicador} & \textbf{Tensão Máxima na Escala (V)} & \textbf{Ganho} & \textbf{Tensão Máxima (V)} \\
@@ -393,6 +415,7 @@ Os ajustes para cada escala tratam-se dos valores de calibração que devem ser 
 \begin{table}[h!]
     \centering
     \caption{Tabela de multiplicadores de corrente}
+    \vspace*{5mm}
     \begin{tabular}{ c c }
         \hline
         \textbf{Escala} & \textbf{Multiplicador} \\
@@ -411,6 +434,7 @@ Os valores dos multiplicadores de corrente foram obtidos analisando o comportame
 \begin{table}[h!]
     \centering
     \caption{Tabela de multiplicadores de corrente}
+    \vspace*{5mm}
     \begin{tabularx}{\textwidth}{ X X X X X X X }
         \hline
         \textbf{Range} & \textbf{Resistor shunt} & \textbf{Corrente (A)} & \textbf{Mult. do divisor resistivo} & \textbf{Tensão lida (V)} & \textbf{Mult. inicial (0,125mV/bit)} & \textbf{Mult. final (razão do resistor)} \\
@@ -433,6 +457,7 @@ A parte estrutural da página foi desenvolvida utilizando \gls{HTML}. Exemplos d
 \begin{figure}[h!]
     \centering
     \caption{Detalhe do cabeçalho de informações da página da Web gerada pelo dispositivo}
+    \vspace*{5mm}
     \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{webpage-tela1.png}
     \label{fig:webpage1}
     \fonte{}
@@ -441,18 +466,20 @@ A parte estrutural da página foi desenvolvida utilizando \gls{HTML}. Exemplos d
 \begin{figure}[h!]
     \centering
     \caption{Detalhe do gráfico da página da Web gerada pelo dispositivo}
+    \vspace*{5mm}
     \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{webpage-tela2.png}
     \label{fig:webpage2}
     \fonte{}
 \end{figure}
 
-\subsubsection{Modularidade no Software}\label{modular-softw}
+\subsubsection{Modularidade no \textit{Software}}\label{modular-softw}
 
 A comunicação foi testada utilizando-se dois módulos \textit{ESP32} e dados pré-programados de leitura, permitindo que fosse possível estabelecer o conceito da comunicação e elaborar a máquina de estados que define como a comunicação precisa ser tratada.
 
 \begin{figure}[h!]
     \centering
     \caption{Máquina de Estados Completa}
+    \vspace*{5mm}
     \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{state-machine-complete.png}
     \label{fig:maq-estados-completa}
     \fonte{}
@@ -477,12 +504,13 @@ Devido a dificuldades durante o desenvolvimento do projeto, não foi possível i
 
 \subsubsection{ADC falsificado}\label{adc-falso}
 
-Um grande empecilho encontrado foi a não conformidade do \gls{ADC} adquirido para a confecção do protótipo. Esse foi comprado de forma online em uma loja com baixa reputação e, como consequência, possuía sua velocidade de leitura fixada a menos que 500 \gls{SPS}. Devido a complexidade de desenvolvimento do firmware, muito foi testado até se chegar a conclusão de que o CI tratava-se de uma falsificação que não atendia o explicitado no datasheet do ADS1015. Esse foi posteriormente substituído por um de melhor procedência, alcançando os 3300 \gls{SPS} esperados sem maiores dificuldades.
+Um grande empecilho encontrado foi a não conformidade do \gls{ADC} adquirido para a confecção do protótipo. Esse foi comprado de forma online em uma loja com baixa reputação e, como consequência, possuía sua velocidade de leitura fixada a menos que 500 \gls{SPS}. Devido a complexidade de desenvolvimento do \textit{firmware}, muito foi testado até se chegar a conclusão de que o CI tratava-se de uma falsificação que não atendia o explicitado no datasheet do ADS1015. Esse foi posteriormente substituído por um de melhor procedência, alcançando os 3300 \gls{SPS} esperados sem maiores dificuldades.
 Ao leitor, recomenda-se evitar o módulo indicado como cópia na \autoref{fig:adc-falsificado}, procurando sempre pelo original.
 
 \begin{figure}[h!]
     \centering
     \caption{Comparação entre ADS1015 cópia e original}
+    \vspace*{5mm}
     \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{figuras/adc-fake-comparison.jpeg}
     \label{fig:adc-falsificado}
     \fonte{}
@@ -504,6 +532,7 @@ Ou caso não fosse necessária a medição entre diferentes pontos do circuito -
 \begin{figure}[h!]
     \centering
     \caption{Circuito de leitura simplificado utilizando ponto comum de referência}
+    \vspace*{5mm}
     \fbox{\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{figuras/diferencial-ponto-comum.png}}
     \label{fig:ponto-comum}
     \fonte{}
@@ -511,13 +540,14 @@ Ou caso não fosse necessária a medição entre diferentes pontos do circuito -
 
 \section{Materiais}\label{sec:materiais}
 
-Esta seção está dedicada à lista de materiais utilizados para a confecção de um protótipo, identificada pela \autoref{tab:Bookofmaterials}. Os preços indicados são validos somente para a data de confecção desta monografia, pois estão cotados de acordo com o que se foi pago para a confecção deste, sendo os componentes originados de várias lojas diferentes, online e físicas, na China e no Brasil e também em datas diferentes.
+Esta seção está dedicada à lista de materiais utilizados para a confecção de um protótipo, identificada pela \autoref{tab:Bookofmaterials}. Os preços indicados são validos somente para a data de confecção desta monografia, pois estão cotados de acordo com o valor pago para a confecção deste, sendo os componentes originados de várias lojas diferentes, online e físicas, na China e no Brasil e também em datas diferentes.
 
-Nota-se também que para efeito de testes e de montagem do protótipo testado, não se foi considerada a proteção de entrada por dois fatores: primeiramente esta é extremamente cara e difícil de encontrar (em questão aos fusíveis). Outro motivo é a segurança dos autores, pois testes de proteção são perigosos necessitam aparatos especiais.
+Nota-se também que para efeito de testes e de montagem do protótipo testado, não foi considerada a proteção de entrada por dois fatores: primeiramente esta é extremamente cara e difícil de encontrar (em questão aos fusíveis). Outro motivo é a segurança dos autores, pois testes de proteção são perigosos necessitam aparatos especiais.
 
 \begin{table}[h!]
 \centering
 \caption{Lista de Materiais e Custos}
+\vspace*{5mm}
 \label{tab:Bookofmaterials}
 \begin{tabular}{ l c c c }
 \hline
@@ -569,6 +599,7 @@ Foram tiradas as medidas de um módulo de bancada de madeira, que suporta os equ
 
 \begin{figure}[htb!]
     \caption{Módulo de Bancada}
+    \vspace*{5mm}
     \label{fig:modulo-base-f}
     \includegraphics[width=0.8\textwidth]{figuras/Modulo-Base-Frente.jpg}
     \fonte{}
@@ -581,6 +612,7 @@ O detalhe dos suportes internos pode ser visto na \autoref{fig:osciloboy-detalhe
 
 \begin{figure}[htb!]
     \caption{Modelo virtual do encapsulamento}
+    \vspace*{5mm}
     \includegraphics[width=1.0\textwidth]{figuras/osciloboy-case-1.png}
     \label{fig:osciloboy-isometrico}
     \fonte{}
@@ -588,6 +620,7 @@ O detalhe dos suportes internos pode ser visto na \autoref{fig:osciloboy-detalhe
 
 \begin{figure}[htb!]
     \caption{Detalhes de suportes para PCB e periféricos}
+    \vspace*{5mm}
     \label{fig:osciloboy-detalhes}
     \includegraphics[width=0.8\textwidth]{figuras/osciloboy-case-2.png}
     \fonte{}
